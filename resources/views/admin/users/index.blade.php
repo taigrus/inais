@@ -1,5 +1,5 @@
 @extends('layout')
-@if (!Auth::guest() and Auth::user()->type=='admin')
+@if (!Auth::guest() and Auth::user()->type_id==1)
     @section('content')
         <div class="container">
             <div class="row">
@@ -38,7 +38,7 @@
                     { data: 'email', name: 'email' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'updated_at', name: 'updated_at' },
-                    { data: 'type', name: 'type' },
+                    { data: 'type_id', name: 'type_id' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
 
                 ]

@@ -1,4 +1,4 @@
-@if (!Auth::guest() and Auth::user()->type=='admin')
+@if (!Auth::guest() and Auth::user()->type_id==1)
     <div class="container">
         <div class="row">
 

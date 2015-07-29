@@ -38,7 +38,7 @@ class UsersController extends Controller
     public function anyData()
     {
         //return Datatables::of(User::select('*'))->make(true);
-        $users = User::select(['id', 'first_name', 'last_name','email', 'password', 'created_at', 'updated_at', 'type']);
+        $users = User::select(['id', 'first_name', 'last_name','email', 'password', 'created_at', 'updated_at', 'type_id']);
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
                 return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
@@ -58,7 +58,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view("admin.users.create");
+        $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
+        return view("admin.users.create", array('roles_options' => $roles_options));
 
     }
 
@@ -95,7 +96,8 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
+        return view('admin.users.edit', compact('user'), array('roles_options' => $roles_options));
     }
 
     /**

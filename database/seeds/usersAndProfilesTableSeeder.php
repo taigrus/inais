@@ -14,13 +14,34 @@ class usersAndProfilesTableSeeder extends Seeder
     {
         $faker = Faker::create('es_ES');
 
+        \DB::table('roles')->insert(array(
+            'descripcion'   => 'Administrador del sistema' ,
+            'permisos'      => '111000',
+            'created_at' => $faker->date('Y-m-d H:i:s'),
+            'updated_at' => $faker->date('Y-m-d H:i:s')
+        ));
+
+        \DB::table('roles')->insert(array(
+            'descripcion'   => 'Usuario del sistema' ,
+            'permisos'      => '100000',
+            'created_at' => $faker->date('Y-m-d H:i:s'),
+            'updated_at' => $faker->date('Y-m-d H:i:s')
+        ));
+
+        \DB::table('roles')->insert(array(
+            'descripcion'   => 'Invitado del sistema' ,
+            'permisos'      => '000000',
+            'created_at' => $faker->date('Y-m-d H:i:s'),
+            'updated_at' => $faker->date('Y-m-d H:i:s')
+        ));
+
         $idr = \DB::table('users')->insertGetId(array(
             'first_name'  => 'Raúl',
             'last_name' => 'Burgos',
             'email' => 'rburgos@csra-bolivia.org',
             'password' => \Hash::make('EmdLa1975'),
             'active' => true,
-            'type' => 'admin',
+            'type_id' => 1,
             'created_at' => $faker->date('Y-m-d H:i:s'),
             'updated_at' => $faker->date('Y-m-d H:i:s')
         ));
@@ -44,7 +65,7 @@ class usersAndProfilesTableSeeder extends Seeder
                 'email' => $faker->unique()->email,
                 'password' => \Hash::make('secret'),
                 'active' => true,
-                'type' => 'user',
+                'type_id' => 2,
                 'created_at' => $faker->date('Y-m-d H:i:s'),
                 'updated_at' => $faker->date('Y-m-d H:i:s')
             ));
@@ -59,5 +80,6 @@ class usersAndProfilesTableSeeder extends Seeder
                 'updated_at' => $faker->date('Y-m-d H:i:s')
             ));
         }
+
     }
 }

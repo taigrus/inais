@@ -1,5 +1,5 @@
 @extends('layout')
-@if (!Auth::guest() and Auth::user()->type=='admin')
+@if (!Auth::guest() and Auth::user()->type_id==1)
     @section('content')
         <div class="container">
             <div class="row">
