@@ -12,6 +12,15 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+
+        Schema::create('roles', function (Blueprint $table) {
+
+            $table->increments('id');
+            $table->string('descripcion',50)->unique();
+            $table->string('permisos',200);
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
 
             $table->increments('id');
@@ -20,9 +29,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('active')->default(true);
-            $table->string('type',10);
+            $table->integer('type_id')->unsigned();
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('roles')
+                ->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
+
         });
 
         Schema::create('user_profiles', function (Blueprint $table) {
@@ -49,5 +63,6 @@ class CreateUsersTable extends Migration
     {
         Schema::drop('user_profiles');
         Schema::drop('users');
+        Schema::drop('roles');
     }
 }

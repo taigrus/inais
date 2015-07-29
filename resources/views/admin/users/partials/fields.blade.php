@@ -22,7 +22,7 @@
             {!! Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'Ingrese su contraseña nuevamente']) !!}
         </div>
         <div class="form-group">
-            {!! Form::label('type', 'Rol del usuario') !!}
-            {!! Form::select('type', ['' => 'Seleccione el tipo de usuario', 'user' => 'Usuario', 'admin' => 'Administrador'],null,['class' => 'form-control']) !!}
+            {!! Form::label('type_id', 'Rol del usuario') !!}
+            {!! Form::select('type_id', $roles_options , Input::old('rol'),['class' => 'form-control']) !!}
         </div>
 </div>
