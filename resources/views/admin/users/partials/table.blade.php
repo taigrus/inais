@@ -9,6 +9,7 @@
             <th>Actualizado el</th>
             <th>Rol</th>
             <th>Acciones</th>
+            <th>Eliminar</th>
         </tr>
     </thead>
 </table>

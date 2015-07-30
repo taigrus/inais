@@ -11,7 +11,7 @@
                         @if (Auth::guest())
                             Estas usando el sistema como invitado
                         @else
-                            Estas usando el sistema como <strong>{{ Auth::user()->full_name }}</strong> y su Rol es: <strong>{{Auth::user()->type}}</strong>
+                            Estas usando el sistema como <strong>{{ Auth::user()->full_name }}</strong> y su Rol es: <strong>{{Auth::user()->type_id}}</strong>
                         @endif
                     </div>
                 </div>
