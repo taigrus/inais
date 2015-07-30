@@ -4,4 +4,6 @@ Homestead.yaml
 .env
 .bowerrc
 .idea
-
+*.sqlite
+config/database.php
+*~

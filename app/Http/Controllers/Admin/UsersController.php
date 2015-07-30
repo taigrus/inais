@@ -45,7 +45,7 @@ class UsersController extends Controller
                 return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
             })
             ->addColumn('action2', function ($user) {
-                return '<a class="delete" href="' . route('admin.users.destroy', $user->id) . ' "data-method="DELETE" data-token="' . csrf_token() .'" . data-confirm="Are you sure?"><i class="fa fa-check"></i> Yes I&#39;m sure</a>';
+                return '<a class="delete2" href="' . route('admin.users.destroy', $user->id) . ' "data-method="DELETE" data-token="' . csrf_token() .'" . data-confirm="Are you sure?"><i class="fa fa-check"></i> Yes I&#39;m sure</a>';
             })
             ->editColumn('updated_at', function ($user) {
                 return $user->updated_at->format('Y/m/d');})
@@ -138,7 +138,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-
+        dd("llego");
         $user = User::findOrFail($id);
 
         //User::destroy($id);

@@ -15,7 +15,7 @@
     var laravel = {
 
         initialize: function() {
-
+            alert('caca');
             this.methodLinks = $('a[data-method]');
             this.token = $('a[data-token]');
             this.registerEvents();
