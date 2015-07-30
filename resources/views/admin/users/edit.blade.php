@@ -1,6 +1,32 @@
 @extends('layout')
 @if (!Auth::guest() and Auth::user()->type_id==1)
     @section('content')
+        <style>
+            .modal-footer {
+                padding:9px 15px;
+                border-bottom:1px solid #eee;
+                background-color: #be0d14;
+                color: lightyellow;
+                -webkit-border-bottom-left-radius: 5px;
+                -webkit-border-bottom-right-radius: 5px;
+                -moz-border-radius-bottomleft: 5px;
+                -moz-border-radius-bottomright: 5px;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+            .modal-header {
+                padding:9px 15px;
+                border-bottom:1px solid #eee;
+                background-color: #be0d14;
+                color: lightyellow;
+                -webkit-border-top-left-radius: 5px;
+                -webkit-border-top-right-radius: 5px;
+                -moz-border-radius-topleft: 5px;
+                -moz-border-radius-topright: 5px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+            }
+        </style>
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -23,32 +49,7 @@
         </div>
         </div>
 
-        <a href="#" class="btn btn-lg btn-success"
-           data-toggle="modal"
-           data-target="#basicModal">Click to open Modal</a>
 
-        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h3>Modal Body</h3>
-                        </br>
-                        {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'method' => 'PUT']) !!}
-                        @include('admin.users.partials.fields_confirmacion')
-
-                        {!! form::close() !!}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     @endsection
 

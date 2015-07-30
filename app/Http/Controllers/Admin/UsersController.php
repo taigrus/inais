@@ -2,6 +2,7 @@
 
 namespace inais\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
@@ -9,6 +10,7 @@ use inais\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Route;
 use yajra\Datatables\Datatables;
+
 
 
 
@@ -36,16 +38,14 @@ class UsersController extends Controller
 
     }
 
+
     public function anyData()
     {
         //return Datatables::of(User::select('*'))->make(true);
         $users = User::select(['id', 'first_name', 'last_name','email', 'password', 'created_at', 'updated_at', 'type_id']);
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
-                return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
-            })
-            ->addColumn('action2', function ($user) {
-                return '<a class="delete2" href="' . route('admin.users.destroy', $user->id) . ' "data-method="DELETE" data-token="' . csrf_token() .'" . data-confirm="Are you sure?"><i class="fa fa-check"></i> Yes I&#39;m sure</a>';
+                return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Operaciones</a>';
             })
             ->editColumn('updated_at', function ($user) {
                 return $user->updated_at->format('Y/m/d');})
@@ -55,14 +55,7 @@ class UsersController extends Controller
             ->make(true);
     }
 
-    public function buttonDelete($id)
-    {
-        $format = '<a href="%s" data-toggle="tooltip" data-delete="%s" title="%s" class="btn btn-default"><i class="fa fa-trash-o"></i></i></a>';
-        $link = URL::route('admin.users.delete', ['id' => $id]);
-        $token = csrf_token();
-        $title = "Delete the group";
-        return sprintf($format, $link, $token, $title);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -97,7 +90,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        dd('al show');
+
     }
 
     /**
@@ -138,7 +131,6 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        dd("llego");
         $user = User::findOrFail($id);
 
         //User::destroy($id);

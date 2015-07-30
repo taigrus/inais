@@ -151,7 +151,8 @@ return [
         inais\Providers\EventServiceProvider::class,
         inais\Providers\RouteServiceProvider::class,
         inais\Providers\RouteServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class
+        Barryvdh\Debugbar\ServiceProvider::class,
+        inais\Providers\HelperServiceProvider:: class
 
 
     ],
@@ -209,7 +210,8 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Datatables' => yajra\Datatables\Datatables::class
+        'Datatables' => yajra\Datatables\Datatables::class,
+        'Helpers'   => inais\Helpers\borrado::class
     ],
 
 ];
