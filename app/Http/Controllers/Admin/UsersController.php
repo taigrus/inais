@@ -2,6 +2,7 @@
 
 namespace inais\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\URL;
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
 use inais\User;
@@ -43,12 +44,24 @@ class UsersController extends Controller
             ->addColumn('action', function ($user) {
                 return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
             })
+            ->addColumn('action2', function ($user) {
+                return '<a class="delete" href="' . route('admin.users.destroy', $user->id) . ' "data-method="DELETE" data-token="' . csrf_token() .'" . data-confirm="Are you sure?"><i class="fa fa-check"></i> Yes I&#39;m sure</a>';
+            })
             ->editColumn('updated_at', function ($user) {
                 return $user->updated_at->format('Y/m/d');})
             ->editColumn('created_at', function ($user) {
                 return $user->created_at->format('Y/m/d');})
             ->removeColumn('password')
             ->make(true);
+    }
+
+    public function buttonDelete($id)
+    {
+        $format = '<a href="%s" data-toggle="tooltip" data-delete="%s" title="%s" class="btn btn-default"><i class="fa fa-trash-o"></i></i></a>';
+        $link = URL::route('admin.users.delete', ['id' => $id]);
+        $token = csrf_token();
+        $title = "Delete the group";
+        return sprintf($format, $link, $token, $title);
     }
 
     /**
@@ -84,7 +97,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('al show');
     }
 
     /**
@@ -125,6 +138,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+
         $user = User::findOrFail($id);
 
         //User::destroy($id);

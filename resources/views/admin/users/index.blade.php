@@ -1,5 +1,6 @@
 @extends('layout')
 @if (!Auth::guest() and Auth::user()->type_id==1)
+
     @section('content')
         <div class="container">
             <div class="row">
@@ -22,6 +23,7 @@
             </div>
         </div>
         </div>
+        <script src="{{ asset('js/deleteConfirm.js') }}"></script>
     @endsection
 
     @push('scripts')
@@ -39,12 +41,13 @@
                     { data: 'created_at', name: 'created_at' },
                     { data: 'updated_at', name: 'updated_at' },
                     { data: 'type_id', name: 'type_id' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false}
-
+                    { data: 'action', name: 'action', orderable: false, searchable: false},
+                    { data: 'action2', name: 'action2', orderable: false, searchable: false}
                 ]
             });
         });
     </script>
+
     @endpush
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>

@@ -22,7 +22,38 @@
             </div>
         </div>
         </div>
+
+        <a href="#" class="btn btn-lg btn-success"
+           data-toggle="modal"
+           data-target="#basicModal">Click to open Modal</a>
+
+        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Modal Body</h3>
+                        </br>
+                        {!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'method' => 'PUT']) !!}
+                        @include('admin.users.partials.fields_confirmacion')
+
+                        {!! form::close() !!}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     @endsection
+
+
+
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>
 @endif

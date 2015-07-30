@@ -60,7 +60,11 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 Route::group(['prefix' => 'admin', 'namespace' => '\Admin'], function(){
 
     Route::resource('users','UsersController');
+
 });
+
+
+
 
 Route::controller('users.datatables', 'Admin\UsersController', [
     'anyData'  => 'users.datatables.data',
