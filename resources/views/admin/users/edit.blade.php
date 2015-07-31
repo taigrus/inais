@@ -1,32 +1,7 @@
 @extends('layout')
 @if (!Auth::guest() and Auth::user()->type_id==1)
     @section('content')
-        <style>
-            .modal-footer {
-                padding:9px 15px;
-                border-bottom:1px solid #eee;
-                background-color: #be0d14;
-                color: lightyellow;
-                -webkit-border-bottom-left-radius: 5px;
-                -webkit-border-bottom-right-radius: 5px;
-                -moz-border-radius-bottomleft: 5px;
-                -moz-border-radius-bottomright: 5px;
-                border-bottom-left-radius: 5px;
-                border-bottom-right-radius: 5px;
-            }
-            .modal-header {
-                padding:9px 15px;
-                border-bottom:1px solid #eee;
-                background-color: #be0d14;
-                color: lightyellow;
-                -webkit-border-top-left-radius: 5px;
-                -webkit-border-top-right-radius: 5px;
-                -moz-border-radius-topleft: 5px;
-                -moz-border-radius-topright: 5px;
-                border-top-left-radius: 5px;
-                border-top-right-radius: 5px;
-            }
-        </style>
+
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">

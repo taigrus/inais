@@ -70,10 +70,10 @@ return [
         "string"  => ":attribute debe contener :size caracteres.",
         "array"   => ":attribute debe contener :size elementos.",
     ],
-    "string"           => "The :attribute must be a string.",
+    "string"           => "El :attribute debe ser una cadena de texto.",
     "timezone"         => "El :attribute debe ser una zona válida.",
     "unique"           => ":attribute ya ha sido registrado.",
-    "url"              => "El formato :attribute es inválido.",
+    "url"              => "El formato de :attribute es inválido.",
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +107,7 @@ return [
         'email' => 'Correo electrónico',
         'first_name' => 'Nombres',
         'last_name' => 'Apellidos',
+        'full_name' => 'Nombre completo',
         'password' => 'Contraseña',
         'type' => 'Rol del usuario',
         'folio' => 'N° de Folio'

@@ -38,7 +38,7 @@
 
         $(document).ready(function() {
             var table = $('#users-table').DataTable({
-                dom: 'T<"clear">lfrtip',
+
                 tableTools: {
                     "aButtons": [
                         "copy",
@@ -52,6 +52,9 @@
                         "print" ]},
                 processing: true,
                 serverSide: true,
+                languaje: {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+                },
                 ajax: '{!! route('users.datatables.data') !!}',
                 columns: [
                     { data: 'id', name: 'id' },
