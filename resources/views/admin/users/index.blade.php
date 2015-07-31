@@ -14,6 +14,8 @@
                         <div class="panel-heading">Listado de Usuarios</div>
                         @if (Session::has('message'))
                             <p class="alert alert-success">{{Session::get('message')}}</p>
+                        @elseif(Session::has('error-message'))
+                            <p class="alert alert-danger">{{Session::get('error-message')}}</p>
                         @endif
                         <div class="panel-body">
                             <p>
@@ -65,6 +67,7 @@
             var tt = new $.fn.dataTable.TableTools( table );
             $( tt.fnContainer() ).insertAfter('div.dataTables_wrapper');
         });
+
 
    </script>
 

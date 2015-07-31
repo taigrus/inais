@@ -9,7 +9,9 @@ use inais\Http\Controllers\Controller;
 use inais\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Route;
+use PhpSpec\Listener\BootstrapListener;
 use yajra\Datatables\Datatables;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 
@@ -101,9 +103,19 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
-        return view('admin.users.edit', compact('user'), array('roles_options' => $roles_options));
+        try
+        {
+            $user = User::findOrFail($id);
+            $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
+            return view('admin.users.edit', compact('user'), array('roles_options' => $roles_options));
+        }
+// catch(Exception $e) catch any exception
+        catch(ModelNotFoundException $e)
+        {
+            dd(get_class_methods($e)); // lists all available methods for exception object
+            dd($e);
+        }
+
     }
 
     /**
@@ -131,15 +143,27 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        try
+        {
+            $user = User::findOrFail($id);
 
-        //User::destroy($id);
+            //User::destroy($id);
 
-        $user -> delete();
+            $user -> delete();
 
-        //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
-        Session::flash('message', 'El registro perteneciente a ' . $user->full_name . ' fue eliminado');
+            //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
+            Session::flash('message', 'El registro perteneciente a ' . $user->full_name . ' fue eliminado');
 
-        return redirect()->route('admin.users.index');
+            return redirect()->route('admin.users.index');
+        }
+// catch(Exception $e) catch any exception
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro no se encontro - ' . $e->getMessage());
+            return redirect()->route('admin.users.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+
     }
 }
