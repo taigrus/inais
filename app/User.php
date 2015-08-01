@@ -33,6 +33,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
+    public function rol(){
+        return $this->belongsTo('inais\Rol', 'type_id', 'id');
+    }
+
     public function getFullNameAttribute(){
         return $this->first_name . ' ' . $this->last_name;
     }

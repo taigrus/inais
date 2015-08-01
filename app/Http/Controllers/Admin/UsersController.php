@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
+use inais\Rol;
 use inais\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Routing\Route;
@@ -44,16 +45,17 @@ class UsersController extends Controller
     public function anyData()
     {
         //return Datatables::of(User::select('*'))->make(true);
-        $users = User::select(['id', 'first_name', 'last_name','email', 'password', 'created_at', 'updated_at', 'type_id']);
+        $users = User::select(['users.id', 'users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id']);
+        //$users = User::join('roles', 'users.id'. '=', 'roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id', 'roles.descripcion']);
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
                 return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Operaciones</a>';
             })
-            ->editColumn('updated_at', function ($user) {
+            ->editColumn('users.updated_at', function ($user) {
                 return $user->updated_at->format('Y/m/d');})
-            ->editColumn('created_at', function ($user) {
+            ->editColumn('users.created_at', function ($user) {
                 return $user->created_at->format('Y/m/d');})
-            ->removeColumn('password')
+            ->removeColumn('users.password')
             ->make(true);
     }
 
@@ -92,6 +94,13 @@ class UsersController extends Controller
      */
     public function show($id)
     {
+        //$users = User::join('roles', 'users.id'. '=', 'roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id', 'roles.descripcion'])->find(1)->roles;
+        $users=Rol::find(1)->users;
+        foreach ($users as $user){
+            echo $user->descripcion;
+        }
+        $rol=User::findOrFail(1)->rol;
+        echo $rol->descripcion;
 
     }
 
@@ -126,13 +135,23 @@ class UsersController extends Controller
      */
     public function update(Requests\EditUserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->fill($request->all());
-        $user->save();
+        try {
+            $user = User::findOrFail($id);
+            $user->fill($request->all());
+            $user->save();
 
-        //return $redirect->route('admin.users.index');
-        Session::flash('message', 'El registro perteneciente a ' . $user->full_name . ' fue actualizado');
-        return redirect()->route('admin.users.index');
+            //return $redirect->route('admin.users.index');
+            Session::flash('message', 'El registro perteneciente a ' . $user->full_name . ' fue actualizado');
+            return redirect()->route('admin.users.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('admin.users.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+
     }
 
     /**
@@ -160,10 +179,11 @@ class UsersController extends Controller
         catch(ModelNotFoundException $e)
         {
             //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'El registro no se encontro - ' . $e->getMessage());
+            Session::flash('error-message', 'El registro que intentó eliminar no se ha podido encontrar.');
             return redirect()->route('admin.users.index');
             //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
 
     }
+
 }
