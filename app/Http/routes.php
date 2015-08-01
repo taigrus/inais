@@ -87,6 +87,3 @@ Route::get('/homebid', function () {
     return view('bid/homebid');
 });
 
-
-
-
