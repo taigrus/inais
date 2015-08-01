@@ -15,6 +15,16 @@
                         @if (Session::has('message'))
                             <p class="alert alert-success">{{Session::get('message')}}</p>
                         @elseif(Session::has('error-message'))
+                            <script>
+                                BootstrapDialog.alert({
+                                    title: 'ATENCION',
+                                    message: '{{Session::get('error-message')}}',
+                                    type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                                    closable: true, // <-- Default value is false
+                                    draggable: true, // <-- Default value is false
+                                    buttonLabel: 'Aceptar' // <-- Default value is 'OK'
+                                });
+                            </script>
                             <p class="alert alert-danger">{{Session::get('error-message')}}</p>
                         @endif
                         <div class="panel-body">
@@ -57,13 +67,13 @@
                 },
                 ajax: '{!! route('users.datatables.data') !!}',
                 columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'first_name', name: 'first_name' },
-                    { data: 'last_name', name: 'last_name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'created_at', name: 'created_at' },
-                    { data: 'updated_at', name: 'updated_at' },
-                    { data: 'type_id', name: 'type_id' },
+                    { data: 'id', name: 'users.id' },
+                    { data: 'first_name', name: 'users.first_name' },
+                    { data: 'last_name', name: 'users.last_name' },
+                    { data: 'email', name: 'users.email' },
+                    { data: 'created_at', name: 'users.created_at' },
+                    { data: 'updated_at', name: 'users.updated_at' },
+                    { data: 'type_id', name: 'users.type_id' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

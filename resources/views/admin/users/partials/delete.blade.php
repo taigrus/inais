@@ -50,8 +50,8 @@
                         {!! form::close() !!}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                         {!!  \inais\Helpers\borrado::buttonDelete('admin.users.destroy', $user->id)  !!}
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
