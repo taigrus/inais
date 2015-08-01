@@ -54,36 +54,33 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-//Rutas de administracion
 
-
-Route::group(['prefix' => 'admin', 'namespace' => '\Admin'], function(){
-
-    Route::resource('users','UsersController');
-
-});
-
-
-
-
-Route::controller('users.datatables', 'Admin\UsersController', [
-    'anyData'  => 'users.datatables.data',
-]);
 
 //Rutas para BID
 
-Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
 
-    Route::resource('familias','FamiliasController');
-
-
-});
-
-Route::controller('familias.datatables', 'bid\FamiliasController', [
-    'anyData'  => 'familias.datatables.data',
-]);
 
 Route::get('/homebid', function () {
     return view('bid/homebid');
 });
 
+Route::group(['middleware' => 'auth'], function() {
+
+    //Rutas de administracion
+    Route::group(['prefix' => 'admin', 'namespace' => '\Admin'], function(){
+        Route::resource('users','UsersController');
+    });
+
+    Route::controller('users.datatables', 'Admin\UsersController', [
+        'anyData'  => 'users.datatables.data',
+    ]);
+
+    //Rutas de familias
+    Route::controller('familias.datatables', 'bid\FamiliasController', [
+        'anyData'  => 'familias.datatables.data',
+    ]);
+
+    Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
+        Route::resource('familias','FamiliasController');
+    });
+});

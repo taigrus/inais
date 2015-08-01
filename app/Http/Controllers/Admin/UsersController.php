@@ -121,8 +121,10 @@ class UsersController extends Controller
 // catch(Exception $e) catch any exception
         catch(ModelNotFoundException $e)
         {
-            dd(get_class_methods($e)); // lists all available methods for exception object
-            dd($e);
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó editar no se ha podido encontrar.');
+            return redirect()->route('admin.users.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
 
     }
