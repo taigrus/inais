@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'type_id'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'rol_id'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $hidden = ['password', 'remember_token'];
 
     public function rol(){
-        return $this->belongsTo('inais\Rol', 'type_id', 'id');
+        return $this->belongsTo('inais\Rol');
     }
 
     public function getFullNameAttribute(){

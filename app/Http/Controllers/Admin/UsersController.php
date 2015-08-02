@@ -45,17 +45,17 @@ class UsersController extends Controller
     public function anyData()
     {
         //return Datatables::of(User::select('*'))->make(true);
-        $users = User::select(['users.id', 'users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id']);
-        //$users = User::join('roles', 'users.id'. '=', 'roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id', 'roles.descripcion']);
+        //$users = User::select(['users.id', 'users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id']);
+        $users = Rol::join('users', 'users.rol_id','=','roles.id')->select(['users.id', 'users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id', 'roles.descripcion']);
         return Datatables::of($users)
             ->addColumn('action', function ($user) {
                 return '<a href="users/'.$user->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Operaciones</a>';
             })
-            ->editColumn('users.updated_at', function ($user) {
+            ->editColumn('updated_at', function ($user) {
                 return $user->updated_at->format('Y/m/d');})
-            ->editColumn('users.created_at', function ($user) {
+            ->editColumn('created_at', function ($user) {
                 return $user->created_at->format('Y/m/d');})
-            ->removeColumn('users.password')
+            ->removeColumn('password')
             ->make(true);
     }
 
@@ -94,14 +94,18 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //$users = User::join('roles', 'users.id'. '=', 'roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.type_id', 'roles.descripcion'])->find(1)->roles;
-        $users=Rol::find(1)->users;
+        $users = User::select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id']);
+        $users = Rol::join('users', 'users.rol_id','=','roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id', 'roles.descripcion'])->get();
+        echo 'resultado' . "<br>";
+        //$users=User::select(['last_name', 'first_name', 'rol.descripcion'])->orderBy('id')->get();
+        //$users=Rol::find(2)->users;
         foreach ($users as $user){
-            echo $user->descripcion;
+            echo $user->first_name . ' ' .  $user->last_name . " - " . $user->descripcion . "<br>";
         }
-        $rol=User::findOrFail(1)->rol;
-        echo $rol->descripcion;
-
+        echo 'resultado 2' . "<br>";
+        $rol=User::findOrFail(4)->rol;
+        echo $rol->descripcion . "<br>";
+        echo 'final';
     }
 
     /**

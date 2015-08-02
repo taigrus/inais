@@ -1,5 +1,5 @@
 @extends('layout')
-@if (!Auth::guest() and Auth::user()->type_id==1)
+@if (!Auth::guest() and Auth::user()->rol->descripcion=="Administrador del sistema") {{--poner esto de nuevo como Auth::user()->rol_id==1--}}
     @section('content')
 
         <div class="container">

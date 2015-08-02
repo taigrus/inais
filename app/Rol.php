@@ -18,7 +18,7 @@ class Rol extends Model
 
     public function users()
     {
-        return $this->hasMany('inais\User', 'type_id', 'id');
+        return $this->hasMany('inais\User');
     }
 
 }

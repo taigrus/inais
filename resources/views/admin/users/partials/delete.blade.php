@@ -1,4 +1,4 @@
-@if (!Auth::guest() and Auth::user()->type_id==1)
+@if (!Auth::guest() and Auth::user()->rol_id==1)
     <style>
         .modal-footer {
             padding:9px 15px;

@@ -1,5 +1,5 @@
 @extends('layout')
-@if (!Auth::guest() and Auth::user()->type_id==1)
+@if (!Auth::guest() and Auth::user()->rol_id==1)
 
     @section('content')
         <style>
@@ -73,7 +73,7 @@
                     { data: 'email', name: 'users.email' },
                     { data: 'created_at', name: 'users.created_at' },
                     { data: 'updated_at', name: 'users.updated_at' },
-                    { data: 'type_id', name: 'users.type_id' },
+                    { data: 'descripcion', name: 'roles.descripcion' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

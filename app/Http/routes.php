@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('home', function () {
+    return view('homebid');
+});
+
+
 // Authentication routes..
 //
 //Esta de abajo es una ruta con nombre

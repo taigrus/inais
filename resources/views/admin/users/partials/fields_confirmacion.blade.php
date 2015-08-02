@@ -8,6 +8,6 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('type_id', 'Rol del usuario') !!}
-        {!! Form::select('type_id', $roles_options , Input::old('rol'),['class' => 'form-control', 'disabled']) !!}
+        {!! Form::label('rol_id', 'Rol del usuario') !!}
+        {!! Form::select('rol_id', $roles_options , Input::old('rol'),['class' => 'form-control', 'disabled']) !!}
     </div>

@@ -36,12 +36,12 @@ class usersAndProfilesTableSeeder extends Seeder
         ));
 
         $idr = \DB::table('users')->insertGetId(array(
-            'first_name'  => 'Raúl',
-            'last_name' => 'Burgos',
+            'first_name'  => 'Raúl M. William',
+            'last_name' => 'Burgos Murray',
             'email' => 'rburgos@csra-bolivia.org',
             'password' => \Hash::make('EmdLa1975'),
             'active' => true,
-            'type_id' => 1,
+            'rol_id' => 1,
             'created_at' => $faker->date('Y-m-d H:i:s'),
             'updated_at' => $faker->date('Y-m-d H:i:s')
         ));
@@ -58,14 +58,15 @@ class usersAndProfilesTableSeeder extends Seeder
 
         for($i=0; $i<30; $i++) {
             $nombre=$faker->firstName;
-            $apellido=$faker->lastName;
+            $apellido1=$faker->lastName;
+            $apellido2=$faker->lastName;
             $id = \DB::table('users')->insertGetId(array(
                 'first_name' => $nombre,
-                'last_name' => $apellido,
+                'last_name' => $apellido1 . ' ' . $apellido2,
                 'email' => $faker->unique()->email,
                 'password' => \Hash::make('secret'),
                 'active' => true,
-                'type_id' => 2,
+                'rol_id' => 2,
                 'created_at' => $faker->date('Y-m-d H:i:s'),
                 'updated_at' => $faker->date('Y-m-d H:i:s')
             ));

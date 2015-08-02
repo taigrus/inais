@@ -28,7 +28,7 @@ class CreateUserRequest extends Request
             'last_name'     => 'required|max:255',
             'email'         => 'required|email|max:255|unique:users,email',
             'password'      => 'required|confirmed|min:6',
-            'type_id'       => 'required|In:1,2,3'
+            'rol_id'       => 'required|In:1,2,3'
         ];
     }
 }

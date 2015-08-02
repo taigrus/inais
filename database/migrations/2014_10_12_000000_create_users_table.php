@@ -29,8 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password', 60);
             $table->boolean('active')->default(true);
-            $table->integer('type_id')->unsigned();
-            $table->foreign('type_id')
+            $table->integer('rol_id')->unsigned();
+            $table->foreign('rol_id')
                 ->references('id')
                 ->on('roles')
                 ->onDelete('cascade');
