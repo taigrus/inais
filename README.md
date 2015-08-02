@@ -1,2 +1,2 @@
 ## inais
-It isn't an information system :)
+It's not an information system :)
