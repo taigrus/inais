@@ -5,5 +5,5 @@ Homestead.yaml
 .bowerrc
 .idea
 *.sqlite
-config/database.php
+/config/database.php
 *~
