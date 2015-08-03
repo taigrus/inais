@@ -1,5 +1,5 @@
 @extends('layout')
-@if (!Auth::guest() and Auth::user()->rol->descripcion=="Administrador del sistema") {{--poner esto de nuevo como Auth::user()->rol_id==1--}}
+@if (!Auth::guest() and Auth::user()->rol_id==1) {{--->rol->descripcion=="Administrador del sistema"--}}
     @section('content')
 
         <div class="container">
@@ -22,9 +22,6 @@
                 </div>
             </div>
         </div>
-        </div>
-
-
 
     @endsection
 

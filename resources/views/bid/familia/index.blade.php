@@ -1,37 +1,70 @@
 @extends('layout')
-@if (!Auth::guest())
+@if (!Auth::guest() and Auth::user()->rol_id==1)
+
 @section('content')
+    <style>
+        body { font-size: 140%; }
+        div.DTTT { margin-bottom: 0.5em; float: right; }
+        div.dataTables_wrapper { clear: both; }
+    </style>
     <div class="container">
-        <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Listado de Familias registradas en el programa</div>
+                    <div class="panel-heading">Listado de Famililas registradas</div>
                     @if (Session::has('message'))
                         <p class="alert alert-success">{{Session::get('message')}}</p>
+                    @elseif(Session::has('error-message'))
+                        <script>
+                            BootstrapDialog.alert({
+                                title: 'ATENCION',
+                                message: '{{Session::get('error-message')}}',
+                                type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                                closable: true, // <-- Default value is false
+                                draggable: true, // <-- Default value is false
+                                buttonLabel: 'Aceptar' // <-- Default value is 'OK'
+                            });
+                        </script>
+                        <p class="alert alert-danger">{{Session::get('error-message')}}</p>
                     @endif
                     <div class="panel-body">
                         <p>
                             <a class="btn btn-success" href="{{route("bid.familias.create")}}" role="button">
-                                Nueva familia
+                                Nueva Familia
                             </a>
                         </p>
                         @include('bid.familia.partials.table')
+                        {{--<script src="{{ asset('js/deleteConfirm.js') }}"></script>--}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
 @endsection
 
 @push('scripts')
 <script>
-    $(function() {
-        $('#familias-table').DataTable({
+
+    $(document).ready(function() {
+        var table = $('#familias-table').DataTable({
+
+            tableTools: {
+                "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                    {
+                        "sExtends": "pdf",
+                        "sPdfOrientation": "landscape",
+                        "sPdfMessage": "Archivo exportado desde CSRA INAIS."
+                    },
+                    "print" ]},
             processing: true,
             serverSide: true,
+            languaje: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+            },
             ajax: '{!! route('familias.datatables.data') !!}',
             columns: [
                 { data: 'id', name: 'id' },
@@ -39,13 +72,19 @@
                 { data: 'direccion', name: 'direccion' },
                 { data: 'latitud', name: 'latitud' },
                 { data: 'longitud', name: 'longitud' },
-                { data: 'created_at', name: 'created_at' },
+                { data: 'altura', name: 'altura' },
                 { data: 'updated_at', name: 'updated_at' },
+                { data: 'created_at', name: 'created_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
+        var tt = new $.fn.dataTable.TableTools( table );
+        $( tt.fnContainer() ).insertAfter('div.dataTables_wrapper');
     });
+
+
 </script>
+
 @endpush
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>

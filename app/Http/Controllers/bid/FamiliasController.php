@@ -9,6 +9,7 @@ use inais\Http\Controllers\Controller;
 use yajra\Datatables\Datatables;
 use inais\FamiliaBid;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FamiliasController extends Controller
 {
@@ -26,7 +27,7 @@ class FamiliasController extends Controller
     public function anyData()
     {
         //return Datatables::of(User::select('*'))->make(true);
-        $familias = FamiliaBid::select(['id', 'folio', 'direccion','latitud', 'longitud', 'created_at', 'updated_at']);
+        $familias = FamiliaBid::select(['id', 'folio', 'direccion','latitud', 'longitud', 'altura', 'created_at', 'updated_at']);
         return Datatables::of($familias)
             ->addColumn('action', function ($familia) {
                 return '<a href="familias/'.$familia->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
@@ -37,6 +38,8 @@ class FamiliasController extends Controller
                 return $familia->created_at->format('Y/m/d');})
             ->make(true);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -95,13 +98,22 @@ class FamiliasController extends Controller
      */
     public function update(Requests\EditFamiliaBidRequest $request, $id)
     {
-        //
-        $familia = FamiliaBid::findOrFail($id);
-        $familia->fill($request->all());
-        $familia->save();
+        try
+        {
+            //
+            $familia = FamiliaBid::findOrFail($id);
+            $familia->fill($request->all());
+            $familia->save();
 
-        //return $redirect->route('admin.users.index');
-        Session::flash('message', 'El registro perteneciente a la familia ' . $familia->folio . ' fue actualizado');
+            //return $redirect->route('admin.users.index');
+            Session::flash('message', 'El registro perteneciente a la familia ' . $familia->folio . ' fue actualizado');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
         return redirect()->route('bid.familias.index');
     }
 
@@ -113,16 +125,25 @@ class FamiliasController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $familia = FamiliaBid::findOrFail($id);
+        try {
+            //
+            $familia = FamiliaBid::findOrFail($id);
 
-        //User::destroy($id);
+            //User::destroy($id);
 
-        $familia -> delete();
+            $familia->delete();
 
-        //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
-        Session::flash('message', 'El registro perteneciente a la familia ' . $familia->folio . ' fue eliminado');
+            //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
+            Session::flash('message', 'El registro perteneciente a la familia ' . $familia->folio . ' fue eliminado');
 
-        return redirect()->route('bid.familias.index');
+            return redirect()->route('bid.familias.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó eliminar no se ha podido encontrar.');
+            return redirect()->route('bid.familias.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 }
