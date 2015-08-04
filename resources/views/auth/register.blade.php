@@ -33,7 +33,7 @@
                         <div class="btn-group">
                             {!! Form::submit('Registrar',['class' => 'btn btn-default btn-primary']) !!}
                             {!! Form::reset('Limpiar',['class' => 'btn btn-default']) !!}
-                            <a href={{ url('/homebid') }} class="btn btn-default">Cancelar</a>
+                            <a href={{ url('/home') }} class="btn btn-default">Cancelar</a>
                         </div>
                         {!! Form::close() !!}
                     </div>

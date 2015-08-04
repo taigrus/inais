@@ -15,10 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('home', function () {
-    return view('homebid');
-});
-
+Route::resource('home','HomeController');
 
 // Authentication routes..
 //
@@ -46,6 +43,7 @@ Route::get('registro',[
     'uses'  => 'Auth\AuthController@getRegister',
     'as'    => 'register'
 ]);
+
 Route::post('registro',[
     'uses'  => 'Auth\AuthController@postRegister',
     'as'    => 'register'
@@ -65,9 +63,7 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 
 
-Route::get('/homebid', function () {
-    return view('bid/homebid');
-});
+
 
 Route::group(['middleware' => 'auth'], function() {
 

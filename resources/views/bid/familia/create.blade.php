@@ -14,9 +14,9 @@
                             @include('bid.familia.partials.fields')
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-5">
-                                {!! Form::submit('Registrar',['class' => 'btn btn-info']) !!}
-                                {!! link_to_route('bid.familias.index', 'Cancelar','',['class' => 'btn btn-default']) !!}
-                                {!! form::close() !!}
+                                    {!! Form::submit('Registrar',['class' => 'btn btn-info']) !!}
+                                    {!! link_to_route('bid.familias.index', 'Cancelar','',['class' => 'btn btn-default']) !!}
+                                    {!! form::close() !!}
                                 </div>
                             </div>
                         </div>

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
+use Pingpong\Menus\Menu;
+
 
 class HomeController extends Controller
 {
@@ -14,9 +16,11 @@ class HomeController extends Controller
      *
      * @return Response
      */
+
     public function index()
     {
         //
+
         return view('bid.homebid');
     }
 

@@ -152,8 +152,8 @@ return [
         inais\Providers\RouteServiceProvider::class,
         inais\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
-        inais\Providers\HelperServiceProvider:: class
-
+        inais\Providers\HelperServiceProvider:: class,
+        Pingpong\Menus\MenusServiceProvider::class
 
     ],
 
@@ -211,7 +211,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => yajra\Datatables\Datatables::class,
-        'Helpers'   => inais\Helpers\borrado::class
+        'Helpers'   => inais\Helpers\borrado::class,
+        'Menu' => Pingpong\Menus\MenuFacade::class
     ],
 
 ];
