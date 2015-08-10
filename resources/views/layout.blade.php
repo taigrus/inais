@@ -61,6 +61,7 @@
                     </li>
                 @endif
             </ul>
+            {!! $menu_example->asUl() !!}
 
         </div>
 
@@ -74,7 +75,7 @@
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/jqui-alert.js') }}"></script>
-<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
 <script src="{{ asset('js/dataTables.tableTools.js') }}"></script>
 <!-- Bootstrap JavaScript -->

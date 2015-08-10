@@ -2,11 +2,12 @@
 
 namespace inais\Http\Controllers;
 
+use Caffeinated\Menus\Facades\Menu;
 use Illuminate\Http\Request;
 
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
-use Pingpong\Menus\Menu;
+
 
 
 class HomeController extends Controller
@@ -20,7 +21,6 @@ class HomeController extends Controller
     public function index()
     {
         //
-
         return view('bid.homebid');
     }
 

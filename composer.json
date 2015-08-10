@@ -12,7 +12,7 @@
         "barryvdh/laravel-debugbar": "^2.0",
         "fzaninotto/faker": "v1.5.0",
         "yajra/laravel-datatables-oracle": "~5.0",
-        "pingpong/menus": "^2.1"
+        "caffeinated/menus": "~2.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",

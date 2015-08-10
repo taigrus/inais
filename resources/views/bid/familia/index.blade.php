@@ -41,6 +41,7 @@
         </div>
     </div>
 
+
 @endsection
 
 @push('scripts')
@@ -48,7 +49,6 @@
 
     $(document).ready(function() {
         var table = $('#familias-table').DataTable({
-
             tableTools: {
                 "aButtons": [
                     "copy",
@@ -67,14 +67,16 @@
             },
             ajax: '{!! route('familias.datatables.data') !!}',
             columns: [
-                { data: 'id', name: 'id' },
-                { data: 'folio', name: 'folio' },
-                { data: 'direccion', name: 'direccion' },
-                { data: 'latitud', name: 'latitud' },
-                { data: 'longitud', name: 'longitud' },
-                { data: 'altura', name: 'altura' },
-                { data: 'updated_at', name: 'updated_at' },
-                { data: 'created_at', name: 'created_at' },
+                { data: 'id', name: 'familia_bid.id' },
+                { data: 'folio', name: 'familia_bid.folio' },
+                { data: 'facilitador', name: 'facilitador_bid.nombre' },
+                { data: 'distrito', name: 'distrito.nombre' },
+                { data: 'urbanizacion', name: 'urbanizacion.nombre' },
+                { data: 'via', name: 'via.nombre', visible: false},
+                { data: function(d){return d.via + ' ' + d.direccion + ' #' + d.numero_puerta;}, name: 'familia_bid.direccion'},
+                { data: 'numero_puerta', name: 'familia_bid.numero_puerta', visible: false },
+                { data: 'creada', name: 'familia_bid.created_at' },
+                { data: 'actualizada', name: 'familia_bid.updated_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
