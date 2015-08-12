@@ -84,8 +84,7 @@
         $( tt.fnContainer() ).insertAfter('div.dataTables_wrapper');
     });
 
-
-</script>
+    </script>
 
 @endpush
 @else

@@ -110,7 +110,8 @@ return [
         'full_name' => 'Nombre completo',
         'password' => 'Contraseña',
         'type' => 'Rol del usuario',
-        'folio' => 'N° de Folio'
+        'folio' => 'N° de Folio',
+        'fecha_encuesta_lb' => 'Fecha de encuesta de línea de base'
     ],
 
 ];

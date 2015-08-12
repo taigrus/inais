@@ -5,7 +5,7 @@
         {!! Form::number('folio', null, array(
          'class' => 'form-control',
          'placeholder' => 'Ingrese el número de folio',
-         'min' => '0000000000',
+         'min' => '1',
          'max' => '9999999999',
          'step' => 'any',
          'decimals' => '0',
@@ -61,7 +61,7 @@
         {!! Form::number('telefono', null, array(
          'class' => 'form-control',
          'placeholder' => 'Ingrese el número de teléfono principal',
-         'min' => '60000000',
+         'min' => '2000000',
          'max' => '79999999',
          'step' => 'any',
          'decimals' => '0',
@@ -73,10 +73,25 @@
         {!! Form::select('alcantarillado_id', $alcantarillado_options , Input::old('alcantarillado'),['class' => 'form-control']) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('fecha_encuesta_lb', '12 Fecha en la que se encuesto el hogar') !!}
-        {!! Form::date('fecha_encuesta_lb', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la fecha en la que se encuesto el hogar', 'value' => 'echo date("Y-m-d")']) !!}
-    </div>
+     <div class="form-group">
+         {!! Form::label('fecha_encuesta_lb', '12 Fecha en la que se encuestó el hogar') !!}
+         <div class='input-group date' id='datetimepicker1'>
+            {!! Form::text('fecha_encuesta_lb', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la fecha de encuesta']) !!}
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+         </div>
+     </div>
+     <script type="text/javascript">
+           $(function () {
+              $('#datetimepicker1').datetimepicker({
+                  maxDate: moment(),
+                  minDate: moment().subtract(5, 'years'),
+                  locale: 'es',
+                  format: 'L'
+              });
+           });
+     </script>
 
     <div class="form-group">
         {!! Form::label('latitud', '13 Latitud de la vivienda') !!}
@@ -119,6 +134,4 @@
          'decimal_separator' => '.'
          )) !!}
     </div>
-
-
  </div>
