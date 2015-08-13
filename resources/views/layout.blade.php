@@ -12,7 +12,7 @@
     <link href="{{ asset('css/bootstrap-dialog.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('css/dataTables.tableTools.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/fixedHeader.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css" />
@@ -34,6 +34,19 @@
 </head>
 <body class="fuelux">
 <nav class="navbar navbar-default">
+    @if (Session::has('error-message'))
+        <script>
+            BootstrapDialog.alert({
+                title: 'ATENCION',
+                message: '{{Session::get('error-message')}}',
+                type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+                closable: true, // <-- Default value is false
+                draggable: true, // <-- Default value is false
+                buttonLabel: 'Aceptar' // <-- Default value is 'OK'
+            });
+        </script>
+        <p class="alert alert-danger">{{Session::get('error-message')}}</p>
+    @endif
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -77,16 +90,18 @@
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/jqui-alert.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('js/jqui-alert.js') }}"></script>
 <script src="{{ asset('js/moment-with-locales.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/bootstrap-dialog.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
-<script src="{{ asset('js/dataTables.tableTools.js') }}"></script>
+<script src="{{ asset('js/dataTables.fixedHeader.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 <script src="{{ asset('js/select2.js') }}"></script>
 <script src="{{ asset('js/select2_locale_es.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
 <script src="{{ asset('js/jquery.numeric.js') }}"></script>
+<script src="{{ asset('js/gen_validatorv4.js') }}"></script>
 <!-- Bootstrap JavaScript -->
 <script src="{{ asset('js/fuelux.js') }}"></script>
 

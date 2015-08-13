@@ -5,13 +5,13 @@ namespace inais\Http\Controllers\bid;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use Illuminate\Session\TokenMismatchException;
 use inais\Http\Requests;
 use inais\Http\Controllers\Controller;
 use yajra\Datatables\Datatables;
 use inais\FamiliaBid;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 
 class FamiliasController extends Controller
 {
@@ -71,20 +71,29 @@ class FamiliasController extends Controller
      */
     public function create()
     {
-        //
-        $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre','id');
-        $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre','id');
-        $urbanizacion_options= \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre','id');
-        $via_options= \DB::table('via')->orderBy('id', 'asc')->lists('nombre','id');
-        $alcantarillado_options= \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion','id');
-        return view("bid.familia.create", array(
-            'facilitador_options' => $facilitador_options,
-            'distrito_options' => $distrito_options,
-            'urbanizacion_options' => $urbanizacion_options,
-            'via_options' => $via_options,
-            'alcantarillado_options' => $alcantarillado_options
-            )
-        );
+        try {
+            //
+            $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
+            return view("bid.familia.create", array(
+                    'facilitador_options' => $facilitador_options,
+                    'distrito_options' => $distrito_options,
+                    'urbanizacion_options' => $urbanizacion_options,
+                    'via_options' => $via_options,
+                    'alcantarillado_options' => $alcantarillado_options
+                )
+            );
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -95,10 +104,19 @@ class FamiliasController extends Controller
      */
     public function store(Requests\CreateFamiliaBidRequest $request)
     {
-        //
-        $familia = FamiliaBid::create($request->all());
-        $familia->save();
-        return redirect()->route('bid.familias.index');
+        try {
+            //
+            $familia = FamiliaBid::create($request->all());
+            $familia->save();
+            return redirect()->route('bid.familias.index');
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -120,20 +138,36 @@ class FamiliasController extends Controller
      */
     public function edit($id)
     {
-        $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre','id');
-        $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre','id');
-        $urbanizacion_options= \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre','id');
-        $via_options= \DB::table('via')->orderBy('id', 'asc')->lists('nombre','id');
-        $alcantarillado_options= \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion','id');
-        $familia = FamiliaBid::findOrFail($id);
-        return view('bid.familia.edit', array(
-            'facilitador_options' => $facilitador_options,
-            'distrito_options' => $distrito_options,
-            'urbanizacion_options' => $urbanizacion_options,
-            'via_options' => $via_options,
-            'alcantarillado_options' => $alcantarillado_options,
-            'familia' => $familia)
-    );
+        try {
+            $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
+            $familia = FamiliaBid::findOrFail($id);
+            return view('bid.familia.edit', array(
+                    'facilitador_options' => $facilitador_options,
+                    'distrito_options' => $distrito_options,
+                    'urbanizacion_options' => $urbanizacion_options,
+                    'via_options' => $via_options,
+                    'alcantarillado_options' => $alcantarillado_options,
+                    'familia' => $familia)
+            );
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('bid.familias.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -154,14 +188,22 @@ class FamiliasController extends Controller
 
             //return $redirect->route('admin.users.index');
             Session::flash('message', 'El registro perteneciente a la familia ' . $familia->folio . ' fue actualizado');
+            return redirect()->route('bid.familias.index');
         }
         catch(ModelNotFoundException $e)
         {
             //dd(get_class_methods($e)); // lists all available methods for exception object
             Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('bid.familias.index');
             //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
-        return redirect()->route('bid.familias.index');
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -192,5 +234,13 @@ class FamiliasController extends Controller
             return redirect()->route('bid.familias.index');
             //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
+
 }

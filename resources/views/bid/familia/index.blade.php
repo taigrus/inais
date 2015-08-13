@@ -48,20 +48,10 @@
 <script>
 
     $(document).ready(function() {
-        var table = $('#familias-table').DataTable({
-            tableTools: {
-                "aButtons": [
-                    "copy",
-                    "csv",
-                    "xls",
-                    {
-                        "sExtends": "pdf",
-                        "sPdfOrientation": "landscape",
-                        "sPdfMessage": "Archivo exportado desde CSRA INAIS."
-                    },
-                    "print" ]},
+        $('#familias-table').DataTable({
             processing: true,
             serverSide: true,
+            fixedHeader: true,
             languaje: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
             },
@@ -80,8 +70,6 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
-        var tt = new $.fn.dataTable.TableTools( table );
-        $( tt.fnContainer() ).insertAfter('div.dataTables_wrapper');
     });
 
     </script>

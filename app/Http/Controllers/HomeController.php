@@ -20,8 +20,17 @@ class HomeController extends Controller
 
     public function index()
     {
-        //
-        return view('bid.homebid');
+        try {
+            //
+            return view('bid.homebid');
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('login');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
