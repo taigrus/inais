@@ -30,3 +30,7 @@
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>
 @endif
+
+
+
+

@@ -5,7 +5,7 @@
         {!! Form::number('folio', null, array(
          'class' => 'form-control',
          'placeholder' => 'Ingrese el número de folio',
-         'min' => '0000000000',
+         'min' => '1',
          'max' => '9999999999',
          'step' => 'any',
          'decimals' => '0',
@@ -14,22 +14,22 @@
 
     <div class="form-group">
         {!! Form::label('facilitador_id', '02 Facilitador') !!}
-        {!! Form::select('facilitador_id', $facilitador_options , Input::old('facilitador'),['class' => 'form-control']) !!}
+        {!! Form::select('facilitador_id', $facilitador_options , Input::old('facilitador'),['class' => 'form-control select2', 'id' => 'facilitador']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('distrito_id', '03 Distrito') !!}
-        {!! Form::select('distrito_id', $distrito_options , Input::old('distrito'),['class' => 'form-control']) !!}
+        {!! Form::select('distrito_id', $distrito_options , Input::old('distrito'),['class' => 'form-control select2', 'id' => 'distrito']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('urbanizacion_id', '04 Urbanización') !!}
-        {!! Form::select('urbanizacion_id', $urbanizacion_options , Input::old('urbanizacion'),['class' => 'form-control']) !!}
+        {!! Form::select('urbanizacion_id', $urbanizacion_options , Input::old('urbanizacion'),['class' => 'form-control select2', 'id' => 'urbanizacion']) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('via_id', '05 Tipo de via') !!}
-        {!! Form::select('via_id', $via_options , Input::old('via'),['class' => 'form-control']) !!}
+        {!! Form::select('via_id', $via_options , Input::old('via'),['class' => 'form-control select2', 'id' => 'via']) !!}
     </div>
 
     <div class="form-group">
@@ -60,23 +60,37 @@
         {!! Form::label('telefono', '10 Teléfono principal') !!}
         {!! Form::number('telefono', null, array(
          'class' => 'form-control',
-         'placeholder' => 'Ingrese el número de teléfono principal',
-         'min' => '60000000',
-         'max' => '79999999',
-         'step' => 'any',
-         'decimals' => '0',
+
+         'id' => 'entero',
+
         )) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('alcantarillado_id', '11 Estado del alcantarillado') !!}
-        {!! Form::select('alcantarillado_id', $alcantarillado_options , Input::old('alcantarillado'),['class' => 'form-control']) !!}
+        {!! Form::select('alcantarillado_id', $alcantarillado_options , Input::old('alcantarillado'),['class' => 'form-control select2', 'id' => 'alcantarillado']) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('fecha_encuesta_lb', '12 Fecha en la que se encuesto el hogar') !!}
-        {!! Form::date('fecha_encuesta_lb', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la fecha en la que se encuesto el hogar', 'value' => 'echo date("Y-m-d")']) !!}
-    </div>
+     <div class="form-group">
+         {!! Form::label('fecha_encuesta_lb', '12 Fecha en la que se encuestó el hogar') !!}
+         <div class='input-group date' id='datetimepicker1'>
+            {!! Form::text('fecha_encuesta_lb', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la fecha de encuesta']) !!}
+            <span class="input-group-addon">nova
+                
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+         </div>
+     </div>
+     <script type="text/javascript">
+           $(function () {
+              $('#datetimepicker1').datetimepicker({
+                  maxDate: moment(),
+                  minDate: moment().subtract(5, 'years'),
+                  locale: 'es',
+                  format: 'L'
+              });
+           });
+     </script>
 
     <div class="form-group">
         {!! Form::label('latitud', '13 Latitud de la vivienda') !!}
@@ -108,17 +122,22 @@
 
     <div class="form-group">
         {!! Form::label('altura', '15 Altura de la vivienda') !!}
-        {!! Form::number('altura',null,array(
+        {!! Form::text('altura',null,array(
          'class' => 'form-control',
-         'placeholder' => 'Ingrese la altura en metros',
-         'min' => '0',
-         'max' => '4500',
-         'step' => 'any',
-         'decimals' => '0',
-         'thousands_separator' => ',',
-         'decimal_separator' => '.'
+
+
+         'id' => 'entero'
          )) !!}
     </div>
-
-
  </div>
+
+<script>
+    $(document).ready(function() {
+        $( "#facilitador" ).select2( { allowClear: true, placeholder: 'seleccione el facilitador' } );
+        $( "#distrito" ).select2( { allowClear: true, placeholder: 'seleccione el distrito' } )
+        $( "#urbanizacion" ).select2( { allowClear: true, placeholder: 'seleccione la urbanización' } )
+        $( "#via" ).select2( { allowClear: true, placeholder: 'seleccione el tipo de via del hogar' } )
+        $( "#alcantarillado" ).select2( { allowClear: true, placeholder: 'seleccione el estado de alcantarillado' } )
+        $('#entero').numeric();
+    });
+</script>

@@ -8,7 +8,7 @@
 
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
     {{--<link href="{{ asset('css/app.css') }}" rel='stylesheet' type='text/css' />--}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/bootstrap-dialog.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
@@ -16,7 +16,10 @@
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/fuelux.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,7 +32,7 @@
         }
     </style>
 </head>
-<body>
+<body class="fuelux">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -68,19 +71,26 @@
     </div>
 </nav>
 
-
-
 <!-- Scripts -->
 <!-- jQuery -->
 <script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/jqui-alert.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('js/moment-with-locales.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/bootstrap-dialog.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
 <script src="{{ asset('js/dataTables.tableTools.js') }}"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+<script src="{{ asset('js/select2.js') }}"></script>
+<script src="{{ asset('js/select2_locale_es.js') }}"></script>
+<script src="{{ asset('js/jquery.mask.js') }}"></script>
+<script src="{{ asset('js/jquery.numeric.js') }}"></script>
 <!-- Bootstrap JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="{{ asset('js/bootstrap-dialog.js') }}"></script>
+<script src="{{ asset('js/fuelux.js') }}"></script>
+
+
 <!-- App scripts -->
 @yield('content')
 

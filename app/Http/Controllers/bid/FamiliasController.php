@@ -59,9 +59,7 @@ class FamiliasController extends Controller
             })
             ->editColumn('actualizada', function ($familia) {
                 return $familia->actualizada ? with(new Carbon($familia->actualizada))->format('d/m/Y') : '';
-            })
-
-            ->make(true);
+            })->make(true);
     }
 
 
@@ -111,28 +109,7 @@ class FamiliasController extends Controller
      */
     public function show($id)
     {
-        //
-        $familias=\DB::table('familia_bid')
-            ->join('alcantarillado', 'alcantarillado.id', '=', 'familia_bid.alcantarillado_id')
-            ->join('via', 'via.id', '=', 'familia_bid.via_id')
-            ->join('facilitador_bid', 'facilitador_bid.id', '=', 'familia_bid.facilitador_id')
-            ->join('distrito', 'distrito.id', '=', 'familia_bid.distrito_id')
-            ->join('urbanizacion', 'urbanizacion.id', '=', 'familia_bid.urbanizacion_id')
-            ->select(
-                'familia_bid.id as id',
-                'familia_bid.folio as folio',
-                'facilitador_bid.nombre as facilitador',
-                'distrito.nombre as distrito',
-                'urbanizacion.nombre as urbanizacion',
-                'via.nombre as via',
-                'familia_bid.direccion as direccion',
-                'familia_bid.numero_puerta as numero_puerta',
-                'alcantarillado.descripcion as alcantarillado',
-                'familia_bid.updated_at as actualizada',
-                'familia_bid.created_at as creada'
-            )
-            ->get();
-        dd($familias);
+
     }
 
     /**
