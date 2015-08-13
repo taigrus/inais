@@ -18,7 +18,8 @@
     <link href="{{ asset('css/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/fuelux.css') }}" rel="stylesheet" type="text/css" />
-
+    <link href="{{ asset('css/select2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,8 +71,6 @@
     </div>
 </nav>
 
-
-
 <!-- Scripts -->
 <!-- jQuery -->
 <script src="{{ asset('js/jquery.js') }}"></script>
@@ -84,7 +83,10 @@
 <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
 <script src="{{ asset('js/dataTables.tableTools.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
-
+<script src="{{ asset('js/select2.js') }}"></script>
+<script src="{{ asset('js/select2_locale_es.js') }}"></script>
+<script src="{{ asset('js/jquery.mask.js') }}"></script>
+<script src="{{ asset('js/jquery.numeric.js') }}"></script>
 <!-- Bootstrap JavaScript -->
 <script src="{{ asset('js/fuelux.js') }}"></script>
 
