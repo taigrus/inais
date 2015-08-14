@@ -34,8 +34,8 @@ var jqUI = {
         }
         if (typeof o === 'object') {
             o = $.extend({
-                title: 'Alert Message',
-                buttonLabel: 'OK',
+                title: 'Atención',
+                buttonLabel: 'Aceptar',
                 modal: true,
                 dialogClass: ''
             }, o);
@@ -67,8 +67,8 @@ var jqUI = {
         }
         if (typeof o === 'object') {
             o = $.extend({
-                title: 'Confirm',
-                buttonLabel: ['OK', 'Cancel'],
+                title: 'por favor confirme',
+                buttonLabel: ['Aceptar', 'Cancelar'],
                 modal: true,
                 dialogClass: ''
             }, o);
@@ -108,8 +108,8 @@ var jqUI = {
         }
         if (typeof o === 'object') {
             o = $.extend({
-                title: 'Prompt',
-                buttonLabel: ['OK', 'Cancel'],
+                title: 'Consulta',
+                buttonLabel: ['Aceptar', 'Cancelar'],
                 modal: true,
                 value: '',
                 dialogClass: ''

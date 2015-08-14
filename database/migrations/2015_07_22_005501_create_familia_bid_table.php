@@ -33,7 +33,7 @@ class CreateFamiliaBidTable extends Migration
 
         Schema::create('urbanizacion', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('nombre',15)->unique()->index();
+            $table->string('nombre',50)->unique()->index();
             $table->string('descripcion',250)->nullable();
             $table->timestamps();
         });
@@ -66,7 +66,7 @@ class CreateFamiliaBidTable extends Migration
             $table->string('direccion',100);
             $table->string('numero_puerta',6);
             $table->string('otras_referencias',250);
-            $table->date('fecha_encuesta_lb');
+            $table->date('fecha_encuesta_lb')->nullable();
             $table->integer('alcantarillado_id')->unsigned();
             $table->timestamps();
             $table->foreign('facilitador_id')->references('id')->on('facilitador_bid')->onDelete('cascade');

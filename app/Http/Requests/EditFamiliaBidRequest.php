@@ -34,18 +34,17 @@ class EditFamiliaBidRequest extends Request
     {
         return [
             'folio'         => 'required|max:15|unique:familia_bid,folio,' . $this->route->getParameter('familias'),
-            'facilitador_id'   => 'required',
-            'distrito_id'   => 'required',
-            'urbanizacion_id'   => 'required',
-            'via_id'   => 'required',
-            'direccion'     => 'required|max:255',
-            'numero_puerta' => 'required:max:6',
+            'facilitador_id'   => 'required|numeric',
+            'distrito_id'   => 'required|numeric',
+            'urbanizacion_id'   => 'required|numeric',
+            'via_id'   => 'required|numeric',
+            'direccion'     => 'required|max:100',
+            'numero_puerta' => 'required|max:6',
             'nombre_jefe_hogar' => 'required|max:100',
-            'telefono' => 'required',
-            'fecha_encuesta_lb' => 'required',
-            'alcantarillado_id' => 'required',
-            'latitud'       => 'required|regex:/-?[0-9]+(\.[0-9]{1,2})/',
-            'longitud'       => 'required|regex:/-?[0-9]+(\.[0-9]{1,2})/',
+            'telefono' => 'required|max:8',
+            'alcantarillado_id' => 'required|numeric',
+            'latitud'       => 'required|numeric',
+            'longitud'       => 'required|numeric',
             'altura'        => 'required|numeric'
         ];
     }

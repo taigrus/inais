@@ -16,20 +16,4 @@
     </tr>
     </thead>
 
-    <tfood>
-    <tr>
-        <th>ID</th>
-        <th>Folio</th>
-        <th>Facilitador</th>
-        <th>Distrito</th>
-        <th>Urbanización</th>
-        <th>Via</th>
-        <th>Dirección</th>
-        <th>Número</th>
-        <th>Creada el</th>
-        <th>Actualizada el</th>
-        <th>Acciones</th>
-
-    </tr>
-    </tfood>
 </table>

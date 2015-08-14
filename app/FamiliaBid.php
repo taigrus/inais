@@ -29,8 +29,9 @@ class FamiliaBid extends Model
         'longitud',
         'altura'];
 
-    public function getDireccionCompletaAttribute(){
-        return $this->via . ' ' . $this->direccion . ' ' . $this->numero_puerta;
+    public function getDireccionCompletaAttribute($id){
+        return $this->via->nombre . ' ' . $this->direccion . ' #' . $this->numero_puerta . ' (' . $this->distrito->nombre . '/Zona: ' . $this->urbanizacion->nombre . ') '  ;
+        //return $this->via . ' ' . $this->direccion . ' ' . $this->numero_puerta;
     }
 
     public function getFechaEncuestaLbAttribute($value){
@@ -41,7 +42,12 @@ class FamiliaBid extends Model
 
     public function setFechaEncuestaLbAttribute($value){
         //convierte la fecha a formato aceptado por la BD al momento de guardar
-        $this->attributes['fecha_encuesta_lb'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
+        if (!empty($value)){
+            $this->attributes['fecha_encuesta_lb'] = Carbon::createFromFormat('d/m/Y', $value)->toDateString();
+        }else
+        {
+            $this->attributes['fecha_encuesta_lb'] = null;
+        }
     }
 
 

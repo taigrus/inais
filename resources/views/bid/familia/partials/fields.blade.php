@@ -3,7 +3,7 @@
     <div class="form-group">
         {!! Form::label('folio', '01 Folio') !!}
         {!! Form::number('folio', null, array(
-         'class' => 'form-control',
+         'class' => 'form-control folio',
          'placeholder' => 'Ingrese el número de folio',
          'min' => '1',
          'max' => '9999999999',
@@ -59,10 +59,8 @@
     <div class="form-group">
         {!! Form::label('telefono', '10 Teléfono principal') !!}
         {!! Form::number('telefono', null, array(
-         'class' => 'form-control',
-
-         'id' => 'entero',
-
+         'class' => 'form-control entero',
+         'placeholder' => 'Ingrese el teléfono principal de la vivienda',
         )) !!}
     </div>
 
@@ -75,8 +73,7 @@
          {!! Form::label('fecha_encuesta_lb', '12 Fecha en la que se encuestó el hogar') !!}
          <div class='input-group date' id='datetimepicker1'>
             {!! Form::text('fecha_encuesta_lb', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la fecha de encuesta']) !!}
-            <span class="input-group-addon">nova
-                
+            <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
             </span>
          </div>
@@ -94,39 +91,36 @@
 
     <div class="form-group">
         {!! Form::label('latitud', '13 Latitud de la vivienda') !!}
-        {!! Form::number('latitud',null,array(
-         'class' => 'form-control',
+        {!! Form::text('latitud',null,array(
+         'class' => 'form-control flotante',
          'placeholder' => 'Ingrese la latitud en grados decimales',
          'min' => '-99.00000000',
          'max' => '99.9999999',
          'step' => 'any',
-         'decimals' => '8',
-         'thousands_separator' => ',',
-         'decimal_separator' => '.'
+         'decimals' => '6',
          )) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('longitud', '14 Longitud de la vivienda') !!}
-        {!! Form::number('longitud',null,array(
-         'class' => 'form-control',
+        {!! Form::text('longitud',null,array(
+         'class' => 'form-control flotante',
          'placeholder' => 'Ingrese la longitud en grados decimales',
          'min' => '-99.00000000',
          'max' => '99.9999999',
          'step' => 'any',
-         'decimals' => '8',
-         'thousands_separator' => ',',
-         'decimal_separator' => '.'
+         'decimals' => '6',
          )) !!}
     </div>
 
     <div class="form-group">
         {!! Form::label('altura', '15 Altura de la vivienda') !!}
-        {!! Form::text('altura',null,array(
-         'class' => 'form-control',
-
-
-         'id' => 'entero'
+        {!! Form::number('altura',null,array(
+         'class' => 'form-control entero',
+         'min' => '0',
+         'max' => '5000',
+         'step' => 'any',
+         'placeholder' => 'Ingrese la longitud en grados decimales',
          )) !!}
     </div>
  </div>
@@ -138,6 +132,18 @@
         $( "#urbanizacion" ).select2( { allowClear: true, placeholder: 'seleccione la urbanización' } )
         $( "#via" ).select2( { allowClear: true, placeholder: 'seleccione el tipo de via del hogar' } )
         $( "#alcantarillado" ).select2( { allowClear: true, placeholder: 'seleccione el estado de alcantarillado' } )
-        $('#entero').numeric();
+        $('.entero').numeric({decimalPlaces : 0});
+        $('.entero').numeric({negative : false});
+        $('.entero').mask("00000000");
+        $('.folio').mask("0000000000");
+        $('.folio').numeric({negative: false});
+        $(".flotante").numeric({ decimal : "." , decimalPlaces :6, negative : true });
+        $('.flotante').mask('-0ZZ.0ZZZZZ', {
+            translation: {
+                'Z': {
+                    pattern: /[0-9-]/, optional: true
+                }
+            }});
+
     });
 </script>
