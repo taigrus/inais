@@ -24,7 +24,7 @@ class CreateFamiliaBidRequest extends Request
     public function rules()
     {
         return [
-            'folio'         => 'required|unique:familia_bid,folio',
+            'folio'         => 'required|unique:familia_bid,folio|max:15',
             'facilitador_id'   => 'required|numeric',
             'distrito_id'   => 'required|numeric',
             'urbanizacion_id'   => 'required|numeric',

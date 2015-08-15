@@ -22,8 +22,8 @@ class MenuMiddleware
             $menu->add('Usuarios', route('admin.users.index'))->prepend('<span class="glyphicon glyphicon-user"></span>')
                 ->append('<b class="caret"></b>');
             $menu->add('Familias', route('bid.familias.index'));
-            $menu->add('Contact Me', '/contact-me');
-            $menu->contactMe->add('Submenu', '/home');
+            $menu->add('Urbanizaciones', route('bid.urbanizaciones.index'));
+            $menu->urbanizaciones->add('Submenu', '/home');
         });
 
         return $next($request);
