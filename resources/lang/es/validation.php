@@ -111,7 +111,8 @@ return [
         'password' => 'Contraseña',
         'type' => 'Rol del usuario',
         'folio' => 'N° de Folio',
-        'fecha_encuesta_lb' => 'Fecha de encuesta de línea de base'
+        'fecha_encuesta_lb' => 'Fecha de encuesta de línea de base',
+        'nombre' => 'Nombre'
     ],
 
 ];

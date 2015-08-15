@@ -84,4 +84,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
         Route::resource('familias','FamiliasController');
     });
+
+    Route::controller('urbanizaciones.datatables', 'bid\UrbanizacionesController', [
+        'anyData'  => 'urbanizaciones.datatables.data',
+    ]);
+
+    Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
+        Route::resource('urbanizaciones','UrbanizacionesController');
+    });
 });

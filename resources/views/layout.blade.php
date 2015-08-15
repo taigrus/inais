@@ -12,6 +12,8 @@
     <link href="{{ asset('css/bootstrap-dialog.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/dataTables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/buttons.dataTables.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/buttons.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/fixedHeader.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css" />
@@ -95,7 +97,16 @@
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/bootstrap-dialog.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap.js') }}"></script>
 <script src="{{ asset('js/dataTables.fixedHeader.js') }}"></script>
+<script src="{{ asset('js/dataTables.buttons.js') }}"></script>
+<script src="{{ asset('js/buttons.bootstrap.js') }}"></script>
+<script src="{{ asset('js/buttons.flash.js') }}"></script>
+<script src="{{ asset('js/jszip.min.js') }}"></script>
+<script src="{{ asset('js/pdfmake.min.js') }}"></script>
+<script src="{{ asset('js/vfs_fonts.js') }}"></script>
+<script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/buttons.print.js') }}"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 <script src="{{ asset('js/select2.js') }}"></script>
 <script src="{{ asset('js/select2_locale_es.js') }}"></script>

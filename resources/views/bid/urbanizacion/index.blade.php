@@ -4,14 +4,12 @@
 @section('content')
     <style>
         body { font-size: 140%; }
-        div.DTTT { margin-bottom: 0.5em; float: right; }
-        div.dataTables_wrapper { clear: both; }
     </style>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Listado de Famililas registradas</div>
+                    <div class="panel-heading">Listado de Urbanizaciones y zonas registradas</div>
                     @if (Session::has('message'))
                         <p class="alert alert-success">{{Session::get('message')}}</p>
                     @elseif(Session::has('error-message'))
@@ -29,11 +27,11 @@
                     @endif
                     <div class="panel-body">
                         <p>
-                            <a class="btn btn-success" href="{{route("bid.familias.create")}}" role="button">
-                                Nueva Familia
+                            <a class="btn btn-success" href="{{route("bid.urbanizaciones.create")}}" role="button">
+                                Nueva Urbanización/Zona
                             </a>
                         </p>
-                        @include('bid.familia.partials.table')
+                        @include('bid.urbanizacion.partials.table')
                         {{--<script src="{{ asset('js/deleteConfirm.js') }}"></script>--}}
                     </div>
                 </div>
@@ -48,7 +46,7 @@
 <script>
 
     $(document).ready(function() {
-        var table=$('#familias-table').DataTable({
+        var table=$('#urbanizaciones-table').DataTable({
             processing: true,
             serverSide: true,
             fixedHeader: true,
@@ -59,18 +57,11 @@
             languaje: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
             },
-            ajax: '{!! route('familias.datatables.data') !!}',
+            ajax: '{!! route('urbanizaciones.datatables.data') !!}',
             columns: [
-                { data: 'id', name: 'familia_bid.id' },
-                { data: 'folio', name: 'familia_bid.folio' },
-                { data: 'facilitador', name: 'facilitador_bid.nombre' },
-                { data: 'distrito', name: 'distrito.nombre' },
-                { data: 'urbanizacion', name: 'urbanizacion.nombre' },
-                { data: 'via', name: 'via.nombre', visible: false},
-                { data: function(d){return d.via + ' ' + d.direccion + ' #' + d.numero_puerta;}, name: 'familia_bid.direccion'},
-                { data: 'numero_puerta', name: 'familia_bid.numero_puerta', visible: false },
-                { data: 'creada', name: 'familia_bid.created_at' },
-                { data: 'actualizada', name: 'familia_bid.updated_at' },
+                { data: 'id', name: 'urbanizacion.id' },
+                { data: 'nombre', name: 'urbanizacion.nombre' },
+                { data: 'descripcion', name: 'urbanizacion.descripcion' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
