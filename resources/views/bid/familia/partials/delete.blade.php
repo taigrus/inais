@@ -33,8 +33,10 @@
                 <a href="#" class="btn btn-sm btn-danger"
                    data-toggle="modal"
                    data-target="#eliminiar">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Eliminar familia
+                    {{--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>--}}
+                    <i class="fa fa-trash-o">
+                        Eliminar familia
+                    </i>
                 </a>
                 <div class="modal fade" id="eliminiar" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                     <div class="modal-dialog">

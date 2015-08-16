@@ -47,21 +47,10 @@
     <script>
 
         $(document).ready(function() {
-            var table = $('#users-table').DataTable({
-
-                tableTools: {
-                    "aButtons": [
-                        "copy",
-                        "csv",
-                        "xls",
-                        {
-                            "sExtends": "pdf",
-                            "sPdfOrientation": "landscape",
-                            "sPdfMessage": "Archivo exportado desde CSRA INAIS."
-                        },
-                        "print" ]},
+            $('#users-table').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
                 languaje: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                 },
@@ -70,15 +59,13 @@
                     { data: 'id', name: 'users.id' },
                     { data: 'first_name', name: 'users.first_name' },
                     { data: 'last_name', name: 'users.last_name' },
-                    { data: 'email', name: 'users.email' },
+                    { data: 'email', name: 'uqsers.email' },
                     { data: 'created_at', name: 'users.created_at' },
                     { data: 'updated_at', name: 'users.updated_at' },
                     { data: 'descripcion', name: 'roles.descripcion' },
                     { data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });
-            var tt = new $.fn.dataTable.TableTools( table );
-            $( tt.fnContainer() ).insertAfter('div.dataTables_wrapper');
         });
 
 

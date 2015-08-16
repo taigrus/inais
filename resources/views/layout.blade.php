@@ -15,6 +15,7 @@
     <link href="{{ asset('css/buttons.dataTables.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/buttons.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/fixedHeader.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/responsive.bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.structure.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/jquery-ui.theme.css') }}" rel="stylesheet" type="text/css" />
@@ -102,6 +103,7 @@
 <script src="{{ asset('js/dataTables.buttons.js') }}"></script>
 <script src="{{ asset('js/buttons.bootstrap.js') }}"></script>
 <script src="{{ asset('js/buttons.flash.js') }}"></script>
+<script src="{{ asset('js/dataTables.responsive.js') }}"></script>
 <script src="{{ asset('js/jszip.min.js') }}"></script>
 <script src="{{ asset('js/pdfmake.min.js') }}"></script>
 <script src="{{ asset('js/vfs_fonts.js') }}"></script>

@@ -114,7 +114,24 @@ class UrbanizacionesController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            $urbanizacion = Urbanizacion::findOrFail($id);
+            return view('bid.urbanizacion.edit', compact('urbanizacion'));
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('bid.urbanizaciones.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -124,9 +141,34 @@ class UrbanizacionesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Requests\EditUrbanizacionRequest $request, $id)
     {
         //
+        try
+        {
+            //
+            $urbanizacion = Urbanizacion::findOrFail($id);
+            $urbanizacion->fill($request->all());
+            $urbanizacion->save();
+
+            //return $redirect->route('admin.users.index');
+            Session::flash('message', 'El registro perteneciente a la urbanización ' . $urbanizacion->nombre . ' con ID: ' . $urbanizacion->id . ' fue actualizado correctamente');
+            return redirect()->route('bid.urbanizaciones.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('bid.urbanizaciones.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 
     /**
@@ -138,5 +180,32 @@ class UrbanizacionesController extends Controller
     public function destroy($id)
     {
         //
+        try {
+            //
+            $urbanizacion = Urbanizacion::findOrFail($id);
+
+            //User::destroy($id);
+
+            $urbanizacion->delete();
+
+            //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
+            Session::flash('message', 'El registro perteneciente a la urbanización ' . $urbanizacion->nombre . ' con ID: ' . $urbanizacion->id . ' fue ELIMINADO correctamente');
+
+            return redirect()->route('bid.urbanizaciones.index');
+        }
+        catch(ModelNotFoundException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'El registro que intentó eliminar no se ha podido encontrar.');
+            return redirect()->route('bid.urbanizaciones.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
     }
 }
