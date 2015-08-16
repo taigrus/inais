@@ -218,7 +218,7 @@ class tablasBidTableSeeder extends Seeder
 		));
 
 		DB::table('alcantarillado')->insert(array(
-			'descripcion' => '4 - Hogares sin datos ( rechazos o sin contacto',
+			'descripcion' => '4 - Hogares sin datos (rechazo o sin contacto)',
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));

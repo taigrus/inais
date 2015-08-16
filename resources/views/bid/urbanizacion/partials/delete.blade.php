@@ -28,29 +28,30 @@
     </style>
 
     <div class="row">
-        <div class="col-md-10"></div>
+        <div class="col-md-4"></div>
             <div class="col-md-2">
                 <a href="#" class="btn btn-sm btn-danger"
                    data-toggle="modal"
                    data-target="#eliminiar">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    Eliminar familia
+                    <i class="fa fa-trash-o">
+                    Eliminar urbanización
+                        </i>
                 </a>
                 <div class="modal fade" id="eliminiar" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header modal-danger">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Eliminación de familia!!!</h4>
+                                <h4 class="modal-title" id="myModalLabel">Eliminación de urbanización!!!</h4>
                             </div>
                             <div class="modal-body">
-                                <h2><small><span style="color: darkred">¿Estas segur@ de eliminar permanentemente esta familia?</span></small></h2>
-                                {!! Form::model($familia, ['route' => ['bid.familias.show', $familia->id], 'method' => 'GET']) !!}
-                                @include('bid.familia.partials.fields_confirmacion')
+                                <h2><small><span style="color: darkred">¿Estas segur@ de eliminar permanentemente esta urbanización?</span></small></h2>
+                                {!! Form::model($urbanizacion, ['route' => ['bid.urbanizaciones.show', $urbanizacion->id], 'method' => 'GET']) !!}
+                                @include('bid.urbanizacion.partials.fields_confirmacion')
                                 {!! form::close() !!}
                             </div>
                             <div class="modal-footer">
-                                {!!  \inais\Helpers\borrado::buttonDelete('bid.familias.destroy', $familia->id)  !!}
+                                {!!  \inais\Helpers\borrado::buttonDelete('bid.urbanizaciones.destroy', $urbanizacion->id)  !!}
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
                         </div>

@@ -3,6 +3,7 @@
 namespace inais\Http\Requests;
 
 use inais\Http\Requests\Request;
+use Illuminate\Routing\Route;
 
 class EditUrbanizacionRequest extends Request
 {
@@ -11,6 +12,13 @@ class EditUrbanizacionRequest extends Request
      *
      * @return bool
      */
+
+    //En el contruscor se optiene la ruta para luego sacar los parametros de edicion
+    public function __construct(Route $route)
+    {
+        $this->route = $route;
+    }
+
     public function authorize()
     {
         return true;
