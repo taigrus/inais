@@ -34,7 +34,7 @@
 
     <div class="form-group">
         {!! Form::label('direccion', '06 Direccion') !!}
-        {!! Form::text('direccion', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la direccion']) !!}
+        {!! Form::text('direccion', null, ['class' => 'form-control mayusculas', 'placeholder' => 'Ingrese la direccion']) !!}
     </div>
 
     <div class="form-group">

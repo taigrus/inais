@@ -67,9 +67,9 @@
                 { data: 'facilitador', name: 'facilitador_bid.nombre' },
                 { data: 'distrito', name: 'distrito.nombre' },
                 { data: 'urbanizacion', name: 'urbanizacion.nombre' },
-                { data: 'via', name: 'via.nombre', visible: false},
+                { data: 'via', name: 'via.nombre', visible: false, className: 'never'},
                 { data: function(d){return d.via + ' ' + d.direccion + ' #' + d.numero_puerta;}, name: 'familia_bid.direccion'},
-                { data: 'numero_puerta', name: 'familia_bid.numero_puerta', visible: false },
+                { data: 'numero_puerta', name: 'familia_bid.numero_puerta', visible: false, className: 'never' },
                 { data: 'creada', name: 'familia_bid.created_at' },
                 { data: 'actualizada', name: 'familia_bid.updated_at' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
