@@ -211,6 +211,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => yajra\Datatables\Datatables::class,
         'Helpers'   => inais\Helpers\borrado::class,
+        'manejadorAJAX'   => inais\Helpers\manejador::class,
         'Menu' => Caffeinated\Menus\Facades\Menu::class,
     ],
 

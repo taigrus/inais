@@ -62,6 +62,7 @@
     </div>
     <script>
         $('[data-delete]').click(function(e){
+            //previene que se ejecute el submit por defecto
             e.preventDefault();
 
             // If the user confirm the delete

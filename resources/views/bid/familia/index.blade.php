@@ -48,11 +48,13 @@
 <script>
 
     $(document).ready(function() {
+
         var table=$('#familias-table').DataTable({
             processing: true,
             serverSide: true,
             fixedHeader: true,
             responsive: true,
+            stateSave: true,
             //dom: 'Bfrtip',
             //buttons: [
             //    'copy', 'csv', 'excel', 'pdf', 'print'
@@ -75,8 +77,7 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
-        //table.buttons().container()
-        //        .insertAfter( $('.panel-body', table.table().container() ) );
+
     });
 
 

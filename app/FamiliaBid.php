@@ -50,6 +50,17 @@ class FamiliaBid extends Model
         }
     }
 
+    public function setDireccionAttribute($value){
+        return $this->attributes['direccion'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
+    }
+
+    public function setOtrasReferenciasAttribute($value){
+        return $this->attributes['otras_referencias'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
+    }
+
+    public function setNombreJefeHogarAttribute($value){
+        return $this->attributes['nombre_jefe_hogar'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
+    }
 
     public function facilitador(){
         return $this->belongsTo('inais\Facilitador');

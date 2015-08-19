@@ -29,14 +29,8 @@
 @endif
 
 @push('scripts')
-<script type="text/javascript">
-    $(document).ready(function() {
-        var frmvalidator = new Validator("edicionUrbanizaciones");  //where myform is the name/id of your form
-        frmvalidator.addValidation("nombre", "req", "Por favor ingrese el NOMBRE de la urbanización");
-        frmvalidator.addValidation("nombre", "maxlen=50", "Se permiten 50 caracteres como máximo en el nombre");
-        frmvalidator.addValidation("descripcion", "maxlen=250", "Se permiten 250 caracteres como máximo en la descripción");
-    });
-</script>
+<script>var nombreformulario='edicionUrbanizaciones'</script>
+@include('bid.urbanizacion.partials.validacion')
 @endpush
 
 

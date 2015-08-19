@@ -1,3 +1,4 @@
+
 <div class="col-md-6 ">
 
     <div class="form-group">
@@ -9,6 +10,7 @@
          'max' => '9999999999',
          'step' => 'any',
          'decimals' => '0',
+         'id' => 'folio'
         )) !!}
     </div>
 
@@ -24,8 +26,19 @@
 
     <div class="form-group">
         {!! Form::label('urbanizacion_id', '04 Urbanización') !!}
-        {!! Form::select('urbanizacion_id', $urbanizacion_options , Input::old('urbanizacion'),['class' => 'form-control select2', 'id' => 'urbanizacion']) !!}
+        <div class='input-group'>
+
+            {!! Form::select('urbanizacion_id', $urbanizacion_options , Input::old('urbanizacion'),['class' => 'form-control select2', 'id' => 'urbanizacion']) !!}
+            <a href="#"
+               data-toggle="modal"
+               data-target="#modalbanizacion"
+               class="input-group-addon">
+                   <span class="glyphicon glyphicon-hand-left"></span>
+            </a>
+        </div>
+
     </div>
+
 
     <div class="form-group">
         {!! Form::label('via_id', '05 Tipo de via') !!}
@@ -44,7 +57,7 @@
 
     <div class="form-group">
         {!! Form::label('otras_referencias', '08 Otras referencias útiles para ubicar el hogar') !!}
-        {!! Form::text('otras_referencias', null, ['class' => 'form-control', 'placeholder' => 'Registre algunas referencias que ayuden a ubicar el hogar']) !!}
+        {!! Form::text('otras_referencias', null, ['class' => 'form-control mayusculas', 'placeholder' => 'Registre algunas referencias que ayuden a ubicar el hogar']) !!}
     </div>
 
 </div>
@@ -53,7 +66,7 @@
 
     <div class="form-group">
         {!! Form::label('nombre_jefe_hogar', '09 Nombre del jefe(a) del hogar') !!}
-        {!! Form::text('nombre_jefe_hogar', null, ['class' => 'form-control', 'placeholder' => 'Ingrese el nombre completo del o la jefa de hogar']) !!}
+        {!! Form::text('nombre_jefe_hogar', null, ['class' => 'form-control mayusculas', 'placeholder' => 'Ingrese el nombre completo del o la jefa de hogar']) !!}
     </div>
 
     <div class="form-group">
@@ -144,6 +157,30 @@
                     pattern: /[0-9-]/, optional: true
                 }
             }});
+        $('#folio').focus();
+        /**
+         * Created by mahbub on 8/5/15.
+         */
+        var Modal = {
+            init: function () {
+                this.initEditModal();
+                this.initConfirmationModal();
+            },
+            initEditModal: function() {
+                $(document).on('click', '.load-form-modal', function(event){
+                    console.log('Modal: '+ $(this).attr('data-url'));
+                    $('#form-modal .modal-body').load($(this).attr('data-url'));
+                    event.preventDefault();
+                });
+            },
+            initConfirmationModal: function() {
+                $(document).on('click', '.load-confirmation-modal', function(event){
+                    $('#confirmation-modal form').attr('action', $(this).attr('data-url'));
+                    event.preventDefault();
+                });
+            }
+        };
 
+        Modal.init();
     });
 </script>

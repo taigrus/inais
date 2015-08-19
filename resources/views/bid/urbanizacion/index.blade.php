@@ -1,4 +1,5 @@
 @extends('layout')
+
 @if (!Auth::guest() and Auth::user()->rol_id==1)
 
 @section('content')
@@ -30,6 +31,13 @@
                             <a class="btn btn-success" href="{{route("bid.urbanizaciones.create")}}" role="button">
                                 Nueva Urbanización/Zona
                             </a>
+                            <a href="#"
+                               data-toggle="modal"
+                               data-target="#modalurbanizacion"
+                               class="boton-nuevaajax btn btn-success">
+                                <span class="glyphicon glyphicon-hand-left"></span>
+                                Nueva urbanización/Zona (AJAX)
+                            </a>
                         </p>
                         @include('bid.urbanizacion.partials.table')
                         {{--<script src="{{ asset('js/deleteConfirm.js') }}"></script>--}}
@@ -38,23 +46,28 @@
             </div>
         </div>
     </div>
-
-
+    {!! Form::open(['route' => ['bid.urbanizaciones.destroy', ':URB_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
+    {!! Form::close() !!}
+    @include('bid.urbanizacion.modalurbanizacion')
 @endsection
 
-@push('scripts')
+@section('scripts')
 <script>
 
     $(document).ready(function() {
+
+
+
+        $('#urbanizaciones-table tfoot th').each( function () {
+            var title = $('#urbanizaciones-table thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder=' + title + ' />' );
+        } );
         var table=$('#urbanizaciones-table').DataTable({
             processing: true,
             serverSide: true,
             fixedHeader: true,
             responsive: true,
-            //dom: 'Bfrtip',
-            //buttons: [
-            //    'copy', 'csv', 'excel', 'pdf', 'print'
-            //],
+            stateSave: true,
             languaje: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
             },
@@ -66,15 +79,87 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
+        table.columns().every( function () {
+            var that = this;
+
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                that
+                        .search( this.value )
+                        .draw();
+            } );
+        } );
         //table.buttons().container()
         //        .insertAfter( $('.panel-body', table.table().container() ) );
+
+        //Eliminar la urbanizacion por boton de tabla con AJAX
+        $('#urbanizaciones-table tbody').on('click', '.btn-borrar', function(e){
+            e.preventDefault();
+
+            var id = $(this).data('id');
+            var form = $('#form-delete');
+            var url=form.attr('action').replace(':URB_ID',id);
+            var data = form.serialize();
+            jqUI.confirm("¿Segur@ que desea eleminar permanentemente este registro?",function(yes){
+                if(yes) {
+                    $.post(url, data, function (result) {
+                        if(result.tipo!='ok') {
+                            jqUI.alert(result.mensaje);
+                        }else{
+                            table
+                             .row($(this).parents('tr'))
+                             .remove()
+                             .draw();
+                        }
+                    }).fail(function (result) {
+                        jqUI.alert('Error inesperado al elimimar el registro');
+                    });
+                }
+            })
+        });
+
+        var nombreformulario='altaUrbanizacionesmodal';
+        $(document).ready(function() {
+
+            //nueva urbanizacion por ajax
+            $('#btn-nueva').click(function (e) {
+                e.preventDefault();
+                var frmvalidator2 = new Validator('altaUrbanizacionesmodal');  //where myform is the name/id of your form
+                frmvalidator2.addValidation("nombre", "req", "Por favor ingrese el NOMBRE de la urbanización");
+                frmvalidator2.addValidation("nombre", "maxlen=50", "Se permiten 50 caracteres como máximo en el nombre");
+                frmvalidator2.addValidation("descripcion", "maxlen=250", "Se permiten 250 caracteres como máximo en la descripción");
+                var form = $('#altaUrbanizacionesmodal');
+                var url = form.attr('action');
+                var data = form.serialize();
+                $.post(url, data, function (result) {
+                    if(result.tipo!='ok') {
+
+                        jqUI.alert(result.mensaje);
+                    }else{
+
+                        $('#modalurbanizacion').modal('hide');
+                        table.clear();
+                        table.rows.add(result);
+                        jqUI.alert('todo ok');
+                    }
+                }).fail(function (result) {
+                    jqUI.alert('Error inesperado al adicionar el registro');
+                });
+
+
+            });
+        });
+
     });
+
 
 
 
     </script>
 
-@endpush
+@endsection
+
+
+
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>
 @endif

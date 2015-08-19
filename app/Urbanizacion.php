@@ -25,8 +25,11 @@ class Urbanizacion extends Model
     //}
 
     public function setNombreAttribute($value){
+        return $this->attributes['nombre'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
+    }
 
-        return $this->attributes['nombre'] = trim($value, $character_mask = " \t\n\r\0\x0B");
+    public function setDescripcionAttribute($value){
+        return $this->attributes['descripcion'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
     }
 
     public function familias()
