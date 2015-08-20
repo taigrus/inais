@@ -31,8 +31,8 @@
             {!! Form::select('urbanizacion_id', $urbanizacion_options , Input::old('urbanizacion'),['class' => 'form-control select2', 'id' => 'urbanizacion']) !!}
             <a href="#"
                data-toggle="modal"
-               data-target="#modalbanizacion"
-               class="input-group-addon">
+               data-target="#modalurbanizacion"
+               class="boton-nuevaurbajax input-group-addon">
                    <span class="glyphicon glyphicon-hand-left"></span>
             </a>
         </div>

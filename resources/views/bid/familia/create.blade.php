@@ -3,6 +3,7 @@
 @if (!Auth::guest())
 
     @section('content')
+        @include('bid.urbanizacion.modalurbanizacion')
         <div class="container">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -24,6 +25,9 @@
                 </div>
             </div>
         </div>
+        <script>
+
+        </script>
     @endsection
 
 @else
@@ -50,6 +54,94 @@
         frmvalidator.addValidation("urbanizacion_id", "req", "Por favor seleccione un valor para URBANIZACION");
         frmvalidator.addValidation("via_id", "req", "Por favor seleccione un valor para TIPO DE VIA");
         frmvalidator.addValidation("alcantarillado_id", "req", "Por favor seleccione un valor para ESTADO DE ALCANTARILLADO");
+
+        $('.boton-nuevaurbajax').click(function(){
+            (document).getElementById('altaUrbanizacionesmodal').reset();
+            $('#nombre').val('');
+            $('#descripcion').val('');
+            $('#cargando').hide();
+        });
+
+        function validarParsley(){
+            $('#altaUrbanizacionesmodal').parsley({
+                successClass: 'success',
+                errorClass: 'error',
+                errors: {
+                    classHandler: function(el) {
+                        return ( $(el).closest('.control-group'));
+                    },
+                    errorsWrapper: '<span class=\"help-inline\"></span>',
+                    errorElem: '<span></span>',
+                    errores: 1
+                }
+            });
+        }
+        function validador(nombre){
+            var tester = /^([a-zA-Z0-9.+-+ ]{3,50})+$/;
+            return tester.test(nombre);
+        }
+
+        //nueva urbanizacion por ajax
+        $('#btn-nueva').click(function (e) {
+            //e.preventDefault();
+            var form = $('#altaUrbanizacionesmodal');
+            var url = form.attr('action');
+            var data = form.serialize();
+            var errores=false;
+            //----VALIDACION
+            var valNombre= document.getElementById('nombre').value;
+            if (valNombre==''){
+                swal("Presta atención a este mensaje!", "No puedo almacenar una urbanización sin nombre, por favor escribe un nombre y luego lo intentamos nuevamente", "error");
+                errores=true;
+                $('#nombre').focus();
+            }else{
+                if(!validador(valNombre)){
+                    swal("Presta atención a este mensaje!", "El nombre de la urbanización debe tener al menos 3 letras y no mas de 50, corrige esto por favor!", "error");
+                    errores=true;
+                    $('#nombre').focus();
+                }
+            }
+            //----ENVIO AJAX
+            if (!errores){
+                $('#cargando').show();
+                var envio = $.post(url, data, function (respuesta) {
+
+                    if(respuesta.tipo!='ok') {
+                        swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
+                    }else{
+                        //actualizar la tabla
+                    }
+                    envio.success(function(){
+                        if(respuesta.tipo=='ok') {
+                            swal({
+                                        title: "Urbanización correctamente registrada",
+                                        text: "¿Desea registrar mas urbanizaciones?",
+                                        type: "success",
+                                        showCancelButton: true,
+                                        confirmButtonText: "Si, una mas!",
+                                        cancelButtonText: 'Ya no mas',
+                                        closeOnConfirm: true
+                                    },
+                                    function (isConfirm) {
+                                        if (isConfirm) {
+                                            $('#nombre').val('');
+                                            $('#descripcion').val('');
+                                        } else {
+                                            $('#modalurbanizacion').modal('hide');
+                                        }
+                                    });
+                        };
+                        //
+                    });
+                    envio.complete(function(){
+                        $('#cargando').hide();
+                    });
+                }).fail(function (result) {
+                    swal("Upps, algo no esta bien!", "Se produjo un error al guardar el registro, intentelo nuevamente.", "error");
+                    $('#cargando').hide();
+                });
+            }
+        });
     });
 </script>
 @endpush

@@ -6,6 +6,7 @@
     <style>
         body { font-size: 140%; }
     </style>
+    @include('bid.urbanizacion.modalurbanizacion')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -34,9 +35,9 @@
                             <a href="#"
                                data-toggle="modal"
                                data-target="#modalurbanizacion"
-                               class="boton-nuevaajax btn btn-success">
+                               class="boton-nuevaajax btn btn-warning">
                                 <span class="glyphicon glyphicon-hand-left"></span>
-                                Nueva urbanización/Zona (AJAX)
+                                Nuevas urbanizaciones/Zonas
                             </a>
                         </p>
                         @include('bid.urbanizacion.partials.table')
@@ -48,7 +49,7 @@
     </div>
     {!! Form::open(['route' => ['bid.urbanizaciones.destroy', ':URB_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
     {!! Form::close() !!}
-    @include('bid.urbanizacion.modalurbanizacion')
+
 @endsection
 
 @section('scripts')
@@ -92,70 +93,136 @@
         //        .insertAfter( $('.panel-body', table.table().container() ) );
 
         //Eliminar la urbanizacion por boton de tabla con AJAX
-        $('#urbanizaciones-table tbody').on('click', '.btn-borrar', function(e){
+        $('#urbanizaciones-table tbody').on('click', '.btn-borrar', function(e) {
             e.preventDefault();
-
             var id = $(this).data('id');
             var form = $('#form-delete');
-            var url=form.attr('action').replace(':URB_ID',id);
+            var url = form.attr('action').replace(':URB_ID', id);
             var data = form.serialize();
-            jqUI.confirm("¿Segur@ que desea eleminar permanentemente este registro?",function(yes){
-                if(yes) {
-                    $.post(url, data, function (result) {
-                        if(result.tipo!='ok') {
-                            jqUI.alert(result.mensaje);
-                        }else{
-                            table
-                             .row($(this).parents('tr'))
-                             .remove()
-                             .draw();
-                        }
-                    }).fail(function (result) {
-                        jqUI.alert('Error inesperado al elimimar el registro');
-                    });
-                }
-            })
+            swal({
+                    title: '¿Esta segur@ de eliminar el registro?',
+                    text: 'La eliminación de este registro sera permanente y eliminara todos los integrantes de la familia relacionados!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    disableButtonsOnConfirm: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmLoadingButtonColor: '#DD6B55',
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "Si, adelante bórralo!",
+                    cancelButtonText: "No, por favor no!"
+
+                }, function () {
+                    setTimeout(function () {
+                        //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                        $.post(url, data, function (result) {
+                            if(result.tipo!='ok') {
+                                swal("Error", result.mensaje, "error");
+                            }else{
+                                table
+                                        .row($(this).parents('tr'))
+                                        .remove()
+                                        .draw();
+                                swal.close();
+                            }
+
+                        }).fail(function (result) {
+                            swal("Upps, algo no esta bien!", "Se produjo un error al borrar el registro, intentelo nuevamente.", "error");
+                        });
+
+                    },3000);
+                })
+            });
+
+        $('.boton-nuevaajax').click(function(){
+            (document).getElementById('altaUrbanizacionesmodal').reset();
+            $('#nombre').val('');
+            $('#descripcion').val('');
+            $('#cargando').hide();
         });
 
-        var nombreformulario='altaUrbanizacionesmodal';
-        $(document).ready(function() {
+        function validarParsley(){
+            $('#altaUrbanizacionesmodal').parsley({
+                successClass: 'success',
+                errorClass: 'error',
+                errors: {
+                    classHandler: function(el) {
+                        return ( $(el).closest('.control-group'));
+                    },
+                    errorsWrapper: '<span class=\"help-inline\"></span>',
+                    errorElem: '<span></span>',
+                    errores: 1
+                }
+            });
+        }
 
-            //nueva urbanizacion por ajax
+        function validador(nombre){
+            var tester = /^([a-zA-Z0-9.+-+ ]{3,50})+$/;
+            return tester.test(nombre);
+        }
+           //nueva urbanizacion por ajax
             $('#btn-nueva').click(function (e) {
-                e.preventDefault();
-                var frmvalidator2 = new Validator('altaUrbanizacionesmodal');  //where myform is the name/id of your form
-                frmvalidator2.addValidation("nombre", "req", "Por favor ingrese el NOMBRE de la urbanización");
-                frmvalidator2.addValidation("nombre", "maxlen=50", "Se permiten 50 caracteres como máximo en el nombre");
-                frmvalidator2.addValidation("descripcion", "maxlen=250", "Se permiten 250 caracteres como máximo en la descripción");
+                //e.preventDefault();
                 var form = $('#altaUrbanizacionesmodal');
                 var url = form.attr('action');
                 var data = form.serialize();
-                $.post(url, data, function (result) {
-                    if(result.tipo!='ok') {
-
-                        jqUI.alert(result.mensaje);
-                    }else{
-
-                        $('#modalurbanizacion').modal('hide');
-                        table.clear();
-                        table.rows.add(result);
-                        jqUI.alert('todo ok');
+                var errores=false;
+                //----VALIDACION
+                var valNombre= document.getElementById('nombre').value;
+                if (valNombre==''){
+                    swal("Presta atención a este mensaje!", "No puedo almacenar una urbanización sin nombre, por favor escribe un nombre y luego lo intentamos nuevamente", "error");
+                    errores=true;
+                    $('#nombre').focus();
+                }else{
+                    if(!validador(valNombre)){
+                        swal("Presta atención a este mensaje!", "El nombre de la urbanización debe tener al menos 3 letras y no mas de 50, corrige esto por favor!", "error");
+                        errores=true;
+                        $('#nombre').focus();
                     }
-                }).fail(function (result) {
-                    jqUI.alert('Error inesperado al adicionar el registro');
-                });
+                }
+                //----ENVIO AJAX
+                if (!errores){
+                    $('#cargando').show();
+                    var envio = $.post(url, data, function (respuesta) {
 
-
+                        if(respuesta.tipo!='ok') {
+                            swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
+                        }else{
+                            //actualizar la tabla
+                        }
+                        envio.success(function(){
+                            if(respuesta.tipo=='ok') {
+                                swal({
+                                            title: "Urbanización correctamente registrada",
+                                            text: "¿Desea registrar mas urbanizaciones?",
+                                            type: "success",
+                                            showCancelButton: true,
+                                            confirmButtonText: "Si, una mas!",
+                                            cancelButtonText: 'Ya no mas',
+                                            closeOnConfirm: true
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                $('#nombre').val('');
+                                                $('#descripcion').val('');
+                                            } else {
+                                                $('#modalurbanizacion').modal('hide');
+                                            }
+                                        });
+                            };
+                            //
+                        });
+                        envio.complete(function(){
+                            $('#cargando').hide();
+                        });
+                        }).fail(function (result) {
+                            swal("Upps, algo no esta bien!", "Se produjo un error al guardar el registro, intentelo nuevamente.", "error");
+                            $('#cargando').hide();
+                        });
+                    }
             });
-        });
-
-    });
-
-
-
-
+       });
     </script>
-
 @endsection
 
 

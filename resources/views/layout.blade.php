@@ -22,6 +22,8 @@
     <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/fuelux.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/select2.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/misestilos.css') }}" rel="stylesheet" type="text/css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -113,7 +115,9 @@
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
 <script src="{{ asset('js/select2.js') }}"></script>
 <script src="{{ asset('js/select2_locale_es.js') }}"></script>
+<script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
+<script src="{{ asset('js/parsley.js') }}"></script>
 <script src="{{ asset('js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('js/gen_validatorv4.js') }}"></script>
 <!-- Bootstrap JavaScript -->

@@ -9,6 +9,12 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('descripcion', 'Descripción') !!}
-    {!! Form::text('descripcion', null, ['class' => 'form-control', 'disabled']) !!}
+    {!! Form::label('descripcion', '02 Descripción') !!}
+    {!! Form::textarea('descripcion', null,
+    ['rows'=>'7',
+    'class' => 'form-control mayusculas',
+    'placeholder' => 'Ingrese una descripción adicional para la urbanización',
+    'id' => 'descripcion',
+    'disabled'
+     ]) !!}
 </div>

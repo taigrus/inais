@@ -52,7 +52,7 @@ class UrbanizacionesController extends Controller
         catch(TokenMismatchException $e)
         {
             //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            Session::flash('error-message', 'No se puede realizar ninguna acción, su sesión expiro, por favor inicie sesión nuevamente.');
             return redirect()->route('home.index');
             //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
@@ -67,15 +67,14 @@ class UrbanizacionesController extends Controller
     {
         //
         try {
-            //
-            $mensaje='ok';
 
+            //
             $urbanizacion = Urbanizacion::create($request->all());
             $urbanizacion->save();
 
             if($request->ajax()){
                  return response()->json([
-                    'mensaje' => $mensaje,
+                    'mensaje' => 'ok',
                     'tipo'    => 'ok'
                 ]);
             }
@@ -84,19 +83,24 @@ class UrbanizacionesController extends Controller
         }
         catch(TokenMismatchException $e)
         {
+            $mensaje='No se puede realizar ninguna acción, su sesión expiro, por favor inicie sesión nuevamente.';
+
+            if($request->ajax()){
+                return response()->json([
+                    'mensaje' => $mensaje,
+                    'tipo'    => 'error'
+                ]);
+            }
             //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            Session::flash('error-message', $mensaje);
             return redirect()->route('home.index');
             //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
         catch(QueryException $e)
         {
-
-
-
             if($e->getCode()=='23505'){
             //dd($e);
-                $mensaje='Error critico! no se pudo registrar el nombre de la urbanización duplicado, verifique los espacios al final e inicio del nombre';
+                $mensaje='Error critico, no se pudo registrar! el nombre de la urbanización esta duplicado, verifique los espacios al final e inicio del nombre';
 
                 if($request->ajax()){
                     return response()->json([
