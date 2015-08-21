@@ -60,6 +60,8 @@
             $('#nombre').val('');
             $('#descripcion').val('');
             $('#cargando').hide();
+            $('#altaUrbanizacionesmodal').parsley().reset();
+
         });
 
 
@@ -69,6 +71,7 @@
         }
 
         //nueva urbanizacion por ajax
+        //nueva urbanizacion por ajax
         $('#btn-nueva').click(function (e) {
             //e.preventDefault();
             var form = $('#altaUrbanizacionesmodal');
@@ -76,27 +79,15 @@
             var data = form.serialize();
             var errores=false;
             //----VALIDACION
-            var valNombre= document.getElementById('nombre').value;
-            if (valNombre==''){
-                swal("Presta atención a este mensaje!", "No puedo almacenar una urbanización sin nombre, por favor escribe un nombre y luego lo intentamos nuevamente", "error");
-                errores=true;
-                $('#nombre').focus();
-            }else{
-                if(!validador(valNombre)){
-                    swal("Presta atención a este mensaje!", "El nombre de la urbanización debe tener al menos 3 letras y no mas de 50, corrige esto por favor!", "error");
-                    errores=true;
-                    $('#nombre').focus();
-                }
-            }
+
             //----ENVIO AJAX
             if (!errores){
                 $('#cargando').show();
                 var envio = $.post(url, data, function (respuesta) {
-
                     if(respuesta.tipo!='ok') {
                         swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
                     }else{
-                        //TODO: Se debe actualizar el control select con los nuevos valores
+                        //TODO: Se debe actualizar la tabla general para que refleje la nueva fila adicionada mediante ajax
                     }
                     envio.success(function(){
                         if(respuesta.tipo=='ok') {
@@ -113,6 +104,9 @@
                                         if (isConfirm) {
                                             $('#nombre').val('');
                                             $('#descripcion').val('');
+                                            $('#cargando').hide();
+                                            $('#altaUrbanizacionesmodal').parsley().reset();
+
                                         } else {
                                             $('#modalurbanizacion').modal('hide');
                                         }
@@ -127,7 +121,7 @@
                     swal("Upps, algo no esta bien!", "Se produjo un error al guardar el registro, intentelo nuevamente.", "error");
                     $('#cargando').hide();
                 });
-            }
+            };
         });
     });
 </script>

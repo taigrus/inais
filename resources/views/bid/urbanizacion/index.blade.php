@@ -130,6 +130,7 @@
             $('#nombre').val('');
             $('#descripcion').val('');
             $('#cargando').hide();
+            $('#altaUrbanizacionesmodal').parsley().reset();
         });
 
         function validarParsley(){
@@ -147,10 +148,6 @@
             });
         }
 
-        function validador(nombre){
-            var tester = /^([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.+-+ ]{3,50})+$/;
-            return tester.test(nombre);
-        }
            //nueva urbanizacion por ajax
             $('#btn-nueva').click(function (e) {
                 //e.preventDefault();
@@ -184,6 +181,8 @@
                                             if (isConfirm) {
                                                 $('#nombre').val('');
                                                 $('#descripcion').val('');
+                                                $('#cargando').hide();
+                                                $('#altaUrbanizacionesmodal').parsley().reset();
                                             } else {
                                                 $('#modalurbanizacion').modal('hide');
                                             }
