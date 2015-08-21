@@ -16,14 +16,15 @@
                         <p class="alert alert-success">{{Session::get('message')}}</p>
                     @elseif(Session::has('error-message'))
                         <script>
-                            BootstrapDialog.alert({
+                            (document).ready(swal('Upss! algo salio realmente mal :(','{{Session::get('error-message')}}','error'));
+                            /*BootstrapDialog.alert({
                                 title: 'ATENCION',
                                 message: '{{Session::get('error-message')}}',
                                 type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
                                 closable: true, // <-- Default value is false
                                 draggable: true, // <-- Default value is false
                                 buttonLabel: 'Aceptar' // <-- Default value is 'OK'
-                            });
+                            });*/
                         </script>
                         <p class="alert alert-danger">{{Session::get('error-message')}}</p>
                     @endif

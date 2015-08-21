@@ -15,15 +15,8 @@
                     @if (Session::has('message'))
                         <p class="alert alert-success">{{Session::get('message')}}</p>
                     @elseif(Session::has('error-message'))
-                        <script>
-                            BootstrapDialog.alert({
-                                title: 'ATENCION',
-                                message: '{{Session::get('error-message')}}',
-                                type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                                closable: true, // <-- Default value is false
-                                draggable: true, // <-- Default value is false
-                                buttonLabel: 'Aceptar' // <-- Default value is 'OK'
-                            });
+                        <script type="text/javascript">
+                            swal('Upss! algo salio realmente mal :(','{{Session::get('error-message')}}','error');
                         </script>
                         <p class="alert alert-danger">{{Session::get('error-message')}}</p>
                     @endif
@@ -113,8 +106,7 @@
                     cancelButtonText: "No, por favor no!"
 
                 }, function () {
-                    setTimeout(function () {
-                        //swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                         //swal("Deleted!", "Your imaginary file has been deleted.", "success");
                         $.post(url, data, function (result) {
                             if(result.tipo!='ok') {
                                 swal("Error", result.mensaje, "error");
@@ -123,14 +115,13 @@
                                         .row($(this).parents('tr'))
                                         .remove()
                                         .draw();
-                                swal.close();
+                                swal("Misión cumplida :)", result.mensaje, "success");
+                                //swal.close();
                             }
 
                         }).fail(function (result) {
                             swal("Upps, algo no esta bien!", "Se produjo un error al borrar el registro, intentelo nuevamente.", "error");
                         });
-
-                    },3000);
                 })
             });
 
@@ -157,7 +148,7 @@
         }
 
         function validador(nombre){
-            var tester = /^([a-zA-Z0-9.+-+ ]{3,50})+$/;
+            var tester = /^([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ.+-+ ]{3,50})+$/;
             return tester.test(nombre);
         }
            //nueva urbanizacion por ajax
@@ -168,27 +159,15 @@
                 var data = form.serialize();
                 var errores=false;
                 //----VALIDACION
-                var valNombre= document.getElementById('nombre').value;
-                if (valNombre==''){
-                    swal("Presta atención a este mensaje!", "No puedo almacenar una urbanización sin nombre, por favor escribe un nombre y luego lo intentamos nuevamente", "error");
-                    errores=true;
-                    $('#nombre').focus();
-                }else{
-                    if(!validador(valNombre)){
-                        swal("Presta atención a este mensaje!", "El nombre de la urbanización debe tener al menos 3 letras y no mas de 50, corrige esto por favor!", "error");
-                        errores=true;
-                        $('#nombre').focus();
-                    }
-                }
+
                 //----ENVIO AJAX
                 if (!errores){
                     $('#cargando').show();
                     var envio = $.post(url, data, function (respuesta) {
-
                         if(respuesta.tipo!='ok') {
                             swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
                         }else{
-                            //actualizar la tabla
+                            //TODO: Se debe actualizar la tabla general para que refleje la nueva fila adicionada mediante ajax
                         }
                         envio.success(function(){
                             if(respuesta.tipo=='ok') {

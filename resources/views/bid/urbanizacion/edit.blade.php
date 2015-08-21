@@ -8,7 +8,7 @@
                         <div class="panel-heading">Editar datos de la urbanización: <strong>{{$urbanizacion->nombre}}</strong></div>
                         <div class="panel-body">
                             @include('bid.urbanizacion.partials.messages')
-                            {!! Form::model($urbanizacion, ['route' => ['bid.urbanizaciones.update', $urbanizacion->id], 'method' => 'PUT', 'id' => 'edicionUrbanizaciones']) !!}
+                            {!! Form::model($urbanizacion, ['route' => ['bid.urbanizaciones.update', $urbanizacion->id], 'method' => 'PUT', 'id' => 'edicionUrbanizaciones', 'data-parsley-validate' => '']) !!}
                             @include('bid.urbanizacion.partials.fields')
                             <div class="col-md-12 col-md-offset-3">
                                 <div class="row">

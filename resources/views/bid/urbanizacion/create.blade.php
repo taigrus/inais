@@ -10,7 +10,7 @@
                         <div class="panel-heading">Registro de nueva urbanización</div>
                         <div class="panel-body">
                             @include('bid.urbanizacion.partials.messages')
-                            {!! Form::open(['route' => 'bid.urbanizaciones.store', 'method' => 'POST', 'id' => 'altaUrbanizaciones']) !!}
+                            {!! Form::open(['route' => 'bid.urbanizaciones.store', 'method' => 'POST', 'id' => 'altaUrbanizaciones', 'data-parsley-validate' => '']) !!}
                             @include('bid.urbanizacion.partials.fields')
                             <div class="row">
                                 <div class="col-md-12 col-md-offset-4">

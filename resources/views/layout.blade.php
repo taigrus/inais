@@ -23,6 +23,7 @@
     <link href="{{ asset('css/fuelux.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/select2.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/parsley.css') }}" rel="stylesheet" type="text/css" />
 
     <link href="{{ asset('css/select2-bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/misestilos.css') }}" rel="stylesheet" type="text/css" />
@@ -40,19 +41,7 @@
 </head>
 <body class="fuelux">
 <nav class="navbar navbar-default">
-    @if (Session::has('error-message'))
-        <script>
-            BootstrapDialog.alert({
-                title: 'ATENCION',
-                message: '{{Session::get('error-message')}}',
-                type: BootstrapDialog.TYPE_WARNING, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
-                closable: true, // <-- Default value is false
-                draggable: true, // <-- Default value is false
-                buttonLabel: 'Aceptar' // <-- Default value is 'OK'
-            });
-        </script>
-        <p class="alert alert-danger">{{Session::get('error-message')}}</p>
-    @endif
+
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -117,11 +106,15 @@
 <script src="{{ asset('js/select2_locale_es.js') }}"></script>
 <script src="{{ asset('js/sweetalert-dev.js') }}"></script>
 <script src="{{ asset('js/jquery.mask.js') }}"></script>
+<script src="{{ asset('js/es-parsley.js') }}"></script>
 <script src="{{ asset('js/parsley.js') }}"></script>
 <script src="{{ asset('js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('js/gen_validatorv4.js') }}"></script>
 <!-- Bootstrap JavaScript -->
 <script src="{{ asset('js/fuelux.js') }}"></script>
+<script type="text/javascript">
+    window.Parsley.setLocale('es');
+</script>
 
 
 <!-- App scripts -->

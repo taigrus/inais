@@ -24,9 +24,9 @@ class Urbanizacion extends Model
         //return $this->via . ' ' . $this->direccion . ' ' . $this->numero_puerta;
     //}
 
-    public function setNombreAttribute($value){
-        return $this->attributes['nombre'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
-    }
+/*    public function setNombreAttribute($value){
+        return $this->attributes['nombre'] = strtoupper(trim($value));
+    }*/
 
     public function setDescripcionAttribute($value){
         return $this->attributes['descripcion'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));

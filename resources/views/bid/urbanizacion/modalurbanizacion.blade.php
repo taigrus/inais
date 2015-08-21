@@ -27,7 +27,9 @@
                             </div>
                             <div class="modal-body">
                                 <h2><small><span style="color: darkred">Ingrese los datos de la nueva urbanización</span></small></h2>
-                                @include('bid.urbanizacion.partials.messages')
+                                {{--No se requieren los mensajes de validacion en el servidor por ser solicitud Ajax,
+                                de todas maneras se efectua la validacion en el servidor retornandose un error generico
+                                @include('bid.urbanizacion.partials.messages')--}}
                                 {!! Form::open(['route' => 'bid.urbanizaciones.store', 'method' => 'POST', 'id' => 'altaUrbanizacionesmodal', 'data-parsley-validate' => '']) !!}
                                 @include('bid.urbanizacion.partials.fields')
                                 {!! form::close() !!}

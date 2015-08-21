@@ -62,20 +62,7 @@
             $('#cargando').hide();
         });
 
-        function validarParsley(){
-            $('#altaUrbanizacionesmodal').parsley({
-                successClass: 'success',
-                errorClass: 'error',
-                errors: {
-                    classHandler: function(el) {
-                        return ( $(el).closest('.control-group'));
-                    },
-                    errorsWrapper: '<span class=\"help-inline\"></span>',
-                    errorElem: '<span></span>',
-                    errores: 1
-                }
-            });
-        }
+
         function validador(nombre){
             var tester = /^([a-zA-Z0-9.+-+ ]{3,50})+$/;
             return tester.test(nombre);
@@ -109,7 +96,7 @@
                     if(respuesta.tipo!='ok') {
                         swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
                     }else{
-                        //actualizar la tabla
+                        //TODO: Se debe actualizar el control select con los nuevos valores
                     }
                     envio.success(function(){
                         if(respuesta.tipo=='ok') {
