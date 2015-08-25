@@ -1,4 +1,4 @@
-/*! Buttons for DataTables 1.0.0
+/*! Buttons for DataTables 1.0.1
  * ©2015 SpryMedia Ltd - datatables.net/license
  */
 (function(window, document, undefined) {
@@ -57,7 +57,7 @@ var Buttons = function( dt, config )
 };
 
 
-Buttons.prototype = {
+$.extend( Buttons.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Public methods
 	 */
@@ -795,7 +795,7 @@ Buttons.prototype = {
 
 		return conf;
 	}
-};
+} );
 
 
 
@@ -1052,7 +1052,7 @@ Buttons.defaults = {
  * @type {string}
  * @static
  */
-Buttons.version = '1.0.0';
+Buttons.version = '1.0.1';
 
 
 $.extend( _dtButtons, {
@@ -1377,6 +1377,10 @@ var _exportData = function ( dt, inOpts )
 	}, inOpts );
 
 	var strip = function ( str ) {
+		if ( typeof str !== 'string' ) {
+			return str;
+		}
+
 		if ( config.stripHtml ) {
 			str = str.replace( /<.*?>/g, '' );
 		}
@@ -1398,7 +1402,10 @@ var _exportData = function ( dt, inOpts )
 
 	var footer = dt.table().footer() ?
 		dt.columns( config.columns ).indexes().map( function (idx, i) {
-			return strip( dt.column( idx ).footer().innerHTML );
+			var el = dt.column( idx ).footer();
+			return el ?
+				strip( el.innerHTML ) :
+				'';
 		} ).toArray() :
 		null;
 

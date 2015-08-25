@@ -52,7 +52,7 @@
                 serverSide: true,
                 responsive: true,
                 stateSave: true,
-                languaje: {
+                language: {
                     "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
                 },
                 ajax: '{!! route('users.datatables.data') !!}',

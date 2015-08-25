@@ -8,12 +8,4 @@
     </tr>
     </thead>
 
-    <tfoot>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-    </tr>
-    </tfoot>
-
 </table>

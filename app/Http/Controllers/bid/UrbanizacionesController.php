@@ -37,7 +37,8 @@ class UrbanizacionesController extends Controller
         $urbanizaciones = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre', 'urbanizacion.descripcion']);
         return Datatables::of($urbanizaciones)
             ->addColumn('action', function ($urbanizacion) {
-                return '<a href="urbanizaciones/'.$urbanizacion->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+                return '<a href="urbanizaciones/'.$urbanizacion->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-wrench"></i></a>
+                <a href="#!" class="btn-editar btn btn-xs btn-success" data-id="' . $urbanizacion->id . '"><i class="glyphicon glyphicon-pencil"></i></a>
                 <a href="#!" class="btn-borrar btn btn-xs btn-danger" data-id="' . $urbanizacion->id . '"><i class="glyphicon glyphicon-exclamation-sign"></i></a>';
             })->make(true);
     }
@@ -49,32 +50,13 @@ class UrbanizacionesController extends Controller
     public function create()
     {
         //
-        try {
-            //
-            return view("bid.urbanizacion.create");
-        }
-        catch(TokenMismatchException $e)
-        {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'No se puede realizar ninguna acción, su sesión expiro, por favor inicie sesión nuevamente.');
-            return redirect()->route('home.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
-        }
+        return view("bid.urbanizacion.create");
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
+
     public function store(Request $request)
     {
-        //todo: No se capturan las excepciones adicionales con catch se debe ver la forma de hacerlo con laravel
-
-        //todo: esto sirve para obtener el id dd($this->route->getParameter('urbanizaciones'));
-
-        try {
-
+      try {
+          //NOTE: esto sirve para obtener el id dd($this->route->getParameter('urbanizaciones'));
             $data = $request->all();
             //Se quita espacios de inicio y final y se convierte a mayusculas el array de datos
             $data['nombre'] = Str::upper(trim($data['nombre']));
@@ -112,30 +94,12 @@ class UrbanizacionesController extends Controller
             }
             //no es ajax
             return redirect()->route('bid.urbanizaciones.index');
-        }
-        catch(TokenMismatchException $e)
-        {
-            $mensaje='No se puede realizar ninguna acción, su sesión expiro, por favor inicie sesión nuevamente.';
-
-            if($request->ajax()){
-                return response()->json([
-                    'mensaje' => $mensaje,
-                    'tipo'    => 'error'
-                ]);
-            }
-            //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', $mensaje);
-            return redirect()->route('home.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
-        }
+          } catch (Exception $e) {
+            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+            return redirect()->route('bid.urbanizaciones.index');
+          }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id)
     {
 
@@ -147,7 +111,15 @@ class UrbanizacionesController extends Controller
         $urbanizacion = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->orderBy('urbanizacion.nombre','asc')->get();
         return response()->json(['success' => true, 'urbanizaciones' => $urbanizacion]);
     }
-    
+
+    public function getUrbanizacion($id)
+    {
+      //abort(500);
+        //Retorna los datos de la urbanizacion con $id
+        $urbanizacion = Urbanizacion::findOrFail($id);
+        return response()->json(['success' => true, 'urbanizacion' => $urbanizacion]);
+    }
+
     public function edit($id)
     {
         try {
@@ -156,29 +128,12 @@ class UrbanizacionesController extends Controller
         }
         catch(ModelNotFoundException $e)
         {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
             Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
             return redirect()->route('bid.urbanizaciones.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
-        }
-
-        catch(TokenMismatchException $e)
-        {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
-            return redirect()->route('home.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Requests\EditUrbanizacionRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try
         {
@@ -192,6 +147,8 @@ class UrbanizacionesController extends Controller
                 'nombre'        => 'required|max:50|min:3|unique:urbanizacion,nombre,' . $id,
                 'descripcion'   => 'max:250|min:10'
             );
+            //Validacion usando la estructura mas antigua de Validator de laravel
+            //Para poder validar correctamente los campos alterados con trim
             $v=Validator::make($data, $rules);
             if($v->fails()){
                 //si la validacion falla armamos los mensajes de error para el ajax
@@ -216,7 +173,7 @@ class UrbanizacionesController extends Controller
             $urbanizacion->save();
             if($request->ajax()){
                 return response()->json([
-                    'mensaje' => 'ok',
+                    'mensaje' => 'Registro actualizado correctamente.',
                     'tipo'    => 'ok'
                 ]);
             }
@@ -226,15 +183,12 @@ class UrbanizacionesController extends Controller
         }
         catch(ModelNotFoundException $e)
         {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
             Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
             return redirect()->Createroute('bid.urbanizaciones.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
         catch(QueryException $e)
         {
             if($e->getCode()=='23505'){
-                //dd($e);
                 $mensaje='No se pudo guardar! el nombre de la urbanizacion esta duplicado, verifique los espacios al final e inicio del nombre';
 
                 if($request->ajax()){
@@ -248,7 +202,6 @@ class UrbanizacionesController extends Controller
             }
             else
             {
-                //dd($e);
                 $mensaje='Error inesperado al efectuar la consulta a la BD (urbanizacionesController/método:store)!';
 
                 if($request->ajax()){
@@ -261,21 +214,8 @@ class UrbanizacionesController extends Controller
                 return redirect()->route('bid.urbanizaciones.index');
             }
         }
-        catch(TokenMismatchException $e)
-        {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
-            return redirect()->route('home.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
-        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id, Request $request)
     {
         //
@@ -286,8 +226,6 @@ class UrbanizacionesController extends Controller
             $urbanizacion = Urbanizacion::findOrFail($id);
 
             $mensaje = 'El registro perteneciente a la urbanización ' . $urbanizacion->nombre . ' con ID: ' . $urbanizacion->id . ' fue ELIMINADO correctamente';
-            //User::destroy($id);
-
             $urbanizacion->delete();
 
             if($request->ajax()){
@@ -296,16 +234,13 @@ class UrbanizacionesController extends Controller
                     'tipo'    => 'ok'
                 ]);
             }
-
             //se debe usar el metodo Set en vez de flash en caso de que se quiera persistir el mensaje.
             Session::flash('message', $mensaje);
             return redirect()->route('bid.urbanizaciones.index');
         }
         catch(ModelNotFoundException $e)
         {
-
             $errormsg='El registro que intentó eliminar no se ha podido encontrar.';
-
             if($request->ajax()){
                 return response()->json([
                     'id'      => $id,
@@ -313,21 +248,14 @@ class UrbanizacionesController extends Controller
                     'tipo'    => 'error'
                 ]);
             }
-            //dd(get_class_methods($e)); // lists all available methods for exception object
             Session::flash('error-message', $errormsg);
             return redirect()->route('bid.urbanizaciones.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
-        }
-        catch(TokenMismatchException $e)
-        {
-            //dd(get_class_methods($e)); // lists all available methods for exception object
-            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
-            return redirect()->route('home.index');
-            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
         }
     }
 
-    public function crear_modal(){
-        return view('bid.urbanizacion.createmodal');
+
+    public function editarModal($id){
+      $urbanizacion = Urbanizacion::findOrFail($id);
+      return view('bid.urbanizacion.modalediturbanizacion', compact('urbanizacion'));
     }
 }

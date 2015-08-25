@@ -96,9 +96,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
         Route::resource('urbanizaciones','UrbanizacionesController');
         Route::post('listaurbanizaciones','UrbanizacionesController@getUrbanizaciones');
+        Route::post('obtieneurbanizacion/{id}','UrbanizacionesController@getUrbanizacion');
     });
 
-    Route::get('creamodal','bid\UrbanizacionesController@crear_modal');
+    Route::get('editamodal/{id}','bid\UrbanizacionesController@editarModal');
 
 
 
