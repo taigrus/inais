@@ -147,13 +147,7 @@ class UrbanizacionesController extends Controller
         $urbanizacion = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->orderBy('urbanizacion.nombre','asc')->get();
         return response()->json(['success' => true, 'urbanizaciones' => $urbanizacion]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    
     public function edit($id)
     {
         try {
