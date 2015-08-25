@@ -94,8 +94,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $users = User::select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id']);
-        $users = Rol::join('users', 'users.rol_id','=','roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id', 'roles.descripcion'])->get();
-        dd($users);
+        //$users = Rol::join('users', 'users.rol_id','=','roles.id')->select(['users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id', 'roles.descripcion'])->get();
         echo 'resultado' . "<br>";
         //$users=User::select(['last_name', 'first_name', 'rol.descripcion'])->orderBy('id')->get();
         //$users=Rol::find(2)->users;

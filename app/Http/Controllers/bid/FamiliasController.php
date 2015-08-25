@@ -73,9 +73,9 @@ class FamiliasController extends Controller
     {
         try {
             //
-            $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre', 'id');
-            $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre', 'id');
-            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $facilitador_options = \DB::table('facilitador_bid')->orderBy('nombre', 'asc')->lists('nombre', 'id');
+            $distrito_options = \DB::table('distrito')->orderBy('nombre', 'asc')->lists('nombre', 'id');
+            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
             $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
             return view("bid.familia.create", array(
@@ -139,9 +139,9 @@ class FamiliasController extends Controller
     public function edit($id)
     {
         try {
-            $facilitador_options = \DB::table('facilitador_bid')->orderBy('id', 'asc')->lists('nombre', 'id');
-            $distrito_options = \DB::table('distrito')->orderBy('id', 'asc')->lists('nombre', 'id');
-            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('id', 'asc')->lists('nombre', 'id');
+            $facilitador_options = \DB::table('facilitador_bid')->orderBy('nombre', 'asc')->lists('nombre', 'id');
+            $distrito_options = \DB::table('distrito')->orderBy('nombre', 'asc')->lists('nombre', 'id');
+            $urbanizacion_options = \DB::table('urbanizacion')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
             $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
             $familia = FamiliaBid::findOrFail($id);

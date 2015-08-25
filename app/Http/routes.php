@@ -61,11 +61,11 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 //Rutas para BID
 
-
-
-
+App::bind('Route', function() { return new Route; });
 
 Route::group(['middleware' => 'auth'], function() {
+
+  Route::group(['middleware' => 'timeout'], function() {
 
     //Rutas de administracion
     Route::group(['prefix' => 'admin', 'namespace' => '\Admin'], function(){
@@ -95,8 +95,13 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
         Route::resource('urbanizaciones','UrbanizacionesController');
+        Route::post('listaurbanizaciones','UrbanizacionesController@getUrbanizaciones');
     });
 
-
     Route::get('creamodal','bid\UrbanizacionesController@crear_modal');
+
+
+
+  });
+
 });

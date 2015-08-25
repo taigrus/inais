@@ -18,7 +18,8 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
         \inais\Http\Middleware\VerifyCsrfToken::class,
-        \inais\Http\Middleware\MenuMiddleware::class
+        \inais\Http\Middleware\MenuMiddleware::class,
+        \inais\Http\Middleware\SessionTimeoutMiddleware::class
     ];
 
     /**
@@ -30,5 +31,6 @@ class Kernel extends HttpKernel
         'auth' => \inais\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \inais\Http\Middleware\RedirectIfAuthenticated::class,
+        'timeout' => \inais\Http\Middleware\SessionTimeoutMiddleware::class
     ];
 }

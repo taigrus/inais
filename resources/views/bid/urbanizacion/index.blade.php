@@ -1,6 +1,6 @@
 @extends('layout')
 
-@if (!Auth::guest() and Auth::user()->rol_id==1)
+@if (!Auth::guest() and (Auth::user()->rol_id==1 or Auth::user()->rol_id==2))
 
 @section('content')
     <style>
@@ -186,6 +186,8 @@
                                             } else {
                                                 $('#modalurbanizacion').modal('hide');
                                             }
+                                              //TODO: actualizar la tabla con la nueva fila
+                                              //NOTE: Se debe buscar la forma de mostrar el nuevo registro creado en la tabla
                                         });
                             };
                             //

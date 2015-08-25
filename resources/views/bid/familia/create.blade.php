@@ -65,12 +65,6 @@
         });
 
 
-        function validador(nombre){
-            var tester = /^([a-zA-Z0-9.+-+ ]{3,50})+$/;
-            return tester.test(nombre);
-        }
-
-        //nueva urbanizacion por ajax
         //nueva urbanizacion por ajax
         $('#btn-nueva').click(function (e) {
             //e.preventDefault();
@@ -109,7 +103,20 @@
 
                                         } else {
                                             $('#modalurbanizacion').modal('hide');
-                                        }
+                                            //Se actualiza via AJAX el select con las nuevas urbanizaciones
+                                            $.post('/bid/listaurbanizaciones', function(response){
+                                            if(response.success)
+                                            {
+                                                 var branchName = $('#urbanizacion').empty();
+                                                 $.each(response.urbanizaciones, function(i, urbanizacion){
+                                                    $('<option/>', {
+                                                         value:urbanizacion.id,
+                                                         text:urbanizacion.nombre
+                                                     }).appendTo(branchName);
+                                                 })
+                                            }
+                                        }, 'json');
+                                      }
                                     });
                         };
                         //

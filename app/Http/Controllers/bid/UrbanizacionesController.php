@@ -20,10 +20,6 @@ use Illuminate\Routing\Route;
 
 class UrbanizacionesController extends Controller
 {
-    public function __construct(Route $route)
-    {
-        $this->route = $route;
-    }
 
     /**
      * Display a listing of the resource.
@@ -142,7 +138,14 @@ class UrbanizacionesController extends Controller
      */
     public function show($id)
     {
-        //
+
+    }
+
+    public function getUrbanizaciones()
+    {
+        //Retorna la lista de urbanizaciones para repoblar los selects
+        $urbanizacion = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->orderBy('urbanizacion.nombre','asc')->get();
+        return response()->json(['success' => true, 'urbanizaciones' => $urbanizacion]);
     }
 
     /**
