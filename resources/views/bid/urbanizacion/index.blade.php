@@ -54,7 +54,9 @@
         //     var title = $('#urbanizaciones-table thead th').eq( $(this).index() ).text();
         //     $(this).html( '<input type="text" placeholder=' + title + ' />' );
         // } );
-        var table=$('#urbanizaciones-table').DataTable({
+        var table=$('#urbanizaciones-table').on('error.dt', function(e, settings, techNote, message){
+            swal("Tu sessión aparentemente expiró!", "por favor presiona F5 para recargar la página y autenticarte nuevamente. Gracias", "error");
+        }).DataTable({
           processing: true,
           serverSide: true,
           stateSave: true,
@@ -90,7 +92,7 @@
           "language": {
               buttons: {
                 copyTitle: 'Copiar al portapapeles',
-                copyKeys: 'Presione la tecla <i>ctrl</i> o la tecla <i>\u2318</i> (en MAC) + <i>C</i> para copiar los datos de la tabla a su portapapeles. <br><br>Si desea cancelar esta operación haga click dentro de este cuadro o presionar la tecla Esc.',
+                copyKeys: 'Presione las teclas <i>ctrl</i> + <i>C</i> o la tecla <i>\u2318</i> + <i>C</i> (en MAC), para copiar los datos de la tabla a su portapapeles. <br><br>Si desea cancelar esta operación haga click dentro de este cuadro o presine la tecla <i>Esc</i>.',
                 colvis: 'Mostar/Ocultar columnas',
                 colvisRestore: 'Mostrar todas'
               },
@@ -146,8 +148,8 @@
             var url = form.attr('action').replace(':URB_ID', id);
             var data = form.serialize();
             swal({
-                    title: '¿Esta segur@ de eliminar el registro con ID: ' +id + '?',
-                    text: 'La eliminación de este registro sera permanente y eliminara todos los integrantes de la familia relacionados!',
+                    title: '¡CUIDADO!\n ¿Esta segur@ de eliminar el registro con ID: ' +id + ' y todo lo relacionado con el?',
+                    text: 'La eliminación de este registro sera permanente y eliminara todas las familias, integrantes y demas registros relacionados!!!',
                     type: 'warning',
                     showCancelButton: true,
                     closeOnConfirm: false,
@@ -239,22 +241,6 @@
             $('#cargando').hide();
             $('#altaUrbanizacionesmodal').parsley().reset();
         });
-
-        //Inicializa el validador
-        function validarParsley(){
-            $('#altaUrbanizacionesmodal').parsley({
-                successClass: 'success',
-                errorClass: 'error',
-                errors: {
-                    classHandler: function(el) {
-                        return ( $(el).closest('.control-group'));
-                    },
-                    errorsWrapper: '<span class=\"help-inline\"></span>',
-                    errorElem: '<span></span>',
-                    errores: 1
-                }
-            });
-        }
 
            //Registra nueva urbanizacion por ajax
             $('#btn-nueva').click(function (e) {

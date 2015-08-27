@@ -62,6 +62,31 @@ class FamiliaBid extends Model
         return $this->attributes['nombre_jefe_hogar'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
     }
 
+    public function setTelefonoAttribute($value){
+        //convierte la fecha a formato aceptado por la BD al momento de guardar
+        if (empty($value)){
+            $this->attributes['telefono'] = null;
+        }
+    }
+
+    public function setLatitudAttribute($value){
+        //convierte la fecha a formato aceptado por la BD al momento de guardar
+        if (empty($value)){
+            $this->attributes['latitud'] = null;
+        }
+    }
+    public function setLongitudAttribute($value){
+        //convierte la fecha a formato aceptado por la BD al momento de guardar
+        if (empty($value)){
+            $this->attributes['longitud'] = null;
+        }
+    }
+    public function setAlturaAttribute($value){
+        //convierte la fecha a formato aceptado por la BD al momento de guardar
+        if (empty($value)){
+            $this->attributes['altura'] = null;
+        }
+    }
     public function facilitador(){
         return $this->belongsTo('inais\Facilitador');
     }

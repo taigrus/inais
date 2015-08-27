@@ -152,19 +152,19 @@ class tablasBidTableSeeder extends Seeder
 
 		//Urbanizaciones
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => '1 - Senkata 79',
+			'nombre' => 'Senkata 79',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => '2 - Juancito Pinto',
+			'nombre' => 'Juancito Pinto',
 			'descripcion' => 'ninguna',
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => '3 - Atipiris',
+			'nombre' => 'Atipiris',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
@@ -192,6 +192,20 @@ class tablasBidTableSeeder extends Seeder
 		));
 		DB::table('via')->insert(array(
 			'nombre' => 'Plaza',
+			'descripcion' => null,
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('via')->insert(array(
+			'nombre' => 'Carretera',
+			'descripcion' => null,
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('via')->insert(array(
+			'nombre' => 'Paseo',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
@@ -236,7 +250,7 @@ class tablasBidTableSeeder extends Seeder
 				'urbanizacion_id' => $faker->numberBetween(1,3),
 				'nombre_jefe_hogar' => $faker->firstName(),
 				'telefono' => $faker->numberBetween(60000000,79999999),
-				'via_id' => $faker->numberBetween(1,4),
+				'via_id' => $faker->numberBetween(1,6),
 				'direccion' => $faker->streetAddress(),
 				'numero_puerta' => $faker->numberBetween(1,4200),
 				'otras_referencias' => $faker->text(50),

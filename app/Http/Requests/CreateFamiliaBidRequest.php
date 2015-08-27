@@ -24,19 +24,20 @@ class CreateFamiliaBidRequest extends Request
     public function rules()
     {
         return [
-            'folio'         => 'required|unique:familia_bid,folio|max:15',
+            'folio'         => 'required|max:9999999999|min:1|numeric|unique:familia_bid,folio',
             'facilitador_id'   => 'required|numeric',
             'distrito_id'   => 'required|numeric',
-            'urbanizacion_id'   => 'required|numeric',
-            'via_id'   => 'required|numeric',
-            'direccion'     => 'required|max:100',
+            'urbanizacion_id'  => 'required|numeric',
+            'via_id'  => 'required|numeric',
+            'direccion'  => 'required|max:100',
             'numero_puerta' => 'required|max:6',
-            'nombre_jefe_hogar' => 'required|max:100',
-            'telefono' => 'required|max:8',
+            'nombre_jefe_hogar' => 'required|max:100|alpha',
+            'telefono' => 'min:2000000|max:79999999|numeric',
             'alcantarillado_id' => 'required|numeric',
-            'latitud'       => 'required|numeric',
-            'longitud'       => 'required|numeric',
-            'altura'        => 'required|numeric'
+            'latitud'       => 'numeric|between:-20.999999,-10.000000',
+            'longitud'       => 'numeric|between:-70.999999,-65.000000',
+            'altura'        => 'numeric|between:2800,4800',
+            'otras_referencias' => 'max:250'
         ];
     }
 }

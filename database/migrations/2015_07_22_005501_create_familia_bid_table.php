@@ -54,18 +54,18 @@ class CreateFamiliaBidTable extends Migration
         Schema::create('familia_bid', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('folio',15)->unique()->index();
-            $table->double('latitud');
-            $table->double('longitud');
-            $table->integer('altura');
+            $table->double('latitud')->nullable();
+            $table->double('longitud')->nullable();
+            $table->integer('altura')->nullable();
             $table->integer('facilitador_id')->index()->unsigned();
             $table->integer('distrito_id')->unsigned();
             $table->integer('urbanizacion_id')->index()->unsigned();
             $table->string('nombre_jefe_hogar',100);
-            $table->string('telefono',8);
+            $table->string('telefono',8)->nullable();
             $table->integer('via_id')->unsigned();
             $table->string('direccion',100);
             $table->string('numero_puerta',6);
-            $table->string('otras_referencias',250);
+            $table->string('otras_referencias',250)->nullable();
             $table->date('fecha_encuesta_lb')->nullable();
             $table->integer('alcantarillado_id')->unsigned();
             $table->timestamps();

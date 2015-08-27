@@ -47,21 +47,71 @@
 
 @push('scripts')
 <script>
-
     $(document).ready(function() {
-
-        var table=$('#familias-table').DataTable({
+        var table=$('#familias-table').on('error.dt', function(e, settings, techNote, message){
+            swal("Tu sessión aparentemente expiró!", "por favor presiona F5 para recargar la página y autenticarte nuevamente. Gracias", "error");
+        }).DataTable({
             processing: true,
             serverSide: true,
-            fixedHeader: true,
             responsive: true,
             stateSave: true,
-            //dom: 'Bfrtip',
-            //buttons: [
-            //    'copy', 'csv', 'excel', 'pdf', 'print'
-            //],
-            languaje: {
-                "url": "//cdn.datatables.net/plug-ins/1.10.7/i18n/Spanish.json"
+            pagingType: 'full_numbers',
+            dom: '<lf<t>ip>B',
+            buttons: [
+              {
+                  extend: 'copyHtml5',
+                  exportOptions: {
+                      columns: [ 0, 1, 2, 3, 4, 6, 8, 9 ]
+
+                  }
+              },
+              {
+                  extend: 'excelHtml5',
+                  exportOptions: {
+                      columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+                  }
+              },
+              {
+                  extend: 'pdfHtml5',
+                  exportOptions: {
+                      columns: [ 0, 1, 2, 3, 4, 6 ]
+                  }
+              },
+              {
+                  extend: 'colvis',
+                  collectionLayout: 'fixed two-column',
+                  postfixButtons: [ 'colvisRestore' ]
+              }
+          ],
+            "language": {
+                buttons: {
+                  copyTitle: 'Copiar al portapapeles',
+                  copyKeys: 'Presione las teclas <i>ctrl</i> + <i>C</i> o la tecla <i>\u2318</i> + <i>C</i> (en MAC), para copiar los datos de la tabla a su portapapeles. <br><br>Si desea cancelar esta operación haga click dentro de este cuadro o presine la tecla <i>Esc</i>.',
+                  colvis: 'Mostar/Ocultar columnas',
+                  colvisRestore: 'Mostrar todas'
+                },
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando del _START_ al _END_ de _TOTAL_",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
             },
             ajax: '{!! route('familias.datatables.data') !!}',
             columns: [
@@ -78,12 +128,11 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
-
+        new $.fn.dataTable.FixedHeader( table, {
+          fixedHeader: true
+        });
     });
-
-
-
-    </script>
+</script>
 
 @endpush
 @else
