@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class="btn-update btn btn-success" id="btn-update"><i class=" glyphicon glyphicon-floppy-saved"></i> Actualizar</a>
+                                <a href="#!" class="btn-update btn btn-success" id="btn-update"><i class="glyphicon glyphicon-heart-empty"></i> Actualizar</a>
                                 <button class="btn btn-default btn btn-warning" data-dismiss="modal"><i class="glyphicon glyphicon-thumbs-down"></i> Cancelar</button>
                             </div>
                         </div>

@@ -178,28 +178,161 @@
             });
 
         //Escucha boton Ajax para edicion de datos de la urbanizacion y obtine sus datos en el formulario modal
-        $('#urbanizaciones-table tbody').on('click', '.btn-editar', function(e) {
-                e.preventDefault();
+        $('#urbanizaciones-table tbody').on('click', '.btn-editar', function(e)
+         {      e.preventDefault();
                 var id = $(this).data('id');
-                var urlInicial = 'obtieneurbanizacion/' + id;
+                var urlInicial = 'obtienedatoscompeltosurbanizacion/' + id;
                 //----ENVIO AJAX para obtener los datos de la urbanizcion
-                $.post(urlInicial, function(response){
-                if(response.success)
+                $.post(urlInicial, function(respuestaAJAX){
+                if(respuestaAJAX.success)
                   {
-                    $('#modalEditUrbanizacion').modal('show');
-                    $('#cargandoEdit').show();
-                    $('#nombreEdicion').val('');
-                    $('#descripcionEdicion').val('');
-                    $('#formEdicionModalUrbanizaciones').parsley().reset();
-                    $('#idOculto').val(response.urbanizacion.id);
-                    $('#nombreEdicion').val(response.urbanizacion.nombre);
-                    $('#descripcionEdicion').val(response.urbanizacion.descripcion);
+
+                     $('#modalEditUrbanizacion').modal('show');
+                     $('#cargandoEdit').show();
+                     $('#formEdicionModalUrbanizaciones').parsley().reset();
+                     $('#idOculto').val(respuestaAJAX.respuestaJSON.id);
+                     $( "#paisEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el país', } );
+                     $( "#departamentoEdicion" ).select2( { disabled: true, allowClear: true, placeholder: 'seleccione el departamento' } );
+                     $( "#provinciaEdicion" ).select2( { allowClear: true, placeholder: 'seleccione la provincia' } );
+                     $( "#municipioEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el municipio' } );
+                     $( "#poblacionEdicion" ).select2( { allowClear: true, placeholder: 'seleccione la población' } );
+                     $( "#distritoEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el distrito' } );
+                     cargaDropDown("#paisEdicion", "listapaises", null, "el país",respuestaAJAX.respuestaJSON.pais, true);
+                    //  cargaDropDown("#departamentoEdicion", "departamentospais", respuestaAJAX.respuestaJSON.pais, "el departamento",respuestaAJAX.respuestaJSON.departamento, false);
+                    //  cargaDropDown("#provinciaEdicion", "provinciasdepartamento", respuestaAJAX.respuestaJSON.departamento, "la provincia",respuestaAJAX.respuestaJSON.provincia, false);
+                    //  cargaDropDown("#municipioEdicion", "municipiosprovincia", respuestaAJAX.respuestaJSON.provincia, "el municipio",respuestaAJAX.respuestaJSON.municipio, false);
+                    //  cargaDropDown("#poblacionEdicion", "poblacionesmunicipio", respuestaAJAX.respuestaJSON.municipio, "la población",respuestaAJAX.respuestaJSON.poblacion, false);
+                    //  cargaDropDown("#distritoEdicion", "distritospoblacion", respuestaAJAX.respuestaJSON.poblacion, "el distrito",respuestaAJAX.respuestaJSON.distrito, false);
+                    $('#nombreEdicion').val(respuestaAJAX.respuestaJSON.nombre);
+                    $('#descripcionEdicion').val(respuestaAJAX.respuestaJSON.descripcion);
                     $('#cargandoEdit').hide();
                   }
                 }, 'json').fail(function (result) {
                      swal("Upps, algo no esta bien!", "Se produjo un error al obtener los datos de la urbanización, intentelo nuevamente.", "error");
                    });
         });
+
+        //funcion para cargar dropdown list
+        function cargaDropDown(controlId, urlParcial, keyId, textoPlaceHolder, indice, estadoFinal){
+          $('#cargandoEdit').show();
+          if (keyId != null){
+            url = '/bid/obtiene' + urlParcial +'/' + keyId;
+          }else {
+            url = '/bid/obtiene' + urlParcial
+
+          }
+          var lista = $.post(url, function(response)
+          {
+            lista.success(function (){
+              if(response.success)
+              {
+                 var control = $(controlId).empty();
+                 $('<option/>', {
+                   value:'0',
+                   text:'---Seleccione ' + textoPlaceHolder + '---'
+                  }).appendTo(control);
+                  laRespuesta=response.respuestaJSON;
+                 $.each(laRespuesta, function(i, item){
+                  $('<option/>', {
+                    value:item.id,
+                    text:item.nombre
+                   }).appendTo(control);
+                 })
+                $("abbr.select2-search-choice-close", control.prev()).trigger("mousedown");
+                 control.val(indice).trigger("change");
+                 control.prop("disabled",!estadoFinal);
+                 $('#cargandoEdit').hide();
+              } else {
+                control.prop("disabled",true);
+                swal("Upps, algo no esta bien!", "Error cargando la lista de provincias.", "error");
+                $('#cargandoEdit').hide();
+              }
+            });
+        },'json').fail(function (result) {
+          //pone en nulo el control select
+          control.prop("disabled",true);
+          swal("Upps, algo no esta bien!", "Error cargando la lista de " + controlId, "error");
+          $('#cargando').hide();
+        });
+        }
+
+        $("#paisEdicion").on("change", function (e) {
+          if($("#paisEdicion").val()!=0 && $("#paisEdicion").val()!=null)
+          {
+            //$("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            var paisId=$('#paisEdicion').val();
+            cargaDropDown("#departamentoEdicion", "departamentospais", paisId, "el departamento",0, true);
+            $("#departamentoEdicion").val(0).trigger("change");
+          }
+          else {
+            $("abbr.select2-search-choice-close", $("#departamentoEdicion").prev()).trigger("mousedown");
+            $("#departamentoEdicion").val(0).trigger("change");
+            $("#departamentoEdicion").prop("disabled",true);
+          }
+        });
+
+        $("#departamentoEdicion").on("change", function (e) {
+          if($("#departamentoEdicion").val()!=0 && $("#departamentoEdicion").val()!=null)
+          {
+            //$("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            var departamentoId=$('#departamentoEdicion').val();
+            cargaDropDown("#provinciaEdicion", "provinciasdepartamento", departamentoId, "la provincia",0, true);
+            $("#provinciaEdicion").val(0).trigger("change");
+          }
+          else {
+            $("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            $("#provinciaEdicion").val(0).trigger("change");
+            $("#provinciaEdicion").prop("disabled",true);
+          }
+        });
+
+        $("#provinciaEdicion").on("change", function (e) {
+          if($("#provinciaEdicion").val()!=0 && $("#provinciaEdicion").val()!=null)
+          {
+            //$("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            var provinciaId=$('#provinciaEdicion').val();
+            cargaDropDown("#municipioEdicion", "municipiosprovincia", provinciaId, "el municipio",0, true);
+
+            $("#municipioEdicion").val(0).trigger("change");
+          }
+          else {
+            $("abbr.select2-search-choice-close", $("#municipioEdicion").prev()).trigger("mousedown");
+            $("#municipioEdicion").val(0).trigger("change");
+            $("#municipioEdicion").prop("disabled",true);
+          }
+        })
+
+        $("#municipioEdicion").on("change", function (e) {
+          if($("#municipioEdicion").val()!=0 && $("#municipioEdicion").val()!=null)
+          {
+            //$("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            var municipioId=$('#municipioEdicion').val();
+            cargaDropDown("#poblacionEdicion", "poblacionesmunicipio", municipioId, "la población",0, true);
+
+            $("#poblacionEdicion").val(0).trigger("change");
+          }
+          else {
+            $("abbr.select2-search-choice-close", $("#poblacionEdicion").prev()).trigger("mousedown");
+            $("#poblacionEdicion").val(0).trigger("change");
+            $("#poblacionEdicion").prop("disabled",true);
+          }
+        })
+
+        $("#poblacionEdicion").on("change", function (e) {
+          if($("#poblacionEdicion").val()!=0 && $("#poblacionEdicion").val()!=null)
+          {
+            //$("abbr.select2-search-choice-close", $("#provinciaEdicion").prev()).trigger("mousedown");
+            var poblacionId=$('#poblacionEdicion').val();
+            cargaDropDown("#distritoEdicion", "distritospoblacion", poblacionId, "el distrito",0, true);
+
+            $("#distritoEdicion").val(0).trigger("change");
+          }
+          else {
+            $("abbr.select2-search-choice-close", $("#distritoEdicion").prev()).trigger("mousedown");
+            $("#distritoEdicion").val(0).trigger("change");
+            $("#distritoEdicion").prop("disabled",true);
+          }
+        })
 
         //Actualiza los datos de la urbanizacion por ajax
          $('#btn-update').click(function (e) {
@@ -213,6 +346,7 @@
                  var envio = $.post(url, data, function (respuesta) {
                      if(respuesta.tipo!='ok') {
                          swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
+                         $('#cargando').hide();                         
                      }
                      envio.success(function(){
                          if(respuesta.tipo=='ok') {
@@ -235,11 +369,7 @@
 
         //Activa e inicializad el formulario modal de alta de urbanizacion
         $('.boton-nuevaajax').click(function(){
-            (document).getElementById('altaUrbanizacionesmodal').reset();
-            $('#nombre').val('');
-            $('#descripcion').val('');
-            $('#cargando').hide();
-            $('#altaUrbanizacionesmodal').parsley().reset();
+            inicializaControles();
         });
 
            //Registra nueva urbanizacion por ajax
@@ -289,6 +419,41 @@
                             $('#cargando').hide();
                         });
             });
+
+            $('#btn-limpiar').click(function(){
+              inicializaControles();
+            });
+
+            function inicializaControles(){
+
+              (document).getElementById('altaUrbanizacionesmodal').reset();
+              $('#nombre').val('');
+              $('#descripcion').val('');
+              $('#cargando').hide();
+              $('#altaUrbanizacionesmodal').parsley().reset();
+
+              //pone nulos los select2
+              $("abbr.select2-search-choice-close", $("#pais").prev()).trigger("mousedown");
+              $("abbr.select2-search-choice-close", $("#departamento").prev()).trigger("mousedown");
+              $("abbr.select2-search-choice-close", $("#provincia").prev()).trigger("mousedown");
+              $("abbr.select2-search-choice-close", $("#municipio").prev()).trigger("mousedown");
+              $("abbr.select2-search-choice-close", $("#poblacion").prev()).trigger("mousedown");
+              $("abbr.select2-search-choice-close", $("#distrito").prev()).trigger("mousedown");
+
+              $( "#pais" ).select2( { allowClear: true, placeholder: 'seleccione su país', } );
+              $( "#departamento" ).select2( { disabled: true, allowClear: true, placeholder: 'seleccione el departamento' } );
+              $( "#provincia" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
+              $( "#municipio" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
+              $( "#poblacion" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
+              $( "#distrito_id" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
+
+              //bloqueos
+              $("#departamento").prop("disabled",true);
+              $("#provincia").prop("disabled",true);
+              $("#municipio").prop("disabled",true);
+              $("#poblacion").prop("disabled",true);
+              $("#distrito").prop("disabled",true);
+            }
        });
     </script>
 @endsection

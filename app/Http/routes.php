@@ -61,11 +61,10 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 //Rutas para BID
 
-App::bind('Route', function() { return new Route; });
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'timeout'], function() {
 
-  Route::group(['middleware' => 'timeout'], function() {
+  Route::group(['middleware' => 'auth'], function() {
 
     //Rutas de administracion
     Route::group(['prefix' => 'admin', 'namespace' => '\Admin'], function(){
@@ -89,19 +88,48 @@ Route::group(['middleware' => 'auth'], function() {
         'anyData'  => 'urbanizaciones.datatables.data',
     ]);
 
-    Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
-        Route::resource('urbanizaciones','UrbanizacionesController');
-    });
+    // Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
+    //     Route::resource('urbanizaciones','UrbanizacionesController');
+    // });
 
     Route::group(['prefix' => 'bid', 'namespace' => '\bid'], function(){
+        //------BID Paises
+        Route::resource('paises','PaisesController');
+        Route::post('obtienelistapaises','PaisesController@getPaises');
+        Route::post('obtienepais/{id}','PaisesController@getPais');
+        //------BID Departamentos
+        Route::resource('departamentos','DepartamentosController');
+        Route::post('listadepartamentos','DepartamentosController@getDepartamentos');
+        Route::post('obtienedepartamento/{id}','DepartamentosController@getDepartamento');
+        Route::post('obtienedepartamentospais/{idPais}','DepartamentosController@getDepartamentosPais');
+        //------BID Provincias
+        Route::resource('provincia','ProvinciasController');
+        Route::post('listaprovincias','ProvinciasController@getProvincias');
+        Route::post('obtieneprovincia/{id}','ProvinciasController@getProvincia');
+        Route::post('obtieneprovinciasdepartamento/{idDepartamento}','ProvinciasController@getProvinciasDepartamento');
+        //------BID Municipios
+        Route::resource('municipio','MunicipiosController');
+        Route::post('listamunicipios','MunicipiosController@getMunicipios');
+        Route::post('obtienemunicipio/{id}','MunicipiosController@getMunicipio');
+        Route::post('obtienemunicipiosprovincia/{idProvincia}','MunicipiosController@getMunicipiosProvincia');
+        //------BID Poblaciones
+        Route::resource('poblacion','PoblacionesController');
+        Route::post('listapoblaciones','PoblacionesController@getPoblaciones');
+        Route::post('obtienepoblacion/{id}','PoblacionesController@getPoblacion');
+        Route::post('obtienepoblacionesmunicipio/{idMunicipio}','PoblacionesController@getPoblacionesMunicipio');
+        //------BID Distritos
+        Route::resource('distrito','DistritosController');
+        Route::post('listadistritos','DistritosController@getDistritos');
+        Route::post('obtienedistrito/{id}','DistritosController@getDistrito');
+        Route::post('obtienedistritospoblacion/{idPoblacion}','DistritosController@getDistritosPoblacion');
+        //------BID Urbanizaciones
         Route::resource('urbanizaciones','UrbanizacionesController');
         Route::post('listaurbanizaciones','UrbanizacionesController@getUrbanizaciones');
         Route::post('obtieneurbanizacion/{id}','UrbanizacionesController@getUrbanizacion');
+        Route::post('obtieneurbanizacionesdistrito/{idDistrito}','UrbanizacionesController@getUrbanizacionesDistrito');
+        Route::post('obtienedatoscompeltosurbanizacion/{id}','UrbanizacionesController@getDatosCompeltosUrbanizacion');
+
     });
-
-    Route::get('editamodal/{id}','bid\UrbanizacionesController@editarModal');
-
-
 
   });
 

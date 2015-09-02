@@ -110,9 +110,15 @@ return [
         'full_name' => 'Nombre completo',
         'password' => 'Contraseña',
         'type' => 'Rol del usuario',
-        'folio' => 'N° de Folio',
+        'folio' => 'Número de Folio',
         'fecha_encuesta_lb' => 'Fecha de encuesta de línea de base',
-        'nombre' => 'Nombre'
+        'nombre' => 'El nombre',
+        'pais_id' => 'país',
+        'departamento_id' => 'departamento',
+        'provincia_id' => 'provincia',
+        'poblacion_id' => 'población',
+        'municipio_id' => 'municipio',
+        'distrito_id' => 'distrito',
     ],
 
 ];

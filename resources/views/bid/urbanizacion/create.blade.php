@@ -5,7 +5,7 @@
     @section('content')
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-10 col-md-offset-1">
                     <div class="panel panel-default">
                         <div class="panel-heading">Registro de nueva urbanización</div>
                         <div class="panel-body">
@@ -13,12 +13,12 @@
                             {!! Form::open(['route' => 'bid.urbanizaciones.store', 'method' => 'POST', 'id' => 'altaUrbanizaciones', 'data-parsley-validate' => '']) !!}
                             @include('bid.urbanizacion.partials.fields')
                             <div class="row">
-                                <div class="col-md-12 col-md-offset-4">
+                                <div class="col-md-12 col-md-offset-5">
                                     {!! Form::submit('Registrar',['class' => 'btn btn-info']) !!}
                                     {!! link_to_route('bid.urbanizaciones.index', 'Cancelar','',['class' => 'btn btn-default']) !!}
-                                    {!! form::close() !!}
                                 </div>
                             </div>
+                            {!! form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -29,8 +29,3 @@
 @else
     <p class="alert alert-danger">Ud. no esta autorizado para usar esta función</p>
 @endif
-
-@push('scripts')
-<script>var nombreformulario='altaUrbanizaciones'</script>
-@include('bid.urbanizacion.partials.validacion')
-@endpush

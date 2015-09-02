@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Session\TokenMismatchException;
 use yajra\Datatables\Datatables;
 use inais\Urbanizacion;
+use inais\Distrito;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Routing\Route;
@@ -50,20 +51,34 @@ class UrbanizacionesController extends Controller
     public function create()
     {
         //
-        return view("bid.urbanizacion.create");
+        try {
+            //
+            return view("bid.urbanizacion.create");
+        }
+        catch(TokenMismatchException $e)
+        {
+            //dd(get_class_methods($e)); // lists all available methods for exception object
+            Session::flash('error-message', 'Su sesión ha expirado, por favor inicie sesión nuevamente.');
+            return redirect()->route('home.index');
+            //return 'No se encontro el usuari que quiere eliminar, presione atras en el navegador';
+        }
+
     }
 
     public function store(Request $request)
     {
       try {
           //NOTE: esto sirve para obtener el id dd($this->route->getParameter('urbanizaciones'));
-            $data = $request->all();
+            $data=$request->all();
+          //$data = ['nombre' => $request->nombre, 'descripcion' => $request->descripcion, 'distrito_id' => $request->distrito_id];
+          //dd($data);
             //Se quita espacios de inicio y final y se convierte a mayusculas el array de datos
             $data['nombre'] = Str::upper(trim($data['nombre']));
             $data['descripcion'] = Str::upper(trim($data['descripcion']));
             $rules = array(
                 'nombre'        => 'required|max:50|min:3|unique:urbanizacion,nombre',
-                'descripcion'   => 'max:250|min:10'
+                'descripcion'   => 'max:250|min:10',
+                'distrito_id'   => 'required|numeric|min:1'
             );
             $v=Validator::make($data, $rules);
             if($v->fails()){
@@ -95,8 +110,8 @@ class UrbanizacionesController extends Controller
             //no es ajax
             return redirect()->route('bid.urbanizaciones.index');
           } catch (Exception $e) {
-            Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
-            return redirect()->route('bid.urbanizaciones.index');
+              Session::flash('error-message', 'El registro que intentó actualizar no se ha podido encontrar.');
+              return redirect()->route('bid.urbanizaciones.index');
           }
     }
 
@@ -105,20 +120,6 @@ class UrbanizacionesController extends Controller
 
     }
 
-    public function getUrbanizaciones()
-    {
-        //Retorna la lista de urbanizaciones para repoblar los selects
-        $urbanizacion = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->orderBy('urbanizacion.nombre','asc')->get();
-        return response()->json(['success' => true, 'urbanizaciones' => $urbanizacion]);
-    }
-
-    public function getUrbanizacion($id)
-    {
-      //abort(500);
-        //Retorna los datos de la urbanizacion con $id
-        $urbanizacion = Urbanizacion::findOrFail($id);
-        return response()->json(['success' => true, 'urbanizacion' => $urbanizacion]);
-    }
 
     public function edit($id)
     {
@@ -140,12 +141,13 @@ class UrbanizacionesController extends Controller
             //
             $data = $request->all();
 
-            //Se quita espacios de inicio y final y se convierte a mayusculas el array de datos
             $data['nombre'] = Str::upper(trim($data['nombre']));
+            $data['nombre'] = preg_replace('/\s+/', ' ',$data['nombre']);
             $data['descripcion'] = Str::upper(trim($data['descripcion']));
             $rules = array(
                 'nombre'        => 'required|max:50|min:3|unique:urbanizacion,nombre,' . $id,
-                'descripcion'   => 'max:250|min:10'
+                'descripcion'   => 'max:250|min:10',
+                'distrito_id'   => 'required|numeric|min:1'
             );
             //Validacion usando la estructura mas antigua de Validator de laravel
             //Para poder validar correctamente los campos alterados con trim
@@ -253,9 +255,51 @@ class UrbanizacionesController extends Controller
         }
     }
 
-
-    public function editarModal($id){
-      $urbanizacion = Urbanizacion::findOrFail($id);
-      return view('bid.urbanizacion.modalediturbanizacion', compact('urbanizacion'));
+    public function getUrbanizaciones()
+    {
+        //Retorna la lista de urbanizaciones para repoblar los selects
+        $urbanizacion = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->orderBy('urbanizacion.nombre','asc')->get();
+        return response()->json(['success' => true, 'urbanizaciones' => $urbanizacion]);
     }
+
+    public function getUrbanizacion($id)
+    {
+      //abort(500);
+        //Retorna los datos de la urbanizacion con $id
+        $urbanizacion = Urbanizacion::findOrFail($id);
+        return response()->json(['success' => true, 'urbanizacion' => $urbanizacion]);
+    }
+
+    public function getDatosCompeltosUrbanizacion($id)
+    {
+        $datosUrbanizacion = Urbanizacion::join('distrito', 'distrito.id', '=', 'urbanizacion.distrito_id')
+        ->join('poblacion', 'poblacion.id', '=', 'distrito.poblacion_id')
+        ->join('municipio', 'municipio.id', '=', 'poblacion.municipio_id')
+        ->join('provincia', 'provincia.id', '=', 'municipio.provincia_id')
+        ->join('departamento', 'departamento.id', '=', 'provincia.departamento_id')
+        ->join('pais', 'pais.id', '=', 'departamento.pais_id')
+        ->select(
+        ['urbanizacion.id',
+         'urbanizacion.nombre',
+         'urbanizacion.descripcion',
+         'distrito.id as distrito',
+         'poblacion.id as poblacion',
+         'municipio.id as municipio',
+         'provincia.id as provincia',
+         'departamento.id as departamento',
+         'pais.id as pais'
+         ])
+         ->where('urbanizacion.id', '=', $id)->orderBy('urbanizacion.nombre','asc')->firstOrFail();
+        //$urbanizacion = Urbanizacion::findOrFail($id);
+
+        return response()->json(['success' => true, 'respuestaJSON' => $datosUrbanizacion]);
+    }
+
+    public function getUrbanizacionesDistrito($idDistrito)
+    {
+        //Retorna las urbanziaciones de un distrito $idDistrito
+        $urbanizacionesDistrito = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre'])->where('urbanizacion.distrito_id', '=', $idDistrito)->orderBy('urbanizacion.nombre','asc')->get();
+        return response()->json(['success' => true, 'respuestaJSON' => $urbanizacionesDistrito]);
+    }
+
 }

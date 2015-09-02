@@ -81,18 +81,16 @@ class FamiliaBid extends Model
             $this->attributes['longitud'] = null;
         }
     }
+
     public function setAlturaAttribute($value){
         //convierte la fecha a formato aceptado por la BD al momento de guardar
         if (empty($value)){
             $this->attributes['altura'] = null;
         }
     }
+
     public function facilitador(){
         return $this->belongsTo('inais\Facilitador');
-    }
-
-    public function distrito(){
-        return $this->belongsTo('inais\Distrito');
     }
 
     public function urbanizacion(){

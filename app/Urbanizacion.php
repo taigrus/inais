@@ -11,7 +11,8 @@ class Urbanizacion extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion'
+        'descripcion',
+        'distrito_id'
         ];
 
 
@@ -32,8 +33,13 @@ class Urbanizacion extends Model
         return $this->attributes['descripcion'] = strtoupper(trim($value, $character_mask = " \t\n\r\0\x0B"));
     }
 
+    public function distrito(){
+        return $this->belongsTo('inais\Distrito');
+    }
+
     public function familias()
     {
         return $this->hasMany('inais\FamiliaBid');
     }
+
 }

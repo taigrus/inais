@@ -134,10 +134,137 @@ class tablasBidTableSeeder extends Seeder
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
+    DB::table('pais')->insert(array(
+      'nombre' => 'Bolivia',
+      'descripcion' => 'POBLACION DE 10 MILLONES DE PERSONAS',
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('pais')->insert(array(
+      'nombre' => 'Peru',
+      'descripcion' => 'POBLACION DE 10 MILLONES DE PERSONAS',
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'LA PAZ',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'COCHABAMBA',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'CHUQUISACA',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'SANTA CRUZ',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'CUSCO',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'LIMA',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'CAYAU',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('departamento')->insert(array(
+      'nombre' => 'AREQUIPA',
+      'descripcion' => 'POBLACION DE 4 MILLONES DE PERSONAS',
+      'pais_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('provincia')->insert(array(
+      'nombre' => 'MURILLO',
+      'descripcion' => 'PROVINCIA MURILLO',
+      'departamento_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+    DB::table('municipio')->insert(array(
+			'nombre' => 'LA PAZ',
+			'descripcion' => 'POBLACION DE 1 MILLON DE PERSONAS',
+      'provincia_id' => 1,
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('municipio')->insert(array(
+			'nombre' => 'EL ALTO',
+			'descripcion' => 'POBLACION DE 1 MILLON DE PERSONAS',
+      'provincia_id' => 1,
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('poblacion')->insert(array(
+			'nombre' => 'LA PAZ',
+			'descripcion' => 'POBLACION DE 1 MILLON DE PERSONAS',
+      'municipio_id' => 1,
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('poblacion')->insert(array(
+      'nombre' => 'EL ALTO',
+      'descripcion' => 'POBLACION DE 1.5 MILLONES DE PERSONAS',
+      'municipio_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
 		//Distritos
+    DB::table('distrito')->insert(array(
+      'nombre' => 'MACRODITRITO CENTRO',
+      'descripcion' => 'Distrito central de La Paz',
+      'poblacion_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
 		DB::table('distrito')->insert(array(
 			'nombre' => 'Distrito 8',
 			'descripcion' => 'Distrito 8 ciudad de El alto',
+      'poblacion_id' => 2,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
@@ -145,72 +272,100 @@ class tablasBidTableSeeder extends Seeder
 		DB::table('distrito')->insert(array(
 			'nombre' => 'Distrito 10',
 			'descripcion' => 'Distrito 10 ciudad de El alto',
+      'poblacion_id' => 2,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
+    DB::table('distrito')->insert(array(
+      'nombre' => 'Distrito 5',
+      'descripcion' => 'Distrito 5 ciudad de El alto',
+      'poblacion_id' => 2,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
 
 		//Urbanizaciones
+    DB::table('urbanizacion')->insert(array(
+      'nombre' => 'MIRAFLORES',
+      'descripcion' => null,
+      'distrito_id' => 1,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => 'Senkata 79',
+			'nombre' => 'SENKATA 79',
 			'descripcion' => null,
+      'distrito_id' => $faker->numberBetween(2,4),
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => 'Juancito Pinto',
-			'descripcion' => 'ninguna',
+			'nombre' => 'JUANCITO PINTO',
+			'descripcion' => 'NINGUNA',
+      'distrito_id' => $faker->numberBetween(2,4),
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 		DB::table('urbanizacion')->insert(array(
-			'nombre' => 'Atipiris',
+			'nombre' => 'ATIPIRIS',
 			'descripcion' => null,
+      'distrito_id' => $faker->numberBetween(2,4),
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
+
+    DB::table('urbanizacion')->insert(array(
+      'nombre' => 'CHIJIMARCA',
+      'descripcion' => null,
+      'distrito_id' => $faker->numberBetween(2,4),
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
 
 		//vias
-		DB::table('via')->insert(array(
-			'nombre' => 'Calle',
+    DB::table('via')->insert(array(
+			'nombre' => 'AVENIDA',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
 		DB::table('via')->insert(array(
-			'nombre' => 'Avenida',
-			'descripcion' => null,
-			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
-			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
-		));
-		DB::table('via')->insert(array(
-			'nombre' => 'Pasaje',
-			'descripcion' => null,
-			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
-			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
-		));
-		DB::table('via')->insert(array(
-			'nombre' => 'Plaza',
+			'nombre' => 'CALLE',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
     DB::table('via')->insert(array(
-			'nombre' => 'Carretera',
+      'nombre' => 'CARRETERA',
+      'descripcion' => null,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+		DB::table('via')->insert(array(
+			'nombre' => 'PASAJE',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
     DB::table('via')->insert(array(
-			'nombre' => 'Paseo',
+      'nombre' => 'PASEO',
+      'descripcion' => null,
+      'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+      'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+    ));
+
+		DB::table('via')->insert(array(
+			'nombre' => 'PLAZA',
 			'descripcion' => null,
 			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
-
 
 		//alcantarillado
 		DB::table('alcantarillado')->insert(array(
@@ -256,7 +411,6 @@ class tablasBidTableSeeder extends Seeder
 				'otras_referencias' => $faker->text(50),
 				'fecha_encuesta_lb' => $faker->dateTimeBetween('-4 years','-1 years'),
 				'alcantarillado_id' => $faker->numberBetween(1,4),
-				'distrito_id' => $faker->numberBetween(1,2),
 				'created_at'=> $faker->dateTimeBetween('-2 years','now'),
 				'updated_at'=> $faker->dateTimeBetween('-2 years','now')
 			));

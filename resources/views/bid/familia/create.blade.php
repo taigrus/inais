@@ -78,8 +78,6 @@
                 var envio = $.post(url, data, function (respuesta) {
                     if(respuesta.tipo!='ok') {
                         swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
-                    }else{
-                        //TODO: Se debe actualizar la tabla general para que refleje la nueva fila adicionada mediante ajax
                     }
                     envio.success(function(){
                         if(respuesta.tipo=='ok') {
@@ -113,7 +111,7 @@
                                                      }).appendTo(branchName);
                                                  })
                                             }
-                                        }, 'json');
+                                          }, 'json');
                                       }
                                     });
                         };

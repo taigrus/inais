@@ -40,7 +40,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class="btn-borrar btn btn-success" id="btn-nueva"><i class="glyphicon glyphicon-thumbs-up"></i> Registrar</a>
+                                <a href="#!" class="btn btn-success" id="btn-nueva"><i class="glyphicon glyphicon-heart-empty"></i> Registrar</a>
+                                <a href="#!" class="btn btn-info" id="btn-limpiar"><i class="glyphicon glyphicon-erase"></i> Limpiar</a>
                                 <button type="submit" class="btn btn-default btn btn-warning" data-dismiss="modal"><i class="glyphicon glyphicon-thumbs-down"></i> Cancelar</button>
                             </div>
                         </div>
@@ -52,7 +53,3 @@
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>
 @endif
-
-
-
-
