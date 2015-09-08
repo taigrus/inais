@@ -127,22 +127,6 @@
         $("#poblacion").prop("disabled",true);
         $("#distrito_id").prop("disabled",true);
 
-
-        //pone nulos los select2
-        // $("abbr.select2-search-choice-close", $("#pais").prev()).trigger("mousedown");
-        // $("abbr.select2-search-choice-close", $("#departamento").prev()).trigger("mousedown");
-        // $("abbr.select2-search-choice-close", $("#provincia").prev()).trigger("mousedown");
-        // $("abbr.select2-search-choice-close", $("#municipio").prev()).trigger("mousedown");
-        // $("abbr.select2-search-choice-close", $("#poblacion").prev()).trigger("mousedown");
-        // $("abbr.select2-search-choice-close", $("#distrito").prev()).trigger("mousedown");
-
-        //bloqueos
-        // $("#departamento").prop("disabled",true);
-        // $("#provincia").prop("disabled",true);
-        // $("#municipio").prop("disabled",true);
-        // $("#poblacion").prop("disabled",true);
-        // $("#distrito").prop("disabled",true);
-
         //controla cambio de pais para activar departamento
         $("#pais").on("change", function (e) {
           if($("#pais").val()!=0 && $("#pais").val()!=null)
@@ -162,7 +146,7 @@
                       value:'0',
                       text:'---Seleccione el departamento---'
                      }).appendTo(branchName);
-                    $.each(response.departamentosPais, function(i, departamento){
+                    $.each(response.respuestaJSON, function(i, departamento){
                      $('<option/>', {
                        value:departamento.id,
                        text:departamento.nombre
@@ -208,7 +192,7 @@
                     value:'0',
                     text:'---Seleccione la provincia---'
                    }).appendTo(branchName);
-                  $.each(response.provinciasDepartamento, function(i, provincia){
+                  $.each(response.respuestaJSON, function(i, provincia){
                    $('<option/>', {
                      value:provincia.id,
                      text:provincia.nombre
@@ -255,7 +239,7 @@
                     value:'0',
                     text:'---Seleccione el municipio---'
                    }).appendTo(branchName);
-                  $.each(response.municipiosProvincia, function(i, municipio){
+                  $.each(response.respuestaJSON, function(i, municipio){
                    $('<option/>', {
                      value:municipio.id,
                      text:municipio.nombre
@@ -302,7 +286,7 @@
                     value:'0',
                     text:'---Seleccione la población---'
                    }).appendTo(branchName);
-                  $.each(response.poblacionesMunicipio, function(i, poblacion){
+                  $.each(response.respuestaJSON, function(i, poblacion){
                    $('<option/>', {
                      value:poblacion.id,
                      text:poblacion.nombre
@@ -349,7 +333,7 @@
                     value:'0',
                     text:'---Seleccione el distrito---'
                    }).appendTo(branchName);
-                  $.each(response.distritosPoblacion, function(i, distrito){
+                  $.each(response.respuestaJSON, function(i, distrito){
                    $('<option/>', {
                      value:distrito.id,
                      text:distrito.nombre

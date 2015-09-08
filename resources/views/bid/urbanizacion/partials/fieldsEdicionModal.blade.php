@@ -1,6 +1,6 @@
 <div class="col-md-6 ">
   <div class="form-group">
-      {!! Form::label('paisEdicion', '01 País') !!}
+      {!! Form::label('paisEdicion', '01 País', ['id' => 'paisEdicionLabel']) !!}
       {!! Form::select('paisEdicion', array('0' => '---Seleccione el país---','1' => 'Bolivia'),Input::old('paisEdicion'),[
         'class' => 'form-control select2',
         'data-parsley-trigger' => 'change focusout',
@@ -14,7 +14,7 @@
   </div>
 
   <div class="form-group">
-      {!! Form::label('departamentoEdicion', '02 Departamento') !!}
+      {!! Form::label('departamentoEdicion', '02 Departamento', ['id' => 'departamentoEdicionLabel']) !!}
       {!! Form::select('departamentoEdicion', array('0' => '---Seleccione el departamento---'), null, [
         'class' => 'form-control select2',
         'id' => 'departamentoEdicion',
@@ -28,7 +28,7 @@
   </div>
 
   <div class="form-group">
-      {!! Form::label('provinciaEdicion', '03 Provincia') !!}
+      {!! Form::label('provinciaEdicion', '03 Provincia', ['id' => 'provinciaEdicionLabel']) !!}
       {!! Form::select('provinciaEdicion', array('0' => '---Seleccione la provincia---'), null, [
         'class' => 'form-control select2',
         'id' => 'provinciaEdicion',
@@ -42,7 +42,7 @@
   </div>
 
   <div class="form-group">
-      {!! Form::label('municipioEdicion', '04 Municipio') !!}
+      {!! Form::label('municipioEdicion', '04 Municipio', ['id' => 'municipioEdicionLabel']) !!}
       {!! Form::select('municipioEdicion', array('0' => '---Seleccione el municipio---'), null, [
         'class' => 'form-control select2',
         'id' => 'municipioEdicion',
@@ -55,7 +55,7 @@
         ]) !!}
   </div>
   <div class="form-group">
-      {!! Form::label('poblacionEdicion', '05 Poblacion') !!}
+      {!! Form::label('poblacionEdicion', '05 Poblacion', ['id' => 'poblacionEdicionLabel']) !!}
       {!! Form::select('poblacionEdicion', array('0' => '---Seleccione la población---'), null, [
         'class' => 'form-control select2',
         'id' => 'poblacionEdicion',
@@ -73,7 +73,7 @@
 
 
 <div class="form-group">
-    {!! Form::label('distrito_id', '06 Distrito') !!}
+    {!! Form::label('distrito_id', '06 Distrito', ['id' => 'distritoEdicionLabel']) !!}
     {!! Form::select('distrito_id', array('0' => '---Seleccione el distrito---'), null, [
       'class' => 'form-control select2',
       'id' => 'distritoEdicion',
@@ -124,9 +124,3 @@
          ]) !!}
     </div>
 </div>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-
-  });
-</script>

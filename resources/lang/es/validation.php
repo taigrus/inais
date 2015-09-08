@@ -74,6 +74,7 @@ return [
     "timezone"         => "El :attribute debe ser una zona válida.",
     "unique"           => ":attribute ya ha sido registrado.",
     "url"              => "El formato de :attribute es inválido.",
+    "alpha_spaces"     => "El :attribute no puede contener números.",
 
     /*
     |--------------------------------------------------------------------------

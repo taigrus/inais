@@ -3,7 +3,7 @@
         .modal-footer {
             padding:9px 15px;
             border-bottom:1px solid #eee;
-            background-color: #be0d14;
+            background-color: #b83535;
             color: lightyellow;
             -webkit-border-bottom-left-radius: 5px;
             -webkit-border-bottom-right-radius: 5px;
@@ -15,7 +15,7 @@
         .modal-header {
             padding:9px 15px;
             border-bottom:1px solid #eee;
-            background-color: #be0d14;
+            background-color: #b83535;
             color: lightyellow;
             -webkit-border-top-left-radius: 5px;
             -webkit-border-top-right-radius: 5px;
@@ -81,4 +81,3 @@
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>
 @endif
-

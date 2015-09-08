@@ -111,6 +111,7 @@
 <script src="{{ asset('js/parsley.js') }}"></script>
 <script src="{{ asset('js/jquery.numeric.js') }}"></script>
 <script src="{{ asset('js/gen_validatorv4.js') }}"></script>
+
 <!-- Bootstrap JavaScript -->
 <script src="{{ asset('js/fuelux.js') }}"></script>
 <script type="text/javascript">

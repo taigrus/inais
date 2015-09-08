@@ -38,7 +38,7 @@ class UrbanizacionesController extends Controller
         $urbanizaciones = Urbanizacion::select(['urbanizacion.id', 'urbanizacion.nombre', 'urbanizacion.descripcion']);
         return Datatables::of($urbanizaciones)
             ->addColumn('action', function ($urbanizacion) {
-                return '<a href="urbanizaciones/'.$urbanizacion->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-wrench"></i></a>
+                return '<a href="#!" class="btn-ver btn btn-xs btn-primary" data-id="' . $urbanizacion->id . '"><i class="glyphicon glyphicon-eye-open"></i></a>
                 <a href="#!" class="btn-editar btn btn-xs btn-success" data-id="' . $urbanizacion->id . '"><i class="glyphicon glyphicon-pencil"></i></a>
                 <a href="#!" class="btn-borrar btn btn-xs btn-danger" data-id="' . $urbanizacion->id . '"><i class="glyphicon glyphicon-exclamation-sign"></i></a>';
             })->make(true);
@@ -74,7 +74,10 @@ class UrbanizacionesController extends Controller
           //dd($data);
             //Se quita espacios de inicio y final y se convierte a mayusculas el array de datos
             $data['nombre'] = Str::upper(trim($data['nombre']));
+            //quitamos espacios adicionales en blanco en medio del nombre
+            $data['nombre'] = preg_replace('/\s+/', ' ',$data['nombre']);
             $data['descripcion'] = Str::upper(trim($data['descripcion']));
+            $data['descripcion'] = preg_replace('/\s+/', ' ',$data['descripcion']);
             $rules = array(
                 'nombre'        => 'required|max:50|min:3|unique:urbanizacion,nombre',
                 'descripcion'   => 'max:250|min:10',
@@ -117,7 +120,7 @@ class UrbanizacionesController extends Controller
 
     public function show($id)
     {
-
+      dd($id);
     }
 
 
@@ -144,6 +147,7 @@ class UrbanizacionesController extends Controller
             $data['nombre'] = Str::upper(trim($data['nombre']));
             $data['nombre'] = preg_replace('/\s+/', ' ',$data['nombre']);
             $data['descripcion'] = Str::upper(trim($data['descripcion']));
+            $data['descripcion'] = preg_replace('/\s+/', ' ',$data['descripcion']);
             $rules = array(
                 'nombre'        => 'required|max:50|min:3|unique:urbanizacion,nombre,' . $id,
                 'descripcion'   => 'max:250|min:10',
@@ -280,14 +284,20 @@ class UrbanizacionesController extends Controller
         ->join('pais', 'pais.id', '=', 'departamento.pais_id')
         ->select(
         ['urbanizacion.id',
-         'urbanizacion.nombre',
-         'urbanizacion.descripcion',
-         'distrito.id as distrito',
-         'poblacion.id as poblacion',
-         'municipio.id as municipio',
-         'provincia.id as provincia',
-         'departamento.id as departamento',
-         'pais.id as pais'
+         'urbanizacion.nombre as urbanizacionNombre',
+         'urbanizacion.descripcion as urbanizacionDescripcion',
+         'distrito.id as distritoId',
+         'poblacion.id as poblacionId',
+         'municipio.id as municipioId',
+         'provincia.id as provinciaId',
+         'departamento.id as departamentoId',
+         'pais.id as paisId',
+         'distrito.nombre as distritoNombre',
+         'poblacion.nombre as poblacionNombre',
+         'municipio.nombre as municipioNombre',
+         'provincia.nombre as provinciaNombre',
+         'departamento.nombre as departamentoNombre',
+         'pais.nombre as paisNombre'
          ])
          ->where('urbanizacion.id', '=', $id)->orderBy('urbanizacion.nombre','asc')->firstOrFail();
         //$urbanizacion = Urbanizacion::findOrFail($id);

@@ -8,6 +8,7 @@
     </style>
     @include('bid.urbanizacion.modalurbanizacion')
     @include('bid.urbanizacion.modalediturbanizacion')
+    @include('bid.urbanizacion.modalViewUrbanizacion')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -23,13 +24,10 @@
                     @endif
                     <div class="panel-body">
                         <p>
-                            <a class="btn btn-success" href="{{route("bid.urbanizaciones.create")}}" role="button">
-                                Nueva Urbanización/Zona
-                            </a>
                             <a href="#"
                                data-toggle="modal"
                                data-target="#modalurbanizacion"
-                               class="boton-nuevaajax btn btn-warning">
+                               class="boton-nuevaajax btn btn-success">
                                 <span class="glyphicon glyphicon-hand-left"></span>
                                 Nuevas urbanizaciones/Zonas
                             </a>
@@ -177,18 +175,58 @@
                 })
             });
 
+            $('#urbanizaciones-table tbody').on('click', '.btn-ver', function(e)
+             {      e.preventDefault();
+                    //obtiene el ID pasado en el atributo data-id del control
+                    var id = $(this).data('id');
+                    var urlInicial = 'obtienedatoscompeltosurbanizacion/' + id;
+                    $('#modalViewUrbanizacion').modal('show');
+                    $('#cargandoView').show();
+                    //----ENVIO AJAX para obtener los datos de la urbanizcion
+                    $.post(urlInicial, function(respuestaAJAX){
+                    if(respuestaAJAX.success)
+                      {
+
+                         $( "#paisVista" ).val(respuestaAJAX.respuestaJSON.paisNombre);
+                         $( "#paisVista" ).prop("disabled",true);
+                         $( "#departamentoVista" ).val(respuestaAJAX.respuestaJSON.departamentoNombre);
+                         $( "#departamentoVista" ).prop("disabled",true);
+                         $( "#provinciaVista" ).val(respuestaAJAX.respuestaJSON.provinciaNombre);
+                         $( "#provinciaVista" ).prop("disabled",true);
+                         $( "#municipioVista" ).val(respuestaAJAX.respuestaJSON.municipioNombre);
+                         $( "#municipioVista" ).prop("disabled",true);
+                         $( "#poblacionVista" ).val(respuestaAJAX.respuestaJSON.poblacionNombre);
+                         $( "#poblacionVista" ).prop("disabled",true);
+                         $( "#distritoVista" ).val(respuestaAJAX.respuestaJSON.distritoNombre);
+                         $( "#distritoVista" ).prop("disabled",true);
+                         $('#nombreVista').val(respuestaAJAX.respuestaJSON.urbanizacionNombre);
+                         $('#nombreVista').prop('disabled', true);
+                         $('#descripcionVista').val(respuestaAJAX.respuestaJSON.urbanizacionDescripcion);
+                         $('#descripcionVista').prop('disabled', true);
+                      }
+                    }, 'json').fail(function (result) {
+                         swal("Upps, algo no esta bien!", "Se produjo un error al obtener los datos de la urbanización, intentelo nuevamente.", "error");
+                       });
+                       $('#cargandoView').hide();
+            });
+
         //Escucha boton Ajax para edicion de datos de la urbanizacion y obtine sus datos en el formulario modal
         $('#urbanizaciones-table tbody').on('click', '.btn-editar', function(e)
          {      e.preventDefault();
                 var id = $(this).data('id');
                 var urlInicial = 'obtienedatoscompeltosurbanizacion/' + id;
+                $('#modalEditUrbanizacion').modal('show');
+                $('#cargandoEdit').show();
                 //----ENVIO AJAX para obtener los datos de la urbanizcion
                 $.post(urlInicial, function(respuestaAJAX){
                 if(respuestaAJAX.success)
                   {
-
-                     $('#modalEditUrbanizacion').modal('show');
-                     $('#cargandoEdit').show();
+                     $( '#paisEdicionLabel' ).text('01 Pais: (' + respuestaAJAX.respuestaJSON.paisNombre + ')');
+                     $( '#departamentoEdicionLabel' ).text('02 Departamento: (' + respuestaAJAX.respuestaJSON.departamentoNombre + ')');
+                     $( '#provinciaEdicionLabel' ).text('03 Provincia: (' + respuestaAJAX.respuestaJSON.provinciaNombre + ')');
+                     $( '#municipioEdicionLabel' ).text('04 Municipio: (' + respuestaAJAX.respuestaJSON.municipioNombre + ')');
+                     $( '#poblacionEdicionLabel' ).text('05 Población: (' + respuestaAJAX.respuestaJSON.poblacionNombre + ')');
+                     $( '#distritoEdicionLabel' ).text('06 Distrito: (' + respuestaAJAX.respuestaJSON.distritoNombre + ')');
                      $('#formEdicionModalUrbanizaciones').parsley().reset();
                      $('#idOculto').val(respuestaAJAX.respuestaJSON.id);
                      $( "#paisEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el país', } );
@@ -197,22 +235,26 @@
                      $( "#municipioEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el municipio' } );
                      $( "#poblacionEdicion" ).select2( { allowClear: true, placeholder: 'seleccione la población' } );
                      $( "#distritoEdicion" ).select2( { allowClear: true, placeholder: 'seleccione el distrito' } );
-                     cargaDropDown("#paisEdicion", "listapaises", null, "el país",respuestaAJAX.respuestaJSON.pais, true);
-                    //  cargaDropDown("#departamentoEdicion", "departamentospais", respuestaAJAX.respuestaJSON.pais, "el departamento",respuestaAJAX.respuestaJSON.departamento, false);
-                    //  cargaDropDown("#provinciaEdicion", "provinciasdepartamento", respuestaAJAX.respuestaJSON.departamento, "la provincia",respuestaAJAX.respuestaJSON.provincia, false);
-                    //  cargaDropDown("#municipioEdicion", "municipiosprovincia", respuestaAJAX.respuestaJSON.provincia, "el municipio",respuestaAJAX.respuestaJSON.municipio, false);
-                    //  cargaDropDown("#poblacionEdicion", "poblacionesmunicipio", respuestaAJAX.respuestaJSON.municipio, "la población",respuestaAJAX.respuestaJSON.poblacion, false);
-                    //  cargaDropDown("#distritoEdicion", "distritospoblacion", respuestaAJAX.respuestaJSON.poblacion, "el distrito",respuestaAJAX.respuestaJSON.distrito, false);
-                    $('#nombreEdicion').val(respuestaAJAX.respuestaJSON.nombre);
-                    $('#descripcionEdicion').val(respuestaAJAX.respuestaJSON.descripcion);
-                    $('#cargandoEdit').hide();
+                     cargaDropDown("#paisEdicion", "listapaises", null, "el país",respuestaAJAX.respuestaJSON.paisId, true);
+                    $('#nombreEdicion').val(respuestaAJAX.respuestaJSON.urbanizacionNombre);
+                    $('#descripcionEdicion').val(respuestaAJAX.respuestaJSON.urbanizacionDescripcion);
                   }
                 }, 'json').fail(function (result) {
                      swal("Upps, algo no esta bien!", "Se produjo un error al obtener los datos de la urbanización, intentelo nuevamente.", "error");
                    });
+                   $('#cargandoEdit').hide();
         });
 
         //funcion para cargar dropdown list
+
+        /* controlId = Nombre del dropdown a poblar
+        /* urlParcial = complemento a la ruta de la funcion del controlador
+        /* KeyId = ID del registro padre a Buscar, null para obtener listado total de registros
+        /* textoPlaceHolder = Texto a poner como valor por defecto en el dropdown
+        /* indice = valor a seleccionar en el dropdown una vez poblado
+        /* estadoFinal = true para dropdown activo, false para inactivo
+        */
+
         function cargaDropDown(controlId, urlParcial, keyId, textoPlaceHolder, indice, estadoFinal){
           $('#cargandoEdit').show();
           if (keyId != null){
@@ -238,8 +280,11 @@
                     text:item.nombre
                    }).appendTo(control);
                  })
+                 //Limpia el control
                 $("abbr.select2-search-choice-close", control.prev()).trigger("mousedown");
+                //Establece el valor a mostrar en el control
                  control.val(indice).trigger("change");
+                 //Activa o desactiva el control segun estadoFinal
                  control.prop("disabled",!estadoFinal);
                  $('#cargandoEdit').hide();
               } else {
@@ -250,7 +295,7 @@
             });
         },'json').fail(function (result) {
           //pone en nulo el control select
-          control.prop("disabled",true);
+
           swal("Upps, algo no esta bien!", "Error cargando la lista de " + controlId, "error");
           $('#cargando').hide();
         });
@@ -346,7 +391,7 @@
                  var envio = $.post(url, data, function (respuesta) {
                      if(respuesta.tipo!='ok') {
                          swal("Presta atención a este mensaje!", respuesta.mensaje, "error");
-                         $('#cargando').hide();                         
+                         $('#cargando').hide();
                      }
                      envio.success(function(){
                          if(respuesta.tipo=='ok') {

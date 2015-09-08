@@ -2,8 +2,8 @@
     <style>
         .modal-header {
             padding:9px 15px;
-            border-bottom:1px solid #eee;
-            background-color: #be0d14;
+            border-bottom:1px solid #257aa4;
+            background-color: #257aa4;
             color: lightyellow;
             -webkit-border-top-left-radius: 5px;
             -webkit-border-top-right-radius: 5px;
@@ -23,7 +23,7 @@
                         <div class="modal-content">
                             <div class="modal-header modal-danger">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Registro de varias urbanizaciones</h4>
+                                <h4 class="modal-title" id="myModalLabel">Registro de urbanizaciones</h4>
                             </div>
                             <div class="modal-body">
                                 <h2><small><span style="color: darkred">Ingrese los datos de la nueva urbanización</span></small></h2>

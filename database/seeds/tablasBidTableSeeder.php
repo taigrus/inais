@@ -392,17 +392,26 @@ class tablasBidTableSeeder extends Seeder
 			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
 		));
 
+    DB::table('genero')->insert(array(
+			'descripcion' => 'MASCULINO',
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
+    DB::table('genero')->insert(array(
+			'descripcion' => 'FEMENINO',
+			'created_at' => $faker->dateTimeBetween('-2 years', 'now'),
+			'updated_at' => $faker->dateTimeBetween('-2 years', 'now')
+		));
+
 		//Familias
 		for($i=0; $i<50; $i++)
 		{
 			$folio=$faker->unique()->numberBetween(1000000000,1999999999);
 			$id1=DB::table('familia_bid')->insertGetId(array(
 				'folio' 	=> $folio,
-				'latitud' 	=> $faker->latitude(),
-				'longitud'	=> $faker->longitude(),
-				'altura'	=> $faker->numberBetween(3500,4200),
 				'facilitador_id' => $faker->numberBetween(1,9),
-				'urbanizacion_id' => $faker->numberBetween(1,3),
+				'urbanizacion_id' => $faker->numberBetween(1,5),
 				'nombre_jefe_hogar' => $faker->firstName(),
 				'telefono' => $faker->numberBetween(60000000,79999999),
 				'via_id' => $faker->numberBetween(1,6),
@@ -411,6 +420,9 @@ class tablasBidTableSeeder extends Seeder
 				'otras_referencias' => $faker->text(50),
 				'fecha_encuesta_lb' => $faker->dateTimeBetween('-4 years','-1 years'),
 				'alcantarillado_id' => $faker->numberBetween(1,4),
+        'latitud' 	=> $faker->latitude(),
+				'longitud'	=> $faker->longitude(),
+				'altura'	=> $faker->numberBetween(3500,4200),
 				'created_at'=> $faker->dateTimeBetween('-2 years','now'),
 				'updated_at'=> $faker->dateTimeBetween('-2 years','now')
 			));
@@ -423,12 +435,12 @@ class tablasBidTableSeeder extends Seeder
 				$edad=Carbon::createFromDate($ano,$mes,$dia)->age;
 				$id2=DB::table('integrante_familia_bid')->insertGetId(array(
 					'familia_id'	=>$id1,
-					'integrante_id'	=>$j,
+					'integrante_id_csra'	=>$j,
 					'nombre'		=>$faker->firstName(),
 					'paterno'		=>$faker->lastName(),
 					'materno'		=>$faker->lastName(),
 					'fecha_nacimiento' => $nacimiento,
-					'edad'			=> $edad,
+          'genero' => $faker->numberBetween(1,2);
 					'created_at'	=> $faker->dateTimeBetween('-2 years','now'),
 					'updated_at'	=> $faker->dateTimeBetween('-2 years','now')
 				));

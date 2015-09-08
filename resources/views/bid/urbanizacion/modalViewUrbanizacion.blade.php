@@ -18,29 +18,28 @@
     <div class="row">
         <div class="col-md-10"></div>
             <div class="col-md-2">
-                <div class="modal fade" id="modalEditUrbanizacion" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal fade" id="modalViewUrbanizacion" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header modal-danger">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel2">Edición de urbanizaciones</h4>
+                                <h4 class="modal-title" id="myModalLabel2">Detalles de urbanizaciones</h4>
                             </div>
                             <div class="modal-body">
-                                <h2><small><span style="color: darkred">Actualice los datos de la urbanización</span></small></h2>
+                                <h2><small><span style="color: darkred">Mostrándole los detalles de la urbanización seleccionada</span></small></h2>
                                 {{--No se requieren los mensajes de validacion en el servidor por ser solicitud Ajax,
                                 de todas maneras se efectua la validacion en el servidor retornandose un error generico
                                 @include('bid.urbanizacion.partials.messages')--}}
-                                {!! Form::open(['route' => ['bid.urbanizaciones.update', ':URB_ID'], 'method' => 'PUT', 'id' => 'formEdicionModalUrbanizaciones', 'data-parsley-validate' => '']) !!}
-                                @include('bid.urbanizacion.partials.fieldsEdicionModal')
+                                {!! Form::open(['route' => ['bid.urbanizaciones.show', ':URB_ID'], 'method' => 'GET', 'id' => 'formViewModalUrbanizaciones']) !!}
+                                @include('bid.urbanizacion.partials.fieldsViewModal')
                                 {!! form::close() !!}
                                 <div class="row">
-                                    <div class="col-md-12 col-md-offset-4" id="cargandoEdit">
+                                    <div class="col-md-12 col-md-offset-4" id="cargandoView">
                                         <img src="{{ asset('images/loading.gif') }}" alt="Cargando">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a href="#!" class="btn-update btn btn-success" id="btn-update"><i class="glyphicon glyphicon-heart-empty"></i> Actualizar</a>
                                 <button class="btn btn-default btn btn-warning" data-dismiss="modal"><i class="glyphicon glyphicon-thumbs-down"></i> Cancelar</button>
                             </div>
                         </div>

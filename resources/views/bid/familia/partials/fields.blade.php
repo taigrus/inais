@@ -27,16 +27,6 @@
           ]) !!}
     </div>
 
-    <div class="form-group">
-        {!! Form::label('distrito_id', '03 Distrito') !!}
-        {!! Form::select('distrito_id', $distrito_options ,
-          Input::old('distrito'),[
-          'class' => 'form-control select2',
-          'id' => 'distrito',
-          'data-parsley-trigger' => 'change focusout',
-          'required'
-          ]) !!}
-    </div>
 
     <div class="form-group">
         {!! Form::label('urbanizacion_id', '04 Urbanización') !!}
@@ -131,12 +121,13 @@
         {!! Form::label('telefono', '10 Teléfono principal') !!}
         {!! Form::text('telefono', null, array(
          'class' => 'form-control entero',
+         'required',
          'placeholder' => 'Ingrese el teléfono principal de la vivienda',
          'data-parsley-type' => 'integer',
          'data-parsley-trigger' => 'change focusout',
-         'data-parsley-minlength' => "7",
+         'data-parsley-minlength' => "1",
          'data-parsley-maxlength' => "8",
-         'data-parsley-min' => '2000000',
+         'data-parsley-range' => "[0,79999999]",
          'data-parsley-validation-threshold' => "2",
          'data-parsley-minlength-message' => "Se debe escribir un número de teléfono valido."
         )) !!}
@@ -179,12 +170,12 @@
         {!! Form::label('latitud', '13 Latitud de la vivienda') !!}
         {!! Form::text('latitud',null,array(
          'class' => 'form-control flotante',
+         'required',
          'placeholder' => 'Ingrese la latitud en grados decimales',
          'data-parsley-trigger' => 'change focusout',
          'data-parsley-type' => 'number',
-         'data-parsley-min' => '-20.999999',
-         'data-parsley-max' => '-10.000000',
-         'data-parsley-minlength' => "3",
+         'data-parsley-range' => "[-21,0]",
+         'data-parsley-minlength' => "2",
          'data-parsley-maxlength' => "10"
          )) !!}
     </div>
@@ -193,11 +184,11 @@
         {!! Form::label('longitud', '14 Longitud de la vivienda') !!}
         {!! Form::text('longitud',null,array(
          'class' => 'form-control flotante',
+         'required',
          'placeholder' => 'Ingrese la longitud en grados decimales',
          'data-parsley-trigger' => 'change focusout',
          'data-parsley-type' => 'number',
-         'data-parsley-min' => '-70.999999',
-         'data-parsley-max' => '-65.000000',
+         'data-parsley-range' => "[-71,0]",
          'data-parsley-minlength' => "2",
          'data-parsley-maxlength' => "10"
          )) !!}
@@ -207,11 +198,12 @@
         {!! Form::label('altura', '15 Altura de la vivienda') !!}
         {!! Form::text('altura',null,array(
          'class' => 'form-control caracteres',
-         'placeholder' => 'Ingrese la longitud en grados decimales',
+         'required',
+         'placeholder' => 'Ingrese la altitud en metros',
          'data-parsley-trigger' => 'change focusout',
          'data-parsley-type' => 'integer',
-         'data-parsley-range' => "[2800,4800]",
-         'data-parsley-minlength' => "4",
+         'data-parsley-range' => "[0,4800]",
+         'data-parsley-minlength' => "1",
          'data-parsley-maxlength' => "4",
          'data-parsley-pattern'   => '/^([0-9]{1,4})+$/'
 

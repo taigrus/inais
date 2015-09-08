@@ -31,13 +31,13 @@ class FamiliasController extends Controller
         //return Datatables::of(User::select('*'))->make(true);
         //$users = Rol::join('users', 'users.rol_id','=','roles.id')->select(['users.id', 'users.first_name', 'users.last_name','users.email', 'users.password', 'users.created_at', 'users.updated_at', 'users.rol_id', 'roles.descripcion']);
         //$familias = FamiliaBid::select(['id', 'folio', 'facilitador_id', 'urbanizacion_id', 'via_id', 'direccion', 'latitud', 'longitud', 'altura', 'created_at', 'updated_at']);
-        $familias=\DB::table('familia_bid')
-            ->join('alcantarillado', 'alcantarillado.id', '=', 'familia_bid.alcantarillado_id')
+        $familias=$familias=FamiliaBid::join('alcantarillado', 'alcantarillado.id', '=', 'familia_bid.alcantarillado_id')
             ->join('via', 'via.id', '=', 'familia_bid.via_id')
             ->join('facilitador_bid', 'facilitador_bid.id', '=', 'familia_bid.facilitador_id')
-            ->join('distrito', 'distrito.id', '=', 'familia_bid.distrito_id')
             ->join('urbanizacion', 'urbanizacion.id', '=', 'familia_bid.urbanizacion_id')
+            ->join('distrito', 'distrito.id', '=', 'urbanizacion.distrito_id')
             ->select(
+                [
                 'familia_bid.id as id',
                 'familia_bid.folio as folio',
                 'facilitador_bid.nombre as facilitador',
@@ -49,7 +49,7 @@ class FamiliasController extends Controller
                 'alcantarillado.descripcion as alcantarillado',
                 'familia_bid.created_at as creada',
                 'familia_bid.updated_at as actualizada'
-                );
+                ]);
         return Datatables::of($familias)
             ->addColumn('action', function ($familia) {
                 return '<a href="familias/'.$familia->id.'/edit" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Gestionar</a>';
@@ -74,13 +74,11 @@ class FamiliasController extends Controller
         try {
             //
             $facilitador_options = \DB::table('facilitador_bid')->orderBy('nombre', 'asc')->lists('nombre', 'id');
-            $distrito_options = \DB::table('distrito')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $urbanizacion_options = \DB::table('urbanizacion')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
             $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
             return view("bid.familia.create", array(
                     'facilitador_options' => $facilitador_options,
-                    'distrito_options' => $distrito_options,
                     'urbanizacion_options' => $urbanizacion_options,
                     'via_options' => $via_options,
                     'alcantarillado_options' => $alcantarillado_options
@@ -140,14 +138,12 @@ class FamiliasController extends Controller
     {
         try {
             $facilitador_options = \DB::table('facilitador_bid')->orderBy('nombre', 'asc')->lists('nombre', 'id');
-            $distrito_options = \DB::table('distrito')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $urbanizacion_options = \DB::table('urbanizacion')->orderBy('nombre', 'asc')->lists('nombre', 'id');
             $via_options = \DB::table('via')->orderBy('id', 'asc')->lists('nombre', 'id');
             $alcantarillado_options = \DB::table('alcantarillado')->orderBy('id', 'asc')->lists('descripcion', 'id');
             $familia = FamiliaBid::findOrFail($id);
             return view('bid.familia.edit', array(
                     'facilitador_options' => $facilitador_options,
-                    'distrito_options' => $distrito_options,
                     'urbanizacion_options' => $urbanizacion_options,
                     'via_options' => $via_options,
                     'alcantarillado_options' => $alcantarillado_options,
@@ -182,6 +178,7 @@ class FamiliasController extends Controller
         try
         {
             //
+            //dd($request);
             $familia = FamiliaBid::findOrFail($id);
             $familia->fill($request->all());
             $familia->save();
