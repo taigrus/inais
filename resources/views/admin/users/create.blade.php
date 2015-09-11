@@ -1,9 +1,8 @@
-@extends('layout')
+@extends('mainlayout')
 
 @if (!Auth::guest() and Auth::user()->rol_id==1)
     @section('content')
-        <div class="container">
-            <div class="row">
+
                 <div class="col-md-10 col-md-offset-1">
                     <div class="panel panel-default">
                         <div class="panel-heading">Nuevo usuario</div>
@@ -17,8 +16,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
     @endsection
 @else
     <p class="alert alert-danger">Ed. no esta autorizado para usar esta función</p>

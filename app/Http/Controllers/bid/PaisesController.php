@@ -88,7 +88,7 @@ class PaisesController extends Controller
 
     public function getPaises()
     {
-        //Retorna la lista de urbanizaciones para repoblar los selects
+        //Retorna la lista de paises para repoblar los selects
         $paises = Pais::select(['pais.id', 'pais.nombre'])->orderBy('pais.nombre','asc')->get();
         return response()->json(['success' => true, 'respuestaJSON' => $paises]);
     }
@@ -96,7 +96,7 @@ class PaisesController extends Controller
     public function getPais($id)
     {
       //abort(500);
-        //Retorna los datos de la urbanizacion con $id
+        //Retorna los datos del pais con $id
         $pais = Pais::findOrFail($id);
         return response()->json(['success' => true, 'respuestaJSON' => $pais]);
     }

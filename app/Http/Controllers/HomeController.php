@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         try {
             //
-            return view('bid.homebid');
+            return view('bid.homebid', array('titulo' => 'Bienvenido!!!'));
         }
         catch(TokenMismatchException $e)
         {

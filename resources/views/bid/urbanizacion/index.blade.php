@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('mainlayout')
 
 @if (!Auth::guest() and (Auth::user()->rol_id==1 or Auth::user()->rol_id==2))
 
@@ -9,9 +9,7 @@
     @include('bid.urbanizacion.modalurbanizacion')
     @include('bid.urbanizacion.modalediturbanizacion')
     @include('bid.urbanizacion.modalViewUrbanizacion')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">Listado de Urbanizaciones y zonas registradas</div>
                     @if (Session::has('message'))
@@ -36,9 +34,7 @@
                         {{--<script src="{{ asset('js/deleteConfirm.js') }}"></script>--}}
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+
     {!! Form::open(['route' => ['bid.urbanizaciones.destroy', ':URB_ID'], 'method' => 'DELETE', 'id' => 'form-delete']) !!}
     {!! Form::close() !!}
 
@@ -243,6 +239,7 @@
                      swal("Upps, algo no esta bien!", "Se produjo un error al obtener los datos de la urbanización, intentelo nuevamente.", "error");
                    });
                    $('#cargandoEdit').hide();
+                   $('#cargando').hide();
         });
 
         //funcion para cargar dropdown list
@@ -256,7 +253,9 @@
         */
 
         function cargaDropDown(controlId, urlParcial, keyId, textoPlaceHolder, indice, estadoFinal){
+          var url;
           $('#cargandoEdit').show();
+          $('#cargando').show();
           if (keyId != null){
             url = '/bid/obtiene' + urlParcial +'/' + keyId;
           }else {
@@ -287,16 +286,19 @@
                  //Activa o desactiva el control segun estadoFinal
                  control.prop("disabled",!estadoFinal);
                  $('#cargandoEdit').hide();
+                 $('#cargando').hide();
               } else {
                 control.prop("disabled",true);
                 swal("Upps, algo no esta bien!", "Error cargando la lista de provincias.", "error");
                 $('#cargandoEdit').hide();
+                $('#cargando').hide();
               }
             });
         },'json').fail(function (result) {
           //pone en nulo el control select
 
           swal("Upps, algo no esta bien!", "Error cargando la lista de " + controlId, "error");
+          $('#cargandoEdit').hide();
           $('#cargando').hide();
         });
         }
@@ -490,7 +492,7 @@
               $( "#provincia" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
               $( "#municipio" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
               $( "#poblacion" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
-              $( "#distrito_id" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
+              $( "#distrito" ).select2( { allowClear: true, placeholder: 'seleccione el departamento' } );
 
               //bloqueos
               $("#departamento").prop("disabled",true);

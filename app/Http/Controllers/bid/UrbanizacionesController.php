@@ -30,7 +30,7 @@ class UrbanizacionesController extends Controller
     public function index()
     {
         //
-        return view('bid.urbanizacion.index');
+        return view('bid.urbanizacion.index', array('titulo' => 'Gestión de urbanizaciones y zonas'));
     }
 
     public function anyData()

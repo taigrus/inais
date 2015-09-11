@@ -37,7 +37,7 @@ class UsersController extends Controller
     {
         //$users=User::paginate();
         //return view('admin.users.index',compact('users'));
-        return view('admin.users.index');
+        return view('admin.users.index', array('titulo' => 'Gestión de usuarios'));
 
     }
 
@@ -69,7 +69,7 @@ class UsersController extends Controller
     public function create()
     {
         $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
-        return view("admin.users.create", array('roles_options' => $roles_options));
+        return view("admin.users.create", array('roles_options' => $roles_options, 'titulo' => 'Registro de usuarios'));
     }
 
     /**
@@ -119,7 +119,7 @@ class UsersController extends Controller
         {
             $user = User::findOrFail($id);
             $roles_options = \DB::table('roles')->orderBy('id', 'asc')->lists('descripcion','id');
-            return view('admin.users.edit', compact('user'), array('roles_options' => $roles_options));
+            return view('admin.users.edit', compact('user'), array('roles_options' => $roles_options, 'titulo' => 'Edición de usuarios'));
         }
 // catch(Exception $e) catch any exception
         catch(ModelNotFoundException $e)

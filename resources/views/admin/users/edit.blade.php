@@ -1,9 +1,8 @@
-@extends('layout')
+@extends('mainlayout')
 @if (!Auth::guest() and Auth::user()->rol_id==1) {{--->rol->descripcion=="Administrador del sistema"--}}
     @section('content')
 
-        <div class="container">
-            <div class="row">
+
                 <div class="col-md-10 col-md-offset-1">
                     <div class="panel panel-default">
                         <div class="panel-heading">Editar usuario: <strong>{{$user->first_name}} {{$user->last_name}}</strong></div>
@@ -20,8 +19,7 @@
                     </div>
                     @include('admin.users.partials.delete')
                 </div>
-            </div>
-        </div>
+
 
     @endsection
 

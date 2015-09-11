@@ -23,7 +23,7 @@ class FamiliasController extends Controller
     public function index()
     {
         //
-        return view('bid.familia.index');
+        return view('bid.familia.index', array('titulo' => 'Gestión de familias'));
     }
 
     public function anyData()
@@ -81,7 +81,8 @@ class FamiliasController extends Controller
                     'facilitador_options' => $facilitador_options,
                     'urbanizacion_options' => $urbanizacion_options,
                     'via_options' => $via_options,
-                    'alcantarillado_options' => $alcantarillado_options
+                    'alcantarillado_options' => $alcantarillado_options,
+                    'titulo' => 'Registro de familias'
                 )
             );
         }
@@ -147,7 +148,9 @@ class FamiliasController extends Controller
                     'urbanizacion_options' => $urbanizacion_options,
                     'via_options' => $via_options,
                     'alcantarillado_options' => $alcantarillado_options,
-                    'familia' => $familia)
+                    'familia' => $familia,
+                    'titulo' => 'Edición de familias'
+                  )
             );
         }
         catch(ModelNotFoundException $e)

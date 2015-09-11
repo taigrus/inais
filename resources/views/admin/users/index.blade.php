@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('mainlayout')
 @if (!Auth::guest() and Auth::user()->rol_id==1)
 
     @section('content')
@@ -7,9 +7,6 @@
             div.DTTT { margin-bottom: 0.5em; float: right; }
             div.dataTables_wrapper { clear: both; }
         </style>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">Listado de Usuarios</div>
                         @if (Session::has('message'))
@@ -37,9 +34,6 @@
                             {{--<script src="{{ asset('js/deleteConfirm.js') }}"></script>--}}
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
     @endsection
 
