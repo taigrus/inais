@@ -80,13 +80,16 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+
                       @if (Auth::guest())
+                      <ul class="dropdown-menu dropdown-user">
                         <li><a href={{ route('login') }}><i class="fa fa-user fa-fw"></i> Iniciar sesión</a>
                         </li>
                         <li><a href={{ route('register') }}><i class="fa fa-user fa-fw"></i> Registrarse</a>
                         </li>
+                      </ul>
                       @else
+                      <ul class="dropdown-menu dropdown-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }}
                           <span class="caret"></span></a>
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil de usuario</a>
@@ -96,8 +99,8 @@
                         <li class="divider"></li>
                         <li><a href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Cerrar sesion</a>
                         </li>
+                      </ul>
                       @endif
-                    </ul>
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
